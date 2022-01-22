@@ -1,0 +1,11 @@
+.view-page ion-input {
+  border: 1px solid #000;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 300px;
+}
+.view-page ion-button {
+  height: 50px;
+  width: 100%;
+  max-width: 300px;
+}

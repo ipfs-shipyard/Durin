@@ -1,0 +1,7 @@
+{
+  "name": "IPFS",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
