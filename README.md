@@ -9,3 +9,20 @@ Created using [ionic](https://ionicframework.com/docs/cli/commands/start).
 - Handles `ipfs://` URLs and kicks them to dweb.link
   - `ipfs://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq/wiki/` to `https://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq.ipfs.dweb.link/wiki/`
 - Handles `ipns://` URLs and kicks them to dweb.link
+
+## Installation
+
+First make sure you have Xcode installed: https://apps.apple.com/us/app/xcode/id497799835?mt=12
+
+```sh
+xcode-select --install # Install Command Line Tools if you haven't already.
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+sudo gem install cocoapods
+npm install
+npx ionic capacitor sync
+npx ionic capacitor open ios # Opens Xcode so you can run the iOS app
+```
+
+### Apple Silicon
+
+If you are using Apple silicon, you will need to follow this first: https://armen-mkrtchian.medium.com/run-cocoapods-on-apple-silicon-and-macos-big-sur-developer-transition-kit-b62acffc1387
