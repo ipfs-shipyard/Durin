@@ -20,7 +20,7 @@ sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 sudo gem install cocoapods
 npm install
 npx ionic capacitor sync
-npx ionic capacitor open ios # Opens Xcode so you can run the iOS app
+npx ionic capacitor run ios --livereload # Opens and runs the iOS app - you will pick which device to run it on. If you have a physical device plugged in, you can select that as well.
 ```
 
 ### Apple Silicon
