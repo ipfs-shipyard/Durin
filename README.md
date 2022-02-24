@@ -26,3 +26,11 @@ npx ionic capacitor run ios --livereload # Opens and runs the iOS app - you will
 ### Apple Silicon
 
 If you are using Apple silicon, you will need to follow this first: https://armen-mkrtchian.medium.com/run-cocoapods-on-apple-silicon-and-macos-big-sur-developer-transition-kit-b62acffc1387
+
+## Testing
+
+When making changes or running for the first time, run `npm run sync` to update the native applications.
+
+### iOS
+
+To test on iOS, run `npm run xcode` which will open XCode, then using the UI run it in an emulator.
