@@ -1,10 +1,10 @@
-import { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli'
 
 const config: CapacitorConfig = {
-  appId: 'ai.protocol.ipfs',
-  appName: 'IPFS',
+  appId: 'ai.protocol.durin',
+  appName: 'Durin',
   webDir: 'build',
   bundledWebRuntime: false
-};
+}
 
-export default config;
+export default config

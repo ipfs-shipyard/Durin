@@ -1,4 +1,4 @@
-# mobile-share
+# Durin
 
 Native mobile apps for share actions on iOS and Android
 

@@ -1,15 +1,15 @@
 {
-  "name": "ipfs-mobile",
+  "name": "durin",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "3.4.0",
-    "@capacitor/app": "1.1.0",
-    "@capacitor/core": "3.4.0",
-    "@capacitor/haptics": "1.1.4",
-    "@capacitor/ios": "3.4.0",
-    "@capacitor/keyboard": "1.2.1",
-    "@capacitor/status-bar": "1.0.7",
+    "@capacitor/android": "^3.4.0",
+    "@capacitor/app": "^1.1.0",
+    "@capacitor/core": "^3.4.0",
+    "@capacitor/haptics": "^1.1.4",
+    "@capacitor/ios": "^3.4.0",
+    "@capacitor/keyboard": "^1.2.1",
+    "@capacitor/status-bar": "^1.0.7",
     "@ionic/react": "^6.0.0",
     "@ionic/react-router": "^6.0.0",
     "@testing-library/jest-dom": "^5.11.9",
@@ -43,12 +43,13 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "icons": "cordova-res ios --skip-config --copy",
     "sync": "ionic capacitor sync",
     "xcode": "ionic capacitor open ios",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject",
-    "lint": "eslint src --fix"
+    "lint": "eslint . --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -75,7 +76,8 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "3.4.0",
+    "@capacitor/cli": "^3.4.0",
+    "cordova-res": "^0.15.4",
     "eslint": "^8.7.0"
   }
 }

@@ -1,6 +1,6 @@
 {
-	"appId": "ai.protocol.ipfs",
-	"appName": "IPFS",
+	"appId": "ai.protocol.durin",
+	"appName": "Durin",
 	"webDir": "build",
 	"bundledWebRuntime": false
 }
