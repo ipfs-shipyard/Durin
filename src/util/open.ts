@@ -1,6 +1,6 @@
 import { cid } from 'is-ipfs'
 
-const open = (url: string) => {
+export const transform = (url: string) => {
   // support opening just a CID w/ no protocol
   if (cid(url) || cid(url.split('/')[0])) url = `ipfs://${url}`
 
@@ -12,14 +12,20 @@ const open = (url: string) => {
 
   const { protocol, hostname, pathname } = new URL(url)
 
-  console.log('Attempting to open:', url)
   if (protocol === 'ipfs:') {
-    window.open(`https://${hostname}.ipfs.dweb.link${pathname}`)
+    return `https://${hostname}.ipfs.dweb.link${pathname}`
   }
   if (protocol === 'ipns:') {
     // use path as per https://github.com/ipfs/infra/issues/506#issuecomment-729850579
-    window.open(`https://dweb.link/ipns/${hostname}${pathname}`)
+    return `https://dweb.link/ipns/${hostname}${pathname}`
   }
+}
+
+const open = (url: string) => {
+  console.log('Attempting to open:', url)
+
+  const transformed = transform(url)
+  if (transformed) window.open(transformed)
 }
 
 export default open

@@ -4,7 +4,7 @@ import './index.css'
 
 const Settings: React.FC = () => {
   return (
-    <IonPage>
+    <IonPage className="settings-page">
       <IonHeader>
         <IonToolbar>
           <IonTitle>Settings</IonTitle>

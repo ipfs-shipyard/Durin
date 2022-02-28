@@ -27,7 +27,7 @@ const Browse: React.FC = () => {
             placeholder="Enter CID, IPFS, or IPNS"
             value={url}
             onIonChange={(e) => setUrl(e.detail.value || '')} />
-          <IonButton onClick={() => open(url)}>Open In Browser</IonButton>
+          <IonButton expand="block" onClick={() => open(url)}>Open In Browser</IonButton>
         </PageContainer>
       </IonContent>
     </IonPage>

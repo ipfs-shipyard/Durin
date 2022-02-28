@@ -29,6 +29,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.0",
     "typescript": "^4.1.3",
+    "web3.storage": "^3.5.5",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
     "workbox-cacheable-response": "^5.1.4",

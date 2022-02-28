@@ -15,12 +15,15 @@ Created using [ionic](https://ionicframework.com/docs/cli/commands/start).
 
 First make sure you have Xcode installed: https://apps.apple.com/us/app/xcode/id497799835?mt=12
 
+- Copy `.env` to a new file `.env.local` - replace the token with one from https://web3.storage
+- Run the following commands:
+
 ```sh
 xcode-select --install # Install Command Line Tools if you haven't already.
 sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 sudo gem install cocoapods
 npm install
-npx ionic capacitor sync
+npm run sync
 npx ionic capacitor run ios --livereload # Opens and runs the iOS app - you will pick which device to run it on. If you have a physical device plugged in, you can select that as well.
 ```
 
