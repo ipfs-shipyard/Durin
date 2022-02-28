@@ -4,19 +4,19 @@ import PageContainer from '../../components/PageContainer'
 import open from '../../util/open'
 import './index.css'
 
-const View: React.FC = () => {
+const Browse: React.FC = () => {
   const [ url, setUrl ] = useState('')
   return (
-    <IonPage className="view-page">
+    <IonPage className="browse-page">
       <IonHeader>
         <IonToolbar>
-          <IonTitle>View</IonTitle>
+          <IonTitle>Browse</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">View</IonTitle>
+            <IonTitle size="large">Browse</IonTitle>
           </IonToolbar>
         </IonHeader>
         <PageContainer>
@@ -24,7 +24,7 @@ const View: React.FC = () => {
             type="url"
             inputmode="url"
             color="primary"
-            placeholder="ipfs://Qm..."
+            placeholder="Enter CID, IPFS, or IPNS"
             value={url}
             onIonChange={(e) => setUrl(e.detail.value || '')} />
           <IonButton onClick={() => open(url)}>Open In Browser</IonButton>
@@ -34,4 +34,4 @@ const View: React.FC = () => {
   )
 }
 
-export default View
+export default Browse

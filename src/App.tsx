@@ -10,9 +10,9 @@ import {
   setupIonicReact
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { ellipse, square, triangle } from 'ionicons/icons'
-import View from './pages/View'
-import Upload from './pages/Upload'
+import { planet, cloudUpload, settings } from 'ionicons/icons'
+import Browse from './pages/Browse'
+import Share from './pages/Share'
 import Settings from './pages/Settings'
 
 /* Core CSS required for Ionic components to work properly */
@@ -42,10 +42,10 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           <Route exact path="/view">
-            <View />
+            <Browse />
           </Route>
-          <Route exact path="/upload">
-            <Upload />
+          <Route exact path="/share">
+            <Share />
           </Route>
           <Route path="/settings">
             <Settings />
@@ -56,15 +56,15 @@ const App: React.FC = () => (
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="view" href="/view">
-            <IonIcon icon={triangle} />
-            <IonLabel>View</IonLabel>
+            <IonIcon icon={planet} />
+            <IonLabel>Browse</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="upload" href="/upload">
-            <IonIcon icon={ellipse} />
-            <IonLabel>Upload</IonLabel>
+          <IonTabButton tab="share" href="/share">
+            <IonIcon icon={cloudUpload} />
+            <IonLabel>Share</IonLabel>
           </IonTabButton>
           <IonTabButton tab="settings" href="/settings">
-            <IonIcon icon={square} />
+            <IonIcon icon={settings} />
             <IonLabel>Settings</IonLabel>
           </IonTabButton>
         </IonTabBar>

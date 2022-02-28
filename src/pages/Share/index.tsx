@@ -2,18 +2,18 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import PageContainer from '../../components/PageContainer'
 import './index.css'
 
-const Upload: React.FC = () => {
+const Share: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Upload</IonTitle>
+          <IonTitle>Share</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Upload</IonTitle>
+            <IonTitle size="large">Share</IonTitle>
           </IonToolbar>
         </IonHeader>
         <PageContainer title="Coming Soon!" text="This page is under construction - check back in a future release." />
@@ -22,4 +22,4 @@ const Upload: React.FC = () => {
   )
 }
 
-export default Upload
+export default Share
