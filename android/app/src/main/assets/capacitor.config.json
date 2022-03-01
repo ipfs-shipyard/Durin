@@ -1,0 +1,6 @@
+{
+	"appId": "ai.protocol.durin",
+	"appName": "Durin",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

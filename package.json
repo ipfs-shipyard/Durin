@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "^3.4.0",
+    "@capacitor/android": "^3.4.1",
     "@capacitor/app": "^1.1.0",
     "@capacitor/core": "^3.4.0",
     "@capacitor/haptics": "^1.1.4",
@@ -45,9 +45,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "icons": "cordova-res ios --skip-config --copy",
+    "icons": "cordova-res --skip-config --copy",
     "sync": "ionic capacitor sync",
-    "xcode": "ionic capacitor open ios",
+    "android": "ionic capacitor open android",
+    "ios": "ionic capacitor open ios",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject",
