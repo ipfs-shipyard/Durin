@@ -44,6 +44,10 @@ When making changes or running for the first time, run `npm run sync` to update 
 
 To test on iOS, run `npm run ios` which will open XCode, then using the UI run it in an emulator.
 
+Note: Firefox and Chrome for iOS do not support custom protocols being typed into the address bar. Clicking links should work fine, however.
+
 ### Android
 
 To test on Android, run `npm run android` which will open the studio, then using the UI run it in an emulator.
+
+Note: Android chrome [does not support custom protocols](https://developer.chrome.com/docs/multidevice/android/intents/) - you will need to type `intent://durin/CID_GOES_HERE#Intent;scheme=ipfs;end`

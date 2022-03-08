@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "^3.4.1",
+    "@capacitor/android": "^3.4.3",
     "@capacitor/app": "^1.1.0",
     "@capacitor/core": "^3.4.0",
     "@capacitor/haptics": "^1.1.4",
-    "@capacitor/ios": "^3.4.0",
+    "@capacitor/ios": "^3.4.3",
     "@capacitor/keyboard": "^1.2.1",
     "@capacitor/status-bar": "^1.0.7",
     "@ionic/react": "^6.0.0",

@@ -24,20 +24,20 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
-			<string>ai.protocol.durin</string>
+			<string>ipns</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ipfs</string>
+				<string>ipns</string>
 			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
-			<string>ai.protocol.ipns</string>
+			<string>ipfs</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ipns</string>
+				<string>ipfs</string>
 			</array>
 		</dict>
 	</array>
@@ -73,5 +73,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
