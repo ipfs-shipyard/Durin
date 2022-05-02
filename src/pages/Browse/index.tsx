@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton, IonInput } from '@ionic/react'
+import { IonContent, IonPage, IonTitle, IonToolbar, IonButton, IonInput } from '@ionic/react'
 import { useState } from 'react'
 import PageContainer from '../../components/PageContainer'
 import open from '../../util/open'
@@ -8,17 +8,10 @@ const Browse: React.FC = () => {
   const [ url, setUrl ] = useState('')
   return (
     <IonPage className="browse-page">
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Browse</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <IonToolbar>
+        <IonTitle>Browse</IonTitle>
+      </IonToolbar>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Browse</IonTitle>
-          </IonToolbar>
-        </IonHeader>
         <PageContainer>
           <IonInput
             type="url"
