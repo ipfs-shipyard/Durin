@@ -3,21 +3,33 @@ import { share, trash, addCircleOutline } from 'ionicons/icons'
 import { useState } from 'react'
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
+import { getThumbnailUrl } from 'image-thumbnail-generator'
 import { transform } from '../../util/open'
 import upload from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
+import FileIcon from '../../components/FileIcon'
 import './index.css'
 
 type Upload = {
   name: string
   url: string
   mimeType: string
+  extension?: string
+  thumbnail?: string
   date: string
 }
 const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
 const hasNativeShare = typeof navigator.share === 'function'
 const nativeShare = (url: string) => {
   navigator.share({ url: transform(url) })
+}
+const createThumbnail = async (file: File): Promise<string | undefined> => {
+  try {
+    const { thumbnail } = await getThumbnailUrl(file, 80, 80) // 2x the size of the preview
+    return thumbnail
+  } catch (err) {
+    console.error('Error making thumbnail:', err)
+  }
 }
 
 const Share: React.FC = () => {
@@ -38,9 +50,15 @@ const Share: React.FC = () => {
       name: file.name,
       url,
       mimeType: file.type,
+      extension: file.name.split('.').pop(),
+      thumbnail: file.type.startsWith('image/')
+        ? await createThumbnail(file)
+        : undefined,
       date: new Date().toISOString()
     }
     setUploadedFiles([ newUpload, ...uploadedFiles ])
+
+    if (!hasFiles) setIsUsingModal(true) // open the success state in the modal if its their first upload
   }
   const deleteUploadedFile = (idx: number) => {
     const newList = [ ...uploadedFiles ]
@@ -53,9 +71,11 @@ const Share: React.FC = () => {
     <IonList>
       {uploadedFiles.map((upload, i) =>
         <IonItemSliding key={`${i}-${upload.url}`}>
-          <IonItem>
+          <IonItem target="_blank" rel="noreferrer noopener" href={transform(upload.url)}>
             <IonAvatar slot="start">
-              <IonImg src={transform(upload.url)} alt="" /> {/* TODO: mimetype image! */}
+              {upload.thumbnail
+                ? <IonImg src={upload.thumbnail} alt={upload.extension} />
+                : <FileIcon extension={upload.extension} />}
             </IonAvatar>
             <IonLabel>
               <h2>{upload.name}</h2>
