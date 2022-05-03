@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonPage, IonTitle, IonToolbar, IonItemSliding, IonItemOptions, IonItemOption, IonSpinner, IonList, IonItem, IonLabel, IonListHeader, IonAvatar, IonIcon, IonButtons, IonModal } from '@ionic/react'
+import { IonButton, IonContent, IonPage, IonTitle, IonToolbar, IonItemSliding, IonItemOptions, IonItemOption, IonSpinner, IonList, IonItem, IonLabel, IonListHeader, IonAvatar, IonIcon, IonButtons, IonModal, IonImg, IonHeader } from '@ionic/react'
 import { share, trash, addCircleOutline } from 'ionicons/icons'
 import { useState } from 'react'
 import { DateTime } from 'luxon'
@@ -55,7 +55,7 @@ const Share: React.FC = () => {
         <IonItemSliding key={`${i}-${upload.url}`}>
           <IonItem>
             <IonAvatar slot="start">
-              <img src={transform(upload.url)} alt="" /> {/* TODO: mimetype image! */}
+              <IonImg src={transform(upload.url)} alt="" /> {/* TODO: mimetype image! */}
             </IonAvatar>
             <IonLabel>
               <h2>{upload.name}</h2>
@@ -111,14 +111,16 @@ const Share: React.FC = () => {
   </IonModal>
 
   return <IonPage className="share-page">
-    <IonToolbar>
-      <IonTitle>Share</IonTitle>
-      {hasFiles && <IonButtons slot="end">
-        <IonButton disabled={isUsingModal} onClick={() => setIsUsingModal(true)}>
-          <IonIcon slot="icon-only" icon={addCircleOutline} />
-        </IonButton>
-      </IonButtons>}
-    </IonToolbar>
+    <IonHeader>
+      <IonToolbar>
+        <IonTitle>Share</IonTitle>
+        {hasFiles && <IonButtons slot="end">
+          <IonButton disabled={isUsingModal} onClick={() => setIsUsingModal(true)}>
+            <IonIcon slot="icon-only" icon={addCircleOutline} />
+          </IonButton>
+        </IonButtons>}
+      </IonToolbar>
+    </IonHeader>
     {isUsingModal ? listContent : listContent || mainContent}
     {uploadModal} 
   </IonPage>
