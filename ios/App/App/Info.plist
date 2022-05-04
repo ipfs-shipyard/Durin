@@ -75,5 +75,12 @@
 	<true/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSBonjourServices</key>
+	<array>
+	<string>_ipfs-discovery._udp.</string>
+	</array>
+
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This is used to find IPFS nodes on your network.</string>
 </dict>
 </plist>

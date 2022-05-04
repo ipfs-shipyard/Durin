@@ -2,10 +2,12 @@ import { IonPage, IonTitle, IonToolbar, IonButton, IonHeader, IonInput } from '@
 import { useState } from 'react'
 import PageContainer from '../../components/PageContainer'
 import open from '../../util/open'
+import { useNodes } from '../../util/node'
 import './index.css'
 
 const Browse: React.FC = () => {
   const [ url, setUrl ] = useState('')
+  const { nodes } = useNodes()
   return (
     <IonPage className="browse-page">
       <IonHeader>
@@ -21,7 +23,7 @@ const Browse: React.FC = () => {
           placeholder="Enter CID, IPFS, or IPNS"
           value={url}
           onIonChange={(e) => setUrl(e.detail.value || '')} />
-        <IonButton expand="block" onClick={() => open(url)}>Open In Browser</IonButton>
+        <IonButton expand="block" onClick={() => open(url, nodes[0])}>Open In Browser</IonButton>
       </PageContainer>
     </IonPage>
   )

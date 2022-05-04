@@ -1,6 +1,7 @@
 import { cid } from 'is-ipfs'
+import { Node } from './node'
 
-export const transform = (url: string) => {
+export const transform = (url: string, node: Node) => {
   // support opening just a CID w/ no protocol
   if (cid(url) || cid(url.split('/')[0])) url = `ipfs://${url}`
 
@@ -12,19 +13,27 @@ export const transform = (url: string) => {
 
   const { protocol, hostname, pathname } = new URL(url)
 
+  const nodeHost = node.port ? `${node.host}:${node.port}` : node.host
+  const nodeProtocol = node.remote ? 'https' : 'http'
+
   if (protocol === 'ipfs:') {
-    return `https://${hostname}.ipfs.dweb.link${pathname}`
+    return node.remote
+      ? `${nodeProtocol}://${hostname}.ipfs.${nodeHost}${pathname}`
+      : `${nodeProtocol}://${nodeHost}/ipfs/${hostname}${pathname}` // use paths on local
   }
   if (protocol === 'ipns:') {
     // use path as per https://github.com/ipfs/infra/issues/506#issuecomment-729850579
-    return `https://dweb.link/ipns/${hostname}${pathname}`
+    return `${nodeProtocol}://${nodeHost}/ipns/${hostname}${pathname}`
   }
 }
 
-const open = (url: string) => {
+export const transformForShare = (url: string) =>
+  transform(url, { host: 'dweb.link', healthy: true, remote: true })
+
+const open = (url: string, node?: Node) => {
   console.log('Attempting to open:', url)
 
-  const transformed = transform(url)
+  const transformed = node ? transform(url, node) : transformForShare(url)
   if (transformed) window.open(transformed)
 }
 

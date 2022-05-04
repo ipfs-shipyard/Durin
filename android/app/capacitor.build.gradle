@@ -13,7 +13,7 @@ dependencies {
     implementation project(':capacitor-haptics')
     implementation project(':capacitor-keyboard')
     implementation project(':capacitor-status-bar')
-
+    implementation "org.jmdns:jmdns:3.5.5"
 }
 
 

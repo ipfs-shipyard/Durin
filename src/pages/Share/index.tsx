@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
 import { getThumbnailUrl } from 'image-thumbnail-generator'
-import { transform } from '../../util/open'
+import { useNodes } from '../../util/node'
+import { transform, transformForShare } from '../../util/open'
 import upload from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
 import FileIcon from '../../components/FileIcon'
@@ -21,7 +22,7 @@ type Upload = {
 const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
 const hasNativeShare = typeof navigator.share === 'function'
 const nativeShare = (url: string) => {
-  navigator.share({ url: transform(url) })
+  navigator.share({ url: transformForShare(url) })
 }
 const createThumbnail = async (file: File): Promise<string | undefined> => {
   try {
@@ -38,6 +39,8 @@ const Share: React.FC = () => {
   const [ isUploading, setIsUploading ] = useState(false)
   const [ url, setUrl ] = useState('')
   const [ uploadedFiles, setUploadedFiles ] = useUploadedFiles([])
+  const { nodes } = useNodes()
+  
   const hasFiles = uploadedFiles.length > 0
 
   const uploadFile = async () => {
@@ -71,7 +74,7 @@ const Share: React.FC = () => {
     <IonList>
       {uploadedFiles.map((upload, i) =>
         <IonItemSliding key={`${i}-${upload.url}`}>
-          <IonItem target="_blank" rel="noreferrer noopener" href={transform(upload.url)}>
+          <IonItem target="_blank" rel="noreferrer noopener" href={transform(upload.url, nodes[0])}>
             <IonAvatar slot="start">
               {upload.thumbnail
                 ? <IonImg src={upload.thumbnail} alt={upload.extension} />
@@ -96,7 +99,7 @@ const Share: React.FC = () => {
   </IonContent>
 
   const successContent = url && <>
-    <p className="success-text">Your file is available <a target="_blank" rel="noreferrer noopener" href={transform(url)}>here</a>.</p>
+    <p className="success-text">Your file is available <a target="_blank" rel="noreferrer noopener" href={transform(url, nodes[0])}>here</a>.</p>
       <IonButton expand="block" onClick={() => {
         setUrl('')
         setIsUsingModal(true)
