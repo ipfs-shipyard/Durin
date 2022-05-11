@@ -125,7 +125,7 @@ const Share: React.FC = () => {
       setUrl('')
       setIsUsingModal(false)
     }}
-    swipeToClose={true}
+    canDismiss={true}
     breakpoints={[0, 0.5, 1]}
     initialBreakpoint={0.5}>
     <div className="share-page-modal-inner">

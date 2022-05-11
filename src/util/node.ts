@@ -1,10 +1,13 @@
-import {  useEffect, useMemo } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useMemo } from 'react'
 import { Zeroconf, ZeroconfResult } from '@ionic-native/zeroconf'
 import pMap from 'p-map'
 import { uniqBy, orderBy } from 'lodash'
 import memo from 'moize'
 import EventEmitter from 'eventemitter3'
 import createPersistedState from 'use-persisted-state'
+
+const MAX_CHECK_INTERVAL = 10000
 
 export type Node = {
   host: string
@@ -30,7 +33,7 @@ const healthCheck = memo(async (host: string, port?: number) => {
   } catch (_) {
     return { healthy: false }
   }
-}, { isPromise: true, isDeepEqual: true, maxAge: 10000, maxSize: 100 }) // wait 10s
+}, { isPromise: true, isDeepEqual: true, maxAge: MAX_CHECK_INTERVAL, maxSize: 100 })
 
 const getNodeStatus = async (node: Partial<Node>): Promise<Node> => {
   const { healthy, speed } = await healthCheck(node.host!, node.port)
@@ -57,19 +60,21 @@ export const useNodes = () => {
       setNodes(await getNodeList(nodes))
     }
     update()
-    const interval = setInterval(update, 5000)
+    const interval = setInterval(update, MAX_CHECK_INTERVAL / 2)
     return () => clearInterval(interval)
   }, [])
 
   // tap into node listener
   useEffect(() => {
     const addNode = async (result: ZeroconfResult) => {
-      const ip = result.service.ipv4Addresses[result.service.ipv4Addresses.length - 1]
-      if (!ip) return
-      if (nodes.find((n) => n.host === ip && n.healthy)) return // already there
-      console.log('Found new local node:', ip, result.service)
+      const ips = result.service.ipv4Addresses
+        .map((ip) => ip === '127.0.0.1' ? 'localhost' : '')
+        .filter((ip) => !nodes.some((n) => n.host === ip && n.healthy)) // already there
+      if (ips.length === 0) return
+      console.log('Found new local node:', ips, result.service)
       setNodes(await getNodeList([
-        { host: ip, port: 8080, remote: false },
+        ...ips
+          .map((ip) => ({ host: ip, port: 8080, remote: false })),
         ...nodes
       ]))
     }
