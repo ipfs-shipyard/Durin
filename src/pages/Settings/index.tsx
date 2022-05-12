@@ -1,5 +1,5 @@
 import { IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react'
-import { useNodes } from '../../util/node'
+import { useNodes } from '../../util/ipfs'
 import PageContainer from '../../components/PageContainer'
 import './index.css'
 

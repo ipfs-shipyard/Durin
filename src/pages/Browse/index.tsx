@@ -1,8 +1,7 @@
 import { IonPage, IonTitle, IonToolbar, IonButton, IonHeader, IonInput } from '@ionic/react'
 import { useState } from 'react'
 import PageContainer from '../../components/PageContainer'
-import open from '../../util/open'
-import { useNodes } from '../../util/node'
+import { useNodes, open } from '../../util/ipfs'
 import './index.css'
 
 const Browse: React.FC = () => {
