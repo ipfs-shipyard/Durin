@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonPage, IonTitle, IonToolbar, IonItemSliding, IonItemOptions, IonItemOption, IonSpinner, IonList, IonItem, IonLabel, IonListHeader, IonAvatar, IonIcon, IonButtons, IonModal, IonImg, IonHeader } from '@ionic/react'
+import { IonButton, IonContent, IonPage, IonTitle, IonToolbar, IonItemSliding, IonItemOptions, IonItemOption, IonSpinner, IonList, IonItem, IonLabel, IonListHeader, IonAvatar, IonIcon, IonButtons, IonModal, IonImg, IonHeader, IonProgressBar } from '@ionic/react'
 import { share, trash, addCircleOutline } from 'ionicons/icons'
 import { useState } from 'react'
 import { DateTime } from 'luxon'
@@ -9,6 +9,8 @@ import upload from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
 import FileIcon from '../../components/FileIcon'
 import './index.css'
+
+const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
 
 type Upload = {
   name: string
@@ -31,12 +33,14 @@ const createThumbnail = async (file: File): Promise<string | undefined> => {
     console.error('Error making thumbnail:', err)
   }
 }
+const defaultUploadProgress: [ number, number ] = [ 0, 1 ]
 
 const Share: React.FC = () => {
   const [ file, setFile ] = useState<File>()
   const [ error, setError ] = useState<Error>()
   const [ isUsingModal, setIsUsingModal ] = useState(false)
   const [ isUploading, setIsUploading ] = useState(false)
+  const [ uploadProgress, setUploadProgress ] = useState(defaultUploadProgress)
   const [ url, setUrl ] = useState('')
   const [ uploadedFiles, setUploadedFiles ] = useUploadedFiles([])
   const { nodes } = useNodes()
@@ -48,15 +52,20 @@ const Share: React.FC = () => {
     setIsUploading(true)
     let url
     try {
-      url = await upload(file)
+      url = await upload(file, {
+        onProgress: (progress, total) =>
+          setUploadProgress([ progress, total ])
+      })
     } catch (err) {
       setError(error)
       setIsUploading(false)
+      setUploadProgress(defaultUploadProgress)
       console.error('Error uploading file:', err)
       return
     }
     setUrl(url)
     setIsUploading(false)
+    setUploadProgress(defaultUploadProgress)
     const newUpload: Upload = {
       name: file.name,
       url,
@@ -91,7 +100,7 @@ const Share: React.FC = () => {
             <IonLabel>
               <h2>{upload.name}</h2>
               <h3>{upload.url}</h3>
-              <p>{DateTime.fromISO(upload.date).toLocaleString(DateTime.DATE_SHORT)}</p>
+              <p>{DateTime.fromISO(upload.date).toLocaleString(DateTime.DATETIME_MED)}</p>
             </IonLabel>
           </IonItem>
           <IonItemOptions side="end">
@@ -121,6 +130,8 @@ const Share: React.FC = () => {
       <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>
       {isUploading ? <IonSpinner /> : null}
     </IonButton>
+    {isUploading ? <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} /> : null}
+    {isUploading && file && file.size >= BIG_FILE_THRESHOLD && <p>This may take a moment, the file is large!</p>}
   </>
   const mainContent = url
     ? <PageContainer title="Success!">{successContent}</PageContainer>

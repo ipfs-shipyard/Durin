@@ -30,7 +30,14 @@
   margin: 10px 0;
 }
 
-/* modal styles */
+.share-page ion-progress-bar {
+  width: 100%;
+  max-width: 300px;
+  height: 10px;
+  border-radius: 4px;
+}
+
+/* modal specific styles */
 .share-page-modal-inner {
   padding-top: 25%;
   display: flex;
