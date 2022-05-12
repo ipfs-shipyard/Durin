@@ -71,7 +71,7 @@ export const defaultNodes: Node[] = [
   { host: 'localhost', healthy: false, remote: false, port: 8080 }
 ]
 
-const healthCheck = memo(async (host: string, port?: number, remote = true) => {
+const healthCheck = memo(async (remote: boolean, host: string, port?: number) => {
   try {
     const start = Date.now()
     const url = transform(`ipfs://${TEST_CID}?now=${Date.now()}`, { host, port, remote, healthy: true })
@@ -84,7 +84,7 @@ const healthCheck = memo(async (host: string, port?: number, remote = true) => {
 }, { isPromise: true, isDeepEqual: true, maxAge: MAX_CHECK_INTERVAL, maxSize: 100 })
 
 const getNodeStatus = async (node: Partial<Node>): Promise<Node> => {
-  const { healthy, speed } = await healthCheck(node.host!, node.port, node.remote)
+  const { healthy, speed } = await healthCheck(node.remote!, node.host!, node.port)
   return { ...node, healthy, speed } as Node
 }
 
@@ -116,8 +116,8 @@ export const useNodes = () => {
   useEffect(() => {
     const addNode = async (result: ZeroconfResult) => {
       const ips = result.service.ipv4Addresses
-        .map((ip) => ip === '127.0.0.1' ? 'localhost' : '')
-        .filter((ip) => !nodes.some((n) => n.host === ip && n.healthy)) // already there
+        .map((ip) => ip === '127.0.0.1' ? 'localhost' : ip)
+        .filter((ip) => ip && !nodes.some((n) => n.host === ip && n.healthy)) // already there
       if (ips.length === 0) return
       console.log('Found new local node:', ips, result.service)
       setNodes(await getNodeList([
@@ -127,9 +127,9 @@ export const useNodes = () => {
       ]))
     }
     const removeNode = (result: ZeroconfResult) => {
-      const ip = result.service.ipv4Addresses[result.service.ipv4Addresses.length - 1]
-      if (!ip) return
-      setNodes((nodes) => nodes.filter((n) => n.host !== ip))
+      const ips = result.service.ipv4Addresses
+      if (ips.length === 0) return
+      setNodes((nodes) => nodes.filter((n) => ips.includes(n.host)))
     }
   
     NodeListener.on('resolved', addNode)

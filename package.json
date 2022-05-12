@@ -64,6 +64,7 @@
     "sync": "ionic capacitor sync",
     "android": "ionic capacitor open android",
     "ios": "ionic capacitor open ios",
+    "live": "ionic capacitor run ios -l --external --target 403E8F3E-D8D2-4EC4-BD23-296855A5B965",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!(@ionic/react|@ionic/react-router|@ionic/core|@stencil/core|ionicons)/)'",
     "eject": "react-scripts eject",

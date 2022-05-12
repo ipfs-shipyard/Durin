@@ -34,6 +34,7 @@ const createThumbnail = async (file: File): Promise<string | undefined> => {
 
 const Share: React.FC = () => {
   const [ file, setFile ] = useState<File>()
+  const [ error, setError ] = useState<Error>()
   const [ isUsingModal, setIsUsingModal ] = useState(false)
   const [ isUploading, setIsUploading ] = useState(false)
   const [ url, setUrl ] = useState('')
@@ -45,7 +46,15 @@ const Share: React.FC = () => {
   const uploadFile = async () => {
     if (!file) return
     setIsUploading(true)
-    const url = await upload(file)
+    let url
+    try {
+      url = await upload(file)
+    } catch (err) {
+      setError(error)
+      setIsUploading(false)
+      console.error('Error uploading file:', err)
+      return
+    }
     setUrl(url)
     setIsUploading(false)
     const newUpload: Upload = {
