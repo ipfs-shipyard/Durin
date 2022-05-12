@@ -11,6 +11,7 @@ import FileIcon from '../../components/FileIcon'
 import './index.css'
 
 const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
+const PROGRESS_THRESHOLD = 10 * 1024 // 10mb
 
 type Upload = {
   name: string
@@ -130,7 +131,7 @@ const Share: React.FC = () => {
       <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>
       {isUploading ? <IonSpinner /> : null}
     </IonButton>
-    {isUploading ? <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} /> : null}
+    {isUploading && file && file.size < PROGRESS_THRESHOLD && <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} />}
     {isUploading && file && file.size >= BIG_FILE_THRESHOLD && <p>This may take a moment, the file is large!</p>}
   </>
   const mainContent = url
