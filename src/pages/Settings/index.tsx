@@ -1,7 +1,7 @@
 import { IonHeader, IonPage, IonTitle, IonToolbar, IonText } from '@ionic/react'
 import { useNodes } from '../../util/ipfs'
 import PageContainer from '../../components/PageContainer'
-import './index.css'
+import './index.scss'
 
 const Settings: React.FC = () => {
   const { nodes } = useNodes()

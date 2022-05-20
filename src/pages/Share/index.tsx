@@ -8,7 +8,7 @@ import { transform, transformForShare, useNodes } from '../../util/ipfs'
 import upload from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
 import FileIcon from '../../components/FileIcon'
-import './index.css'
+import './index.scss'
 
 const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
 const PROGRESS_THRESHOLD = 10 * 1024 // 10mb

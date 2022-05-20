@@ -1,4 +1,5 @@
 import { Redirect, Route } from 'react-router-dom'
+import { useEffect } from 'react'
 import {
   IonApp,
   IonIcon,
@@ -34,7 +35,6 @@ import '@ionic/react/css/display.css'
 
 /* Theme variables */
 import './theme/variables.css'
-import { useEffect } from 'react'
 
 setupIonicReact()
 
