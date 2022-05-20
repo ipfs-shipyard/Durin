@@ -11,6 +11,7 @@ import {
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { planet, cloudUpload, settings } from 'ionicons/icons'
+import { SplashScreen } from '@capacitor/splash-screen'
 import Browse from './pages/Browse'
 import Share from './pages/Share'
 import Settings from './pages/Settings'
@@ -33,11 +34,15 @@ import '@ionic/react/css/display.css'
 
 /* Theme variables */
 import './theme/variables.css'
+import { useEffect } from 'react'
 
 setupIonicReact()
 
-const App: React.FC = () => (
-  <IonApp>
+const App: React.FC = () => {
+  useEffect(() => {
+    SplashScreen.hide()
+  }, [])
+  return <IonApp>
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
@@ -71,6 +76,6 @@ const App: React.FC = () => (
       </IonTabs>
     </IonReactRouter>
   </IonApp>
-)
+}
 
 export default App

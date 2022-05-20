@@ -4,7 +4,12 @@ const config: CapacitorConfig = {
   appId: 'ai.protocol.durin',
   appName: 'Durin',
   webDir: 'build',
-  bundledWebRuntime: false
+  bundledWebRuntime: false,
+  plugins: {
+    SplashScreen: {
+      launchAutoHide: false
+    }
+  }
 }
 
 export default config

@@ -1,6 +1,6 @@
 {
-  "short_name": "Ionic App",
-  "name": "My Ionic App",
+  "short_name": "Durin",
+  "name": "Durin",
   "icons": [
     {
       "src": "assets/icon/favicon.png",
@@ -10,12 +10,12 @@
     {
       "src": "assets/icon/icon.png",
       "type": "image/png",
-      "sizes": "512x512",
+      "sizes": "1024x1024",
       "purpose": "maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "theme_color": "#1e1e1e",
+  "background_color": "#1e1e1e"
 }

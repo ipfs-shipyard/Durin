@@ -18,7 +18,6 @@ const Browse: React.FC = () => {
         <IonInput
           type="url"
           inputmode="url"
-          color="primary"
           placeholder="Enter CID, IPFS, or IPNS"
           value={url}
           onIonChange={(e) => setUrl(e.detail.value || '')} />

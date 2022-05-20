@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonPage, IonTitle, IonToolbar, IonItemSliding, IonItemOptions, IonItemOption, IonSpinner, IonList, IonItem, IonLabel, IonListHeader, IonAvatar, IonIcon, IonButtons, IonModal, IonImg, IonHeader, IonProgressBar } from '@ionic/react'
+import { IonButton, IonContent, IonPage, IonTitle, IonToolbar, IonItemSliding, IonItemOptions, IonItemOption, IonSpinner, IonList, IonItem, IonLabel, IonListHeader, IonAvatar, IonIcon, IonButtons, IonModal, IonImg, IonHeader, IonProgressBar, IonText } from '@ionic/react'
 import { share, trash, addCircleOutline } from 'ionicons/icons'
 import { useState } from 'react'
 import { DateTime } from 'luxon'
@@ -78,6 +78,7 @@ const Share: React.FC = () => {
       date: new Date().toISOString()
     }
     setUploadedFiles([ newUpload, ...uploadedFiles ])
+    setFile(undefined)
 
     if (!hasFiles) setIsUsingModal(true) // open the success state in the modal if its their first upload
   }
@@ -117,7 +118,7 @@ const Share: React.FC = () => {
   </IonContent>
 
   const successContent = url && <>
-    <p className="success-text">Your file is available <a target="_blank" rel="noreferrer noopener" href={transform(url, nodes[0])}>here</a>.</p>
+      <IonText color="light" className="success-text">Your file is available <a target="_blank" rel="noreferrer noopener" href={transform(url, nodes[0])}>here</a>.</IonText>
       <IonButton expand="block" onClick={() => {
         setUrl('')
         setIsUsingModal(true)
@@ -132,7 +133,7 @@ const Share: React.FC = () => {
       {isUploading ? <IonSpinner /> : null}
     </IonButton>
     {isUploading && file && file.size < PROGRESS_THRESHOLD && <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} />}
-    {isUploading && file && file.size >= BIG_FILE_THRESHOLD && <p>This may take a moment, the file is large!</p>}
+    {isUploading && file && file.size >= BIG_FILE_THRESHOLD && <IonText color="light">This may take a moment, the file is large!</IonText>}
   </>
   const mainContent = url
     ? <PageContainer title="Success!">{successContent}</PageContainer>
