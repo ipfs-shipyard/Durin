@@ -7,7 +7,7 @@ import './index.scss'
 const defaultLinks = [
   { name: 'Wikipedia', value: 'ipns://en.wikipedia-on-ipfs.org' },
   { name: 'PeerPad', value: 'ipns://peerpad.net' },
-  { name: 'Orbit', value: 'ipns://orbit.chat' }
+  { name: 'Uniswap', value: 'ipns://app.uniswap.org' }
 ]
 
 const Browse: React.FC = () => {
