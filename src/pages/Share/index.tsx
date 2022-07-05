@@ -133,7 +133,7 @@ const Share: React.FC = () => {
       {isUploading ? <IonSpinner /> : null}
     </IonButton>
     {isUploading && file && file.size > PROGRESS_THRESHOLD && <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} />}
-    {isUploading && file && file.size >= BIG_FILE_THRESHOLD && <IonText color="light">This may take a moment, the file is large!</IonText>}
+    {isUploading && file && file.size >= BIG_FILE_THRESHOLD && <IonText className="large-file-text" color="light">This may take a moment, the file is large!</IonText>}
   </>
   const mainContent = url
     ? <PageContainer title="Success!">{successContent}</PageContainer>
