@@ -37,7 +37,7 @@
     "rxjs": "^7.5.5",
     "typescript": "^4.1.3",
     "use-persisted-state": "^0.3.3",
-    "web3.storage": "^3.5.5",
+    "web3.storage": "^4.0.0",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
     "workbox-cacheable-response": "^5.1.4",

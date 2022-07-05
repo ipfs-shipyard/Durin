@@ -5,13 +5,13 @@ import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
 import { getThumbnailUrl } from 'image-thumbnail-generator'
 import { transform, transformForShare, useNodes } from '../../util/ipfs'
-import upload from '../../util/upload'
+import upload, { maxChunkSize } from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
 import FileIcon from '../../components/FileIcon'
 import './index.scss'
 
 const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
-const PROGRESS_THRESHOLD = 10 * 1024 // 10mb
+const PROGRESS_THRESHOLD = maxChunkSize / 1000
 
 type Upload = {
   name: string
@@ -132,7 +132,7 @@ const Share: React.FC = () => {
       <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>
       {isUploading ? <IonSpinner /> : null}
     </IonButton>
-    {isUploading && file && file.size < PROGRESS_THRESHOLD && <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} />}
+    {isUploading && file && file.size > PROGRESS_THRESHOLD && <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} />}
     {isUploading && file && file.size >= BIG_FILE_THRESHOLD && <IonText color="light">This may take a moment, the file is large!</IonText>}
   </>
   const mainContent = url
