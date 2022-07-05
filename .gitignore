@@ -7,3 +7,4 @@ node_modules/
 build/
 resources/*/
 .env.local
+yarn.lock
