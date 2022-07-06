@@ -24,6 +24,9 @@ export const transform = (url: string, node: Node) => {
   // support opening just a CID w/ no protocol
   if (cid(url) || cid(url.split('/')[0].split('?')[0])) url = `ipfs://${url}`
 
+  // catch HTTP urls
+  if (new URL(url).protocol.startsWith('http')) return url
+
   // no protocol, not a CID - assume IPNS
   if (!url.startsWith('ipfs://') && !url.startsWith('ipns://')) url = `ipns://${url}`
 
