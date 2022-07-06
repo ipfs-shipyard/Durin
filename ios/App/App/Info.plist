@@ -82,5 +82,11 @@
 
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>This is used to find IPFS nodes on your network.</string>
+
+	<key>NSCameraUsageDescription</key>
+	<string>This is so you can upload photos and videos directly.</string>
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This is so you can upload videos and audio directly.</string>
 </dict>
 </plist>

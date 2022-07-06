@@ -1,4 +1,5 @@
 import { CapacitorConfig } from '@capacitor/cli'
+import { KeyboardResize } from '@capacitor/keyboard'
 
 const config: CapacitorConfig = {
   appId: 'ai.protocol.durin',
@@ -8,6 +9,10 @@ const config: CapacitorConfig = {
   plugins: {
     SplashScreen: {
       launchAutoHide: false
+    },
+    Keyboard: {
+      style: 'dark',
+      resize: 'none' as KeyboardResize
     }
   }
 }

@@ -6,6 +6,10 @@
 	"plugins": {
 		"SplashScreen": {
 			"launchAutoHide": false
+		},
+		"Keyboard": {
+			"style": "dark",
+			"resize": "none"
 		}
 	}
 }

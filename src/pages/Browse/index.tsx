@@ -20,7 +20,7 @@ const Browse: React.FC = () => {
         <IonTitle>Browse</IonTitle>
       </IonToolbar>
       </IonHeader>
-      <Flex auto column center h="100%">
+      <Flex auto column center>
         <Box className="inputs" pb={3}>
           <IonInput
             type="url"
