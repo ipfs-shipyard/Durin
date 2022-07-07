@@ -81,12 +81,12 @@
 	</array>
 
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>This is used to find IPFS nodes on your network.</string>
+	<string>The app needs access to find IPFS nodes on your local network, which are utilized for viewing files. If you have no need to use a local IPFS node, you should decline this.</string>
 
 	<key>NSCameraUsageDescription</key>
-	<string>This is so you can upload photos and videos directly.</string>
+	<string>The app needs access to your camera when you choose to upload photos or videos directly from the Camera app. This is only used when you click "Take a Photo/Video" on the upload page.</string>
 
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This is so you can upload videos and audio directly.</string>
+	<string>The app needs access to your camera when you choose to upload videos directly from the Camera app. This is only used when you click "Take a Photo/Video" on the upload page.</string>
 </dict>
 </plist>
