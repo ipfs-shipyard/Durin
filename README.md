@@ -25,6 +25,7 @@ sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
 
 brew install --cask android-studio
 sudo gem install cocoapods
+npm i -g @ionic/cli
 npm install
 npm run sync
 npx ionic capacitor run ios --livereload # Opens and runs the iOS app - you will pick which device to run it on. If you have a physical device plugged in, you can select that as well.
