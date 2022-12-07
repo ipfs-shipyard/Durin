@@ -72,7 +72,6 @@ export const open = (url: string, node?: Node) => {
 // presuppose that dweb.link is our best bet, but include local so it health checks for it on startup
 export const defaultNodes: Node[] = [
   { host: 'dweb.link', healthy: true, remote: true },
-  { host: 'ipfs-gateway.cloud', healthy: true, remote: true },
   { host: 'w3s.link', healthy: true, remote: true },
   { host: 'cf-ipfs.com', healthy: true, remote: true },
   { host: 'localhost', healthy: false, remote: false, port: 8080 }
