@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Mobile Share</string>
+    <string name="action_settings">Settings</string>
+    <string name="load_ipfs_content">Load IPFS content</string>
+    <string name="default_ipfs_image">ipfs://bafybeiagu4ioj5uzviif242wnyqsqoz7gryvfb72hhoot4wgco3rz7xxnq</string>
+</resources>

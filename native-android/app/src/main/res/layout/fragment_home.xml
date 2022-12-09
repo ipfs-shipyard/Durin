@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    tools:context=".HomeFragment">
+
+
+    <EditText
+        android:id="@+id/field_cid"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_margin="40dp"
+        android:layout_gravity="center_horizontal"
+        android:singleLine="true"
+        android:inputType="textUri"
+        android:text="@string/default_ipfs_image"
+    />
+
+    <Button
+        android:id="@+id/btn_ipfs_intent"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/load_ipfs_content"/>
+
+</LinearLayout>
