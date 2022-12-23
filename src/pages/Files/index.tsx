@@ -26,6 +26,7 @@ import "./index.scss"
 
 type Upload = {
   name: string
+  cid: string
   url: string
   mimeType: string
   extension?: string
@@ -58,7 +59,7 @@ const Files: React.FC = () => {
           target="_blank"
           className="durin-file"
           rel="noreferrer noopener"
-          href={transform(upload.url, nodes[0])}
+          routerLink={`/files/${upload.cid}`}
         >
           <IonThumbnail slot="start" className="durin-file_thumbnail">
             {upload.thumbnail ? (

@@ -38,6 +38,7 @@ const PROGRESS_THRESHOLD = maxChunkSize / 1000
 
 type Upload = {
   name: string
+  cid: string
   url: string
   mimeType: string
   extension?: string
@@ -66,6 +67,7 @@ const Share: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(defaultUploadProgress)
   const [url, setUrl] = useState("")
+  const [cid, setCid] = useState("")
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const { nodes } = useNodes()
 
@@ -74,9 +76,9 @@ const Share: React.FC = () => {
   const uploadFile = async () => {
     if (!file) return
     setIsUploading(true)
-    let url
+    let uploadedFile
     try {
-      url = await upload(file, {
+      uploadedFile = await upload(file, {
         onProgress: (progress, total) => setUploadProgress([progress, total]),
       })
     } catch (err) {
@@ -86,12 +88,14 @@ const Share: React.FC = () => {
       console.error("Error uploading file:", err)
       return
     }
-    setUrl(url)
+    setUrl(uploadedFile.url)
+    setCid(uploadedFile.cid)
     setIsUploading(false)
     setUploadProgress(defaultUploadProgress)
     const newUpload: Upload = {
       name: file.name,
-      url,
+      cid: uploadedFile.cid,
+      url: uploadedFile.url,
       mimeType: file.type,
       extension: file.name.split(".").pop(),
       thumbnail: file.type.startsWith("image/")
@@ -104,58 +108,12 @@ const Share: React.FC = () => {
 
     if (!hasFiles) setIsUsingModal(true) // open the success state in the modal if its their first upload
   }
-  const deleteUploadedFile = (idx: number) => {
-    const newList = [...uploadedFiles]
-    newList.splice(idx, 1)
-    setUploadedFiles(newList)
-  }
 
-  const listContent = hasFiles && (
-    <IonContent>
-      <IonListHeader>Previously Uploaded</IonListHeader>
-      <IonList>
-        {uploadedFiles.map((upload, i) => (
-          <IonItemSliding key={`${i}-${upload.url}`}>
-            <IonItem
-              target="_blank"
-              rel="noreferrer noopener"
-              href={transform(upload.url, nodes[0])}
-            >
-              <IonAvatar slot="start">
-                {upload.thumbnail ? (
-                  <IonImg src={upload.thumbnail} alt={upload.extension} />
-                ) : (
-                  <FileIcon extension={upload.extension} />
-                )}
-              </IonAvatar>
-              <IonLabel>
-                <h2>{upload.name}</h2>
-                <h3>{upload.url}</h3>
-                <p>
-                  {DateTime.fromISO(upload.date).toLocaleString(
-                    DateTime.DATETIME_MED
-                  )}
-                </p>
-              </IonLabel>
-            </IonItem>
-            <IonItemOptions side="end">
-              {hasNativeShare && (
-                <IonItemOption onClick={() => nativeShare(upload.url)}>
-                  <IonIcon icon={share} slot="icon-only" />
-                </IonItemOption>
-              )}
-              <IonItemOption
-                color="danger"
-                onClick={() => deleteUploadedFile(i)}
-              >
-                <IonIcon icon={trash} slot="icon-only" />
-              </IonItemOption>
-            </IonItemOptions>
-          </IonItemSliding>
-        ))}
-      </IonList>
-    </IonContent>
-  )
+  // const deleteUploadedFile = (idx: number) => {
+  //   const newList = [...uploadedFiles]
+  //   newList.splice(idx, 1)
+  //   setUploadedFiles(newList)
+  // }
 
   const successContent = url && (
     <>

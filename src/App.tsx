@@ -21,6 +21,7 @@ import Browse from "./pages/Browse"
 import Share from "./pages/Share"
 import Settings from "./pages/Settings"
 import Files from "./pages/Files"
+import File from "./pages/File"
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css"
@@ -61,6 +62,7 @@ const App: React.FC = () => {
             <Route exact path="/files">
               <Files />
             </Route>
+            <Route path="/files/:id" component={File} />
             <Route exact path="/share">
               <Share />
             </Route>
