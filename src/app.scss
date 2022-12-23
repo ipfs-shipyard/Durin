@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Koulen&family=Source+Code+Pro&display=swap");
+
+body {
+  font-family: "koulen";
+  background-image: url(./assets/images/portals-bg.svg);
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  --durin-padding-start: 20px;
+  --ion-background-color: transparent;
+}
+
+ion-toolbar {
+  --border-color: transparent;
+  .logo {
+    max-height: 44px;
+    width: auto;
+    aspect-ratio: 2/1;
+    margin: 0 auto;
+  }
+}
+
+ion-label.durin-label {
+  font-family: "Koulen", sans-serif;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  padding-left: var(--durin-padding-start);
+}
+
+ion-input.durin-input,
+input.durin-input {
+  min-height: 60px;
+  border-radius: calc(50px * var(--border-radius-factor));
+  border: none;
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 210px var(--durin-teal);
+  padding: 12px 20px;
+  font-family: var(--ion-font-family);
+
+  --padding-bottom: 12px;
+  --padding-end: 20px;
+  --padding-start: var(--durin-padding-start);
+  --padding-top: 12px;
+
+  &::placeholder {
+    opacity: 0.6;
+  }
+  &:focus-within,
+  &:hover {
+    border: 1px solid var(--durin-teal);
+  }
+}
+
+input[type="file"] {
+  cursor: pointer;
+  &::file-selector-button {
+    color: inherit;
+    padding: 0.5em;
+    border: 0px;
+    background-color: #222;
+    font-family: var(--ion-font-family);
+    border-radius: 3px;
+  }
+}
+
+ion-button.durin-button {
+  transition: box-shadow 200ms ease-in-out;
+  height: 60px;
+  border-radius: calc(50px * var(--border-radius-factor));
+  width: 100%;
+  background: var(--durin-teal);
+  color: #1e1e1e;
+  font-family: "Koulen", sans-serif;
+  letter-spacing: 0.25em;
+  font-size: 16px;
+  overflow: hidden;
+  margin-top: 10px;
+  --padding-bottom: 12px;
+  --padding-end: 20px;
+  --padding-start: var(--durin-padding-start);
+  --padding-top: 12px;
+
+  &:focus-within,
+  &:hover {
+    box-shadow: 0px 0px 2px var(--ion-color-primary);
+  }
+
+  &.durin-hide-when-disabled.button-disabled {
+    opacity: 0;
+  }
+}
+
+ion-tab-bar {
+  height: 90px;
+  --border: 0px;
+}
+
+ion-tab-button {
+  --color-selected: #fff;
+}
+
+ion-radio-group {
+  --ion-background-color: transparent;
+}
+
+ion-radio::part(container) {
+  border-radius: 22px;
+  width: 24px;
+  height: 24px;
+}
+
+ion-radio::part(mark) {
+  background: none;
+  transition: none;
+  transform: none;
+  border-radius: 0;
+}
+
+ion-radio.radio-checked::part(container) {
+  background: var(--durin-teal);
+  border-color: transparent;
+  width: 24px;
+  height: 24px;
+}
+
+ion-radio.radio-checked::part(mark) {
+  width: 6px;
+  height: 10px;
+
+  border-width: 0px 2px 2px 0px;
+  border-style: solid;
+  border-color: #000;
+  transform: rotate(45deg) translateY(-1px);
+}
+
+.durin-settings-group {
+  width: 100%;
+  &:not(:first-child) {
+    margin-top: 2rem;
+  }
+}
+
+ion-item.durin-file {
+  --border-color: transparent;
+  margin-bottom: 0.6rem;
+
+  .durin-file {
+    &_thumbnail {
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    &_url {
+      color: var(--durin-teal);
+    }
+    &_date {
+      font-family: "Koulen", sans-serif;
+      color: rgba(255, 255, 255, 1);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+    }
+  }
+}
