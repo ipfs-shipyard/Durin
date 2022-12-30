@@ -24,6 +24,7 @@ import { transform, transformForShare, useNodes } from "../../util/ipfs"
 import upload, { maxChunkSize } from "../../util/upload"
 import PageContainer from "../../components/PageContainer"
 import FileIcon from "../../components/FileIcon"
+import QRCode from 'react-qr-code'
 import "./index.scss"
 
 const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
@@ -113,7 +114,7 @@ const Share: React.FC = () => {
   const successContent = uploadedFile && (
     <>
       <IonLabel className="durin-label ion-text-center ion-no-padding">Successfully Uploaded File:</IonLabel>
-      <IonList className="ion-margin-top">
+      <IonList className="ion-margin-top ion-margin-bottom">
         <IonItem className="durin-file">
           <IonThumbnail slot="start" className="durin-file_thumbnail">
             {uploadedFile.thumbnail ? (
@@ -135,8 +136,16 @@ const Share: React.FC = () => {
         </IonItem>
       </IonList>
 
+      <div className="durin-qr">
+        <QRCode value={uploadedFile.url} />
+      </div>
+
+      <div className="durin-view-ipfs ion-margin-top">
+        <a href={uploadedFile.url} target="_blank" rel="noreferrer">View it on IPFS</a>
+      </div>
+
       <div className="durin-buttons">
-      <IonButton
+        <IonButton
           expand="block"
           className="durin-button-alt"
           routerLink="/files"
@@ -187,8 +196,15 @@ const Share: React.FC = () => {
         className={`durin-button ${!isUploading && "durin-hide-when-disabled"}`}
       >
         <IonLabel>{isUploading ? "Uploading..." : "Upload"}</IonLabel>
-        {isUploading ? <IonSpinner /> : null}
       </IonButton>
+
+      {isUploading ? <div className="durin-pulse">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div> : null}
+
       {isUploading && file && file.size > PROGRESS_THRESHOLD && (
         <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} />
       )}
@@ -196,7 +212,7 @@ const Share: React.FC = () => {
         <IonText className="large-file-text" color="light">
           ( This may take a moment, the file is large! )
         </IonText>
-      )} 
+      )}
     </>
   )
   const mainContent = url ? (

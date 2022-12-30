@@ -11,8 +11,5 @@
 			"style": "dark",
 			"resize": "none"
 		}
-	},
-	"server": {
-		"url": "http://localhost:8100"
 	}
 }

@@ -6,6 +6,7 @@ body {
   background-position: bottom center;
   background-repeat: no-repeat;
   --durin-padding-start: 20px;
+  --durin-padding-y: 16px;
   --ion-background-color: transparent;
 }
 
@@ -41,13 +42,13 @@ input.durin-input {
   color: #fff;
   border: 1px solid transparent;
   box-shadow: 0px 0px 210px var(--durin-teal);
-  padding: 12px 20px;
+  padding: var(--durin-padding-y) 20px;
   font-family: var(--ion-font-family);
 
-  --padding-bottom: 12px;
+  --padding-bottom: var(--durin-padding-y);
   --padding-end: 20px;
   --padding-start: var(--durin-padding-start);
-  --padding-top: 12px;
+  --padding-top: var(--durin-padding-y);
 
   &::placeholder {
     opacity: 0.6;
@@ -71,22 +72,28 @@ input[type="file"] {
   }
 }
 
-ion-button.durin-button {
-  transition: box-shadow 200ms ease-in-out;
-  //   height: 60px;
+ion-button.durin-button,
+ion-button.durin-button-alt {
+      height: 56px;
+      transition: box-shadow 200ms ease-in-out;
   border-radius: calc(50px * var(--border-radius-factor));
   width: 100%;
-  background: var(--durin-teal);
-  color: #1e1e1e;
   font-family: "Koulen", sans-serif;
   letter-spacing: 0.25em;
   font-size: 16px;
   overflow: hidden;
   margin-top: 10px;
-  --padding-bottom: 12px;
+  font-weight: normal;
+  --padding-bottom: var(--durin-padding-y);
   --padding-end: 20px;
   --padding-start: var(--durin-padding-start);
-  --padding-top: 12px;
+  --padding-top: var(--durin-padding-y);
+}
+
+
+ion-button.durin-button {  
+  background: var(--durin-teal);
+  color: #1e1e1e;
 
   &:focus-within,
   &:hover {
@@ -99,27 +106,9 @@ ion-button.durin-button {
 }
 
 .durin-button-alt {
-  transition: box-shadow 200ms ease-in-out;
-  border-radius: calc(50px * var(--border-radius-factor));
-  width: 100%;
   --background: transparent;
   color: #fff;
   border: 1px solid var(--durin-teal);
-  font-family: "Koulen", sans-serif;
-  letter-spacing: 0.25em;
-  font-size: 16px;
-  overflow: hidden;
-  margin-top: 10px;
-  --padding-bottom: 12px;
-  --padding-end: 20px;
-  --padding-start: var(--durin-padding-start);
-  --padding-top: 12px;
-
-  &:focus-within,
-  &:hover {
-    --background-hover: rgba(0,0,0,.2);
-    box-shadow: 0px 0px 2px var(--ion-color-primary);
-  }
 
   &[size="small"] {
     font-size: 14px;
@@ -199,6 +188,27 @@ ion-item.durin-file {
   }
 }
 
+.durin-qr {
+  background-color: #D9D9D9;
+  border-radius: 10px;
+  max-width: 240px;
+  margin: 0 auto;
+  padding: 35px;
+  svg {
+    max-width: 100%;
+    height: 100%;
+  }
+}
+
+.durin-view-ipfs {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Koulen';
+  letter-spacing: .2em;
+}
+
 .file-modal {
   background-color: #1e1e1e;
 }
@@ -222,4 +232,39 @@ ion-item.durin-file {
   max-width: 300px;
   max-height: 30vh;
   margin: 0 auto;
+}
+
+.durin-pulse {
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  transform: translate3d(-50%,-50%,0);
+
+  span {
+    border-radius: 50%;
+    background-color: var(--durin-teal);
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    transform: translate3d(-50%,-50%,0);
+    opacity: 0;
+    animation: scaleIn 4s infinite cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+  span:nth-child(1) {animation-delay: -3s;}
+  span:nth-child(2) {animation-delay: -2s;}
+  span:nth-child(3) {animation-delay: -1s;}
+  span:nth-child(4) {animation-delay: 0s;}
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(.5, .5);
+    opacity: .15;
+  }
+  to {
+    transform: scale(2.5, 2.5);
+    opacity: 0;
+  }
 }
