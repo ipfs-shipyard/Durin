@@ -268,3 +268,12 @@ ion-item.durin-file {
     opacity: 0;
   }
 }
+
+ion-toast {
+  --white-space: nowrap;
+}
+ion-toast::part(message) {
+  max-width: calc(100vw - 100px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

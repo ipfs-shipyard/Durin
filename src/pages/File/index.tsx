@@ -11,15 +11,17 @@ import {
   IonGrid,
   IonRow,
   IonCol,
+  useIonToast,
 } from "@ionic/react"
-import { closeOutline, share, trash } from "ionicons/icons"
+import { closeOutline, checkmarkCircle } from "ionicons/icons"
 import { DateTime } from "luxon"
 import createPersistedState from "use-persisted-state"
 import { transformForShare } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
 import FileIcon from "../../components/FileIcon"
 import "./index.scss"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
+import QRCode from "react-qr-code"
 
 type Upload = {
   name: string
@@ -43,11 +45,23 @@ type ModalProps = {
 
 const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
+  const [showQR, setShowQR] = useState(false)
+  const [present] = useIonToast()
 
   const deleteUploadedFile = (cid: string) => {
     const newList = [...uploadedFiles].filter((u) => u.cid !== cid)
     setUploadedFiles(newList)
     onDismiss(null, "cancel")
+  }
+
+  const copyCID = (cid: string) => {
+    navigator.clipboard.writeText(cid)
+    present({
+      message: `Copied CID: ${cid}`,
+      duration: 2000,
+      position: 'bottom',
+      icon: checkmarkCircle
+    })
   }
 
   const foundFile = upload
@@ -56,15 +70,23 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
 
   const fileContent = foundFile && (
     <>
-      {foundFile.thumbnail ? (
-        <IonImg
-          src={`https://ipfs.io/ipfs/${foundFile.cid}/${foundFile.name}`}
-          alt={foundFile.extension}
-          className="durin-image-preview"
-        />
-      ) : (
-        <FileIcon extension={foundFile.extension} />
-      )}
+      {showQR ? (
+        <div className="durin-qr">
+          <QRCode value={foundFile.url} />
+        </div>
+      ) :
+        <>
+          {foundFile.thumbnail ? (
+            <IonImg
+              src={`https://ipfs.io/ipfs/${foundFile.cid}/${foundFile.name}`}
+              alt={foundFile.extension}
+              className="durin-image-preview"
+            />
+          ) : (
+            <FileIcon extension={foundFile.extension} />
+          )}
+        </>
+      }
 
       <div className="durin-file-view">
         <h2 className="durin-file_name">{foundFile.name}</h2>
@@ -83,12 +105,12 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
       </div>
 
       <div className="durin-buttons-row">
-        <IonButton className="durin-button-alt" expand="block" size="small">
+        <IonButton className="durin-button-alt" expand="block" size="small" onClick={() => copyCID(foundFile.cid)}>
           Copy CID
         </IonButton>
 
-        <IonButton className="durin-button-alt" expand="block" size="small">
-          Show QR Code
+        <IonButton className="durin-button-alt" expand="block" size="small" onClick={() => setShowQR(!showQR)}>
+          {!showQR ? 'Show' : 'Hide'} QR Code
         </IonButton>
       </div>
 
