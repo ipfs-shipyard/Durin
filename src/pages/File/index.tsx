@@ -47,6 +47,7 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
   const deleteUploadedFile = (cid: string) => {
     const newList = [...uploadedFiles].filter((u) => u.cid !== cid)
     setUploadedFiles(newList)
+    onDismiss(null, "cancel")
   }
 
   const foundFile = upload
