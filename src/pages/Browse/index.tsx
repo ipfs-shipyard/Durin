@@ -27,7 +27,7 @@ const Browse: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <PageContainer>
-        <div className="durin-page-container center">
+        <div className="durin-page-container flex-col center">
           <div>
             <IonLabel className="durin-label">
               Enter Cid, IPFS URL, or IPNS

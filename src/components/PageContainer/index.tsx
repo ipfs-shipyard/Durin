@@ -9,7 +9,7 @@ interface ContainerProps {
 const PageContainer: React.FC<ContainerProps> = ({ title, text, children }) => {
   return (
     <div className="page-container-component">
-      <IonContent>
+      <IonContent className="ion-padding">
         {title && <strong>{title}</strong>}
         {text && <p>{text}</p>}
         {children}

@@ -15,6 +15,7 @@ import {
   IonIcon,
   IonImg,
   IonHeader,
+  useIonModal,
 } from "@ionic/react"
 import { share, trash } from "ionicons/icons"
 import { DateTime } from "luxon"
@@ -23,6 +24,9 @@ import { transform, transformForShare, useNodes } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
 import FileIcon from "../../components/FileIcon"
 import "./index.scss"
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces"
+import { useState } from "react"
+import File from "../File"
 
 type Upload = {
   name: string
@@ -42,6 +46,7 @@ const nativeShare = (url: string) => {
 const Files: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const { nodes } = useNodes()
+  const [currentUpload, setCurrentUpload] = useState<Upload>()
 
   const hasFiles = uploadedFiles.length > 0
 
@@ -51,15 +56,26 @@ const Files: React.FC = () => {
     setUploadedFiles(newList)
   }
 
+  const [present, dismiss] = useIonModal(File, {
+    upload: currentUpload,
+    onDismiss: (data: string, role: string) => dismiss(data, role),
+  })
+
+  const openModal = (e: MouseEvent, upload: Upload) => {
+    e.preventDefault()
+    setCurrentUpload(upload)
+    present({})
+  }
+
   const listContent = hasFiles && (
-    <IonList>
+    <IonList className="ion-margin-top">
       {uploadedFiles.map((upload, i) => (
         <IonItem
           key={`${i}-${upload.url}`}
           target="_blank"
           className="durin-file"
           rel="noreferrer noopener"
-          routerLink={`/files/${upload.cid}`}
+          onClick={(e) => openModal(e as any, upload)}
         >
           <IonThumbnail slot="start" className="durin-file_thumbnail">
             {upload.thumbnail ? (
@@ -103,7 +119,7 @@ const Files: React.FC = () => {
       </IonHeader>
       <PageContainer>
         <div className="durin-page-container fill-height">
-          <IonLabel className="durin-label">Previously Uploaded</IonLabel>
+          <IonLabel className="durin-label ion-text-center ion-no-padding">Previously Uploaded</IonLabel>
           {listContent}
         </div>
       </PageContainer>

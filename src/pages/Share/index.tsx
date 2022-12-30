@@ -4,22 +4,16 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
   IonSpinner,
   IonList,
   IonItem,
   IonLabel,
-  IonListHeader,
-  IonAvatar,
-  IonIcon,
-  IonButtons,
   IonModal,
   IonImg,
   IonHeader,
   IonProgressBar,
   IonText,
+  IonThumbnail,
 } from "@ionic/react"
 import { share, trash, addCircleOutline } from "ionicons/icons"
 import { useState } from "react"
@@ -31,7 +25,6 @@ import upload, { maxChunkSize } from "../../util/upload"
 import PageContainer from "../../components/PageContainer"
 import FileIcon from "../../components/FileIcon"
 import "./index.scss"
-import { Box, Flex } from "react-flex-lite"
 
 const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
 const PROGRESS_THRESHOLD = maxChunkSize / 1000
@@ -68,6 +61,7 @@ const Share: React.FC = () => {
   const [uploadProgress, setUploadProgress] = useState(defaultUploadProgress)
   const [url, setUrl] = useState("")
   const [cid, setCid] = useState("")
+  const [uploadedFile, setUploadedFile] = useState<Upload>()
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const { nodes } = useNodes()
 
@@ -104,6 +98,7 @@ const Share: React.FC = () => {
       date: new Date().toISOString(),
     }
     setUploadedFiles([newUpload, ...uploadedFiles])
+    setUploadedFile(newUpload)
     setFile(undefined)
 
     if (!hasFiles) setIsUsingModal(true) // open the success state in the modal if its their first upload
@@ -115,38 +110,63 @@ const Share: React.FC = () => {
   //   setUploadedFiles(newList)
   // }
 
-  const successContent = url && (
+  const successContent = uploadedFile && (
     <>
-      <IonText color="light" className="success-text">
-        Your file is available{" "}
-        <a
-          target="_blank"
-          rel="noreferrer noopener"
-          href={transform(url, nodes[0])}
-        >
-          here
-        </a>
-        .
-      </IonText>
+      <IonLabel className="durin-label ion-text-center ion-no-padding">Successfully Uploaded File:</IonLabel>
+      <IonList className="ion-margin-top">
+        <IonItem className="durin-file">
+          <IonThumbnail slot="start" className="durin-file_thumbnail">
+            {uploadedFile.thumbnail ? (
+              <IonImg src={uploadedFile.thumbnail} alt={uploadedFile.extension} />
+            ) : (
+              <FileIcon extension={uploadedFile.extension} />
+            )}
+          </IonThumbnail>
+
+          <IonLabel>
+            <h2 className="durin-file_name">{uploadedFile.name}</h2>
+            <h3 className="durin-file_url">{uploadedFile.url}</h3>
+            <p className="durin-file_date">
+              {DateTime.fromISO(uploadedFile.date).toLocaleString(
+                DateTime.DATETIME_MED
+              )}
+            </p>
+          </IonLabel>
+        </IonItem>
+      </IonList>
+
+      <div className="durin-buttons">
       <IonButton
-        expand="block"
-        className="durin-button"
-        onClick={() => {
-          setUrl("")
-          setIsUsingModal(true)
-        }}
-      >
-        Upload Another
-      </IonButton>
-      {hasNativeShare && (
+          expand="block"
+          className="durin-button-alt"
+          routerLink="/files"
+          onClick={() => {
+            setUrl("")
+            setIsUsingModal(true)
+          }}
+        >
+          Go to Uploads List
+        </IonButton>
         <IonButton
           expand="block"
-          className="share-link"
-          onClick={() => nativeShare(url)}
+          className="durin-button"
+          onClick={() => {
+            setUrl("")
+            setIsUsingModal(true)
+          }}
         >
-          Share URL
+          Upload Another
         </IonButton>
-      )}
+        {hasNativeShare && (
+          <IonButton
+            expand="block"
+            className="share-link"
+            onClick={() => nativeShare(url)}
+          >
+            Share URL
+          </IonButton>
+        )}
+      </div>
     </>
   )
 
@@ -174,18 +194,18 @@ const Share: React.FC = () => {
       )}
       {isUploading && file && file.size >= BIG_FILE_THRESHOLD && (
         <IonText className="large-file-text" color="light">
-          This may take a moment, the file is large!
+          ( This may take a moment, the file is large! )
         </IonText>
-      )}
+      )} 
     </>
   )
   const mainContent = url ? (
-    <PageContainer title="Success!">
-      <div className="durin-page-container center">{successContent}</div>
+    <PageContainer>
+      <div className="durin-page-container flex-col">{successContent}</div>
     </PageContainer>
   ) : (
     <PageContainer>
-      <div className="durin-page-container center">
+      <div className="durin-page-container flex-col center">
         <div>{uploadContent}</div>
       </div>
     </PageContainer>

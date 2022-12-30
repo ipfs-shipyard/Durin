@@ -2,29 +2,24 @@ import {
   IonButton,
   IonContent,
   IonPage,
-  IonTitle,
-  IonToolbar,
-  IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
-  IonList,
-  IonItem,
   IonLabel,
-  IonListHeader,
-  IonThumbnail,
   IonIcon,
   IonImg,
   IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonGrid,
+  IonRow,
+  IonCol,
 } from "@ionic/react"
-import { share, trash } from "ionicons/icons"
+import { closeOutline, share, trash } from "ionicons/icons"
 import { DateTime } from "luxon"
 import createPersistedState from "use-persisted-state"
-import { transform, transformForShare, useNodes } from "../../util/ipfs"
+import { transformForShare } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
 import FileIcon from "../../components/FileIcon"
 import "./index.scss"
-import { useEffect } from "react"
-import { RouteComponentProps } from "react-router"
+import { useEffect, useRef } from "react"
 
 type Upload = {
   name: string
@@ -41,26 +36,22 @@ const nativeShare = (url: string) => {
   navigator.share({ url: transformForShare(url) })
 }
 
-interface FileDetailPageProps
-  extends RouteComponentProps<{
-    id: string
-  }> {}
+type ModalProps = {
+  upload: Upload
+  onDismiss: (data?: string | null | undefined | number, role?: string) => void
+}
 
-const File: React.FC<FileDetailPageProps> = ({ match }) => {
+const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
-  const { nodes } = useNodes()
-
-  const hasFiles = uploadedFiles.length > 0
-
-  useEffect(() => {}, [])
 
   const deleteUploadedFile = (cid: string) => {
     const newList = [...uploadedFiles].filter((u) => u.cid !== cid)
     setUploadedFiles(newList)
   }
 
-  const foundFile =
-    hasFiles && uploadedFiles.find((u) => u.cid === match.params.id)
+  const foundFile = upload
+  // const foundFile =
+  //   hasFiles && match && uploadedFiles.find((u) => u.cid === match.params.id)
 
   const fileContent = foundFile && (
     <>
@@ -76,7 +67,13 @@ const File: React.FC<FileDetailPageProps> = ({ match }) => {
 
       <div className="durin-file-view">
         <h2 className="durin-file_name">{foundFile.name}</h2>
-        <h3 className="durin-file_url">{foundFile.url}</h3>
+        <IonLabel className="durin-label">File URL:</IonLabel>
+        <p>
+          <a className="durin-file_url" href={foundFile.url}>
+            {foundFile.url}
+          </a>
+        </p>
+        <IonLabel className="durin-label ion-margin-top">File Uploaded:</IonLabel>
         <p className="durin-file_date">
           {DateTime.fromISO(foundFile.date).toLocaleString(
             DateTime.DATETIME_MED
@@ -84,32 +81,47 @@ const File: React.FC<FileDetailPageProps> = ({ match }) => {
         </p>
       </div>
 
-      {hasNativeShare && (
-        <IonButton onClick={() => nativeShare(foundFile.url)}>
-          <IonIcon icon={share} slot="icon-only" />
+      <div className="durin-buttons-row">
+        <IonButton className="durin-button-alt" expand="block">
+          Copy CID
         </IonButton>
-      )}
-      <IonButton
-        color="danger"
-        onClick={() => deleteUploadedFile(foundFile.cid)}
-      >
-        <IonIcon icon={trash} slot="icon-only" />
-      </IonButton>
+
+        <IonButton className="durin-button-alt" expand="block">
+          Show QR Code
+        </IonButton>
+      </div>
+
+      <div className="durin-buttons">
+        {hasNativeShare && (
+          <IonButton className="durin-button" onClick={() => nativeShare(foundFile.url)}>
+            <IonIcon icon={share} slot="icon-only" />
+          </IonButton>
+        )}
+        <IonButton
+          color="danger"
+          className="durin-button"
+          onClick={() => deleteUploadedFile(foundFile.cid)}
+        >
+          Delete
+        </IonButton>
+      </div>
     </>
   )
 
   return (
-    <IonPage className="share-page">
+    <IonPage className="file-modal">
       <IonHeader>
         <IonToolbar>
-          <IonTitle>
-            <IonImg src="./assets/images/durin-logo.svg" className="logo" />
-          </IonTitle>
+          <IonButtons slot="end">
+            <IonButton color="light" onClick={() => onDismiss(null, "cancel")}>
+              <IonIcon icon={closeOutline}></IonIcon>
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <PageContainer>
-        <div className="durin-page-container fill-height">
-          <IonLabel className="durin-label">File</IonLabel>
+        <div className="durin-page-container flex-col">
+          <IonLabel className="durin-label ion-text-center ion-margin-bottom">Share</IonLabel>
           {fileContent}
         </div>
       </PageContainer>

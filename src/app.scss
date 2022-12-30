@@ -25,11 +25,15 @@ ion-label.durin-label {
   font-size: 13px;
   letter-spacing: 0.1em;
   padding-left: var(--durin-padding-start);
+
+  &.ion-text-center {
+    display: block;
+    --durin-padding-start: 0;
+  }
 }
 
 ion-input.durin-input,
 input.durin-input {
-  min-height: 60px;
   border-radius: calc(50px * var(--border-radius-factor));
   border: none;
   width: 100%;
@@ -56,19 +60,20 @@ input.durin-input {
 
 input[type="file"] {
   cursor: pointer;
+  display: flex;
   &::file-selector-button {
     color: inherit;
-    padding: 0.5em;
     border: 0px;
     background-color: #222;
     font-family: var(--ion-font-family);
     border-radius: 3px;
+    align-self: center;
   }
 }
 
 ion-button.durin-button {
   transition: box-shadow 200ms ease-in-out;
-  height: 60px;
+  //   height: 60px;
   border-radius: calc(50px * var(--border-radius-factor));
   width: 100%;
   background: var(--durin-teal);
@@ -90,6 +95,30 @@ ion-button.durin-button {
 
   &.durin-hide-when-disabled.button-disabled {
     opacity: 0;
+  }
+}
+
+.durin-button-alt {
+  transition: box-shadow 200ms ease-in-out;
+  border-radius: calc(50px * var(--border-radius-factor));
+  width: 100%;
+  --background: transparent;
+  color: #fff;
+  border: 1px solid var(--durin-teal);
+  font-family: "Koulen", sans-serif;
+  letter-spacing: 0.25em;
+  font-size: 16px;
+  overflow: hidden;
+  margin-top: 10px;
+  --padding-bottom: 12px;
+  --padding-end: 20px;
+  --padding-start: var(--durin-padding-start);
+  --padding-top: 12px;
+
+  &:focus-within,
+  &:hover {
+    --background-hover: rgba(0,0,0,.2);
+    box-shadow: 0px 0px 2px var(--ion-color-primary);
   }
 }
 
@@ -157,13 +186,34 @@ ion-item.durin-file {
     }
     &_date {
       font-family: "Koulen", sans-serif;
-      color: rgba(255, 255, 255, 1);
-      font-size: 13px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 12px;
       letter-spacing: 0.1em;
     }
   }
 }
 
+.file-modal {
+  background-color: #1e1e1e;
+}
+
+.durin-buttons {
+  margin-top: auto;
+}
+
+.durin-buttons-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  margin: 1.25rem 0;
+  @media (max-width:420px) {
+    grid-gap: 0;
+    grid-template-columns: 1fr;
+  }
+}
+
 .durin-image-preview {
   max-width: 300px;
+  max-height: 30vh;
+  margin: 0 auto;
 }
