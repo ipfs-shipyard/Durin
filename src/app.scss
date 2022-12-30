@@ -120,6 +120,12 @@ ion-button.durin-button {
     --background-hover: rgba(0,0,0,.2);
     box-shadow: 0px 0px 2px var(--ion-color-primary);
   }
+
+  &[size="small"] {
+    font-size: 14px;
+    min-height: 36px;
+    letter-spacing: 2px;
+  }
 }
 
 ion-tab-bar {
@@ -204,9 +210,9 @@ ion-item.durin-file {
 .durin-buttons-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
+  grid-gap: .5rem;
   margin: 1.25rem 0;
-  @media (max-width:420px) {
+  @media (max-width:390px) {
     grid-gap: 0;
     grid-template-columns: 1fr;
   }

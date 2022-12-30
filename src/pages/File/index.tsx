@@ -82,11 +82,11 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
       </div>
 
       <div className="durin-buttons-row">
-        <IonButton className="durin-button-alt" expand="block">
+        <IonButton className="durin-button-alt" expand="block" size="small">
           Copy CID
         </IonButton>
 
-        <IonButton className="durin-button-alt" expand="block">
+        <IonButton className="durin-button-alt" expand="block" size="small">
           Show QR Code
         </IonButton>
       </div>
@@ -94,7 +94,7 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
       <div className="durin-buttons">
         {hasNativeShare && (
           <IonButton className="durin-button" onClick={() => nativeShare(foundFile.url)}>
-            <IonIcon icon={share} slot="icon-only" />
+            Share
           </IonButton>
         )}
         <IonButton

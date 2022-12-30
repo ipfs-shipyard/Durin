@@ -160,10 +160,10 @@ const Share: React.FC = () => {
         {hasNativeShare && (
           <IonButton
             expand="block"
-            className="share-link"
+            className="durin-button"
             onClick={() => nativeShare(url)}
           >
-            Share URL
+            Share
           </IonButton>
         )}
       </div>
