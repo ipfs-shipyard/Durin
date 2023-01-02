@@ -8,6 +8,8 @@ import {
   IonRadioGroup,
   IonItem,
   IonRadio,
+  IonList,
+  IonThumbnail,
 } from "@ionic/react"
 import { useNodes } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
@@ -33,6 +35,12 @@ const gateways = [
   {
     name: "local",
   },
+]
+
+const defaultLinks = [
+  { name: "Wikipedia", value: "ipns://en.wikipedia-on-ipfs.org", logo: "wikipedia.png" },
+  { name: "PeerPad", value: "ipns://peerpad.net", logo: "peerpad.png" },
+  { name: "Uniswap", value: "ipns://app.uniswap.org", logo: "uniswap.png" },
 ]
 
 const Settings: React.FC = () => {
@@ -71,6 +79,22 @@ const Settings: React.FC = () => {
                 </IonItem>
               ))}
             </IonRadioGroup>
+          </div>
+
+          <div className="durin-settings-group">
+            <IonLabel className="durin-label">Shortcuts</IonLabel>
+            <IonList>
+              {defaultLinks.map((link) => (
+                <IonItem key={link.name} href={link.value} target="blank" className="durin-shortcut-link">
+                  <IonThumbnail slot="start">
+                    <IonImg src={`./assets/images/${link.logo}`} alt={link.name} />
+                  </IonThumbnail>
+                  <IonLabel>{link.name}</IonLabel>
+                </IonItem>
+              ))}
+
+
+            </IonList>
           </div>
         </div>
       </PageContainer>

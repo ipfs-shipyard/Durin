@@ -16,7 +16,18 @@ import "./index.scss"
 
 const Browse: React.FC = () => {
   const [url, setUrl] = useState("")
+  const [error, setError] = useState(false)
   const { nodes } = useNodes()
+
+  const validateUrl = (url:string) => {
+    setUrl(url)
+
+    if( url.length < 6 && !!url ){
+      setError(true)
+    } else {
+      setError(false)
+    }
+  }
   return (
     <IonPage className="browse-page">
       <IonHeader>
@@ -37,17 +48,24 @@ const Browse: React.FC = () => {
               inputmode="url"
               placeholder="Enter CID, IPFS URL, or IPNS"
               value={url}
-              className="durin-input"
-              onIonChange={(e) => setUrl(e.detail.value?.trim() || "")}
+              className={`durin-input ${error && 'error'}`}
+              onIonChange={(e) => validateUrl(e.detail.value?.trim() || "")}
             />
             <IonButton
               expand="block"
-              disabled={!url}
+              disabled={!url || error}
               className="durin-button durin-hide-when-disabled"
               onClick={() => open(url, nodes[0])}
             >
               Open In Browser
             </IonButton>
+
+            {error && (
+            <div className="durin-error">
+              <IonLabel>Sample Error Title</IonLabel>
+              <p>Some other context or full address for reference here: bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi</p>
+            </div>
+            )}
           </div>
         </div>
       </PageContainer>

@@ -57,6 +57,10 @@ input.durin-input {
   &:hover {
     border: 1px solid var(--durin-teal);
   }
+
+  &.error {
+    border: 1px solid var(--ion-color-danger);;
+  }
 }
 
 input[type="file"] {
@@ -185,6 +189,24 @@ ion-item.durin-file {
       font-size: 12px;
       letter-spacing: 0.1em;
     }
+  }
+}
+
+.durin-error {
+  padding: 0px 0 20px 20px;
+  // border: 1px solid #D37669;
+  color: rgba(255, 255, 255, 0.6);
+  ion-label {
+    color: var(--ion-color-danger);
+    font-family: 'Koulen';
+    letter-spacing: .1em;
+  }
+}
+
+.durin-shortcut-link {
+  margin-top: 6px;
+  ion-thumbnail {
+    --border-radius: 4px;
   }
 }
 
