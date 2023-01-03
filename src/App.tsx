@@ -22,6 +22,7 @@ import Share from "./pages/Share"
 import Settings from "./pages/Settings"
 import Files from "./pages/Files"
 import File from "./pages/File"
+import createPersistedState from "use-persisted-state"
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css"
@@ -48,6 +49,10 @@ setupIonicReact({
 })
 
 const App: React.FC = () => {
+  const useUploadedFiles = createPersistedState<[]>("uploaded-files")
+  const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
+  const hasFiles = uploadedFiles.length > 0
+
   useEffect(() => {
     SplashScreen.hide()
   }, [])
@@ -80,9 +85,11 @@ const App: React.FC = () => {
             <IonTabButton tab="share" href="/share">
               <IonIcon icon={cloudUploadOutline} />
             </IonTabButton>
-            <IonTabButton tab="files" href="/files">
-              <IonIcon icon={listOutline} />
-            </IonTabButton>
+            {hasFiles && (
+              <IonTabButton tab="files" href="/files">
+                <IonIcon icon={listOutline} />
+              </IonTabButton>
+            )}
             <IonTabButton tab="settings" href="/settings">
               <IonIcon icon={settingsOutline} />
             </IonTabButton>

@@ -13,8 +13,10 @@ import {
 } from "@ionic/react"
 import { useNodes } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
+import createPersistedState from "use-persisted-state"
+
 import "./index.scss"
-import { Box, Flex } from "react-flex-lite"
+import ShortcutLinks from "../../components/Shortcuts"
 
 const gateways = [
   {
@@ -37,14 +39,20 @@ const gateways = [
   },
 ]
 
-const defaultLinks = [
-  { name: "Wikipedia", value: "ipns://en.wikipedia-on-ipfs.org", logo: "wikipedia.png" },
-  { name: "PeerPad", value: "ipns://peerpad.net", logo: "peerpad.png" },
-  { name: "Uniswap", value: "ipns://app.uniswap.org", logo: "uniswap.png" },
-]
+type Settings = {
+  node: string,
+  gateway: string
+}
 
 const Settings: React.FC = () => {
   const { nodes } = useNodes()
+  const useSettings = createPersistedState<Settings>("durin-settings")
+  const [ settings, setSettings ] = useSettings({
+    node: nodes[0].host,
+    gateway: 'auto'
+  })
+  const { node, gateway } = settings
+
   return (
     <IonPage className="settings-page">
       <IonHeader>
@@ -58,7 +66,11 @@ const Settings: React.FC = () => {
         <div className="durin-page-container fill-height">
           <div className="durin-settings-group">
             <IonLabel className="durin-label">Available Nodes</IonLabel>
-            <IonRadioGroup name="durinNode">
+            <IonRadioGroup name="durinNode" value={node} onIonChange={
+              e => setSettings({
+              gateway: gateway,
+              node: e.detail.value!
+            })}>
               {nodes.map((n) => (
                 <IonItem key={n.host}>
                   <IonLabel>
@@ -71,7 +83,11 @@ const Settings: React.FC = () => {
           </div>
           <div className="durin-settings-group">
             <IonLabel className="durin-label">Gateways</IonLabel>
-            <IonRadioGroup name="duringGateway">
+            <IonRadioGroup name="durinGateway" value={gateway} onIonChange={
+              e => setSettings({
+              gateway: e.detail.value!,
+              node: node
+            })}>
               {gateways.map((g) => (
                 <IonItem key={g.name}>
                   <IonLabel>{g.name}</IonLabel>
@@ -83,18 +99,7 @@ const Settings: React.FC = () => {
 
           <div className="durin-settings-group">
             <IonLabel className="durin-label">Shortcuts</IonLabel>
-            <IonList>
-              {defaultLinks.map((link) => (
-                <IonItem key={link.name} href={link.value} target="blank" className="durin-shortcut-link">
-                  <IonThumbnail slot="start">
-                    <IonImg src={`./assets/images/${link.logo}`} alt={link.name} />
-                  </IonThumbnail>
-                  <IonLabel>{link.name}</IonLabel>
-                </IonItem>
-              ))}
-
-
-            </IonList>
+              <ShortcutLinks />
           </div>
         </div>
       </PageContainer>

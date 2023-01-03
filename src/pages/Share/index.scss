@@ -28,10 +28,42 @@
 
 /* modal specific styles */
 .share-page-modal-inner {
-  padding-top: 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.durin-intro {
+  --ion-backdrop-opacity: 0.7;
+}
+
+.durin-intro-inner {
+  padding: 2rem;
+  margin: 2rem;
+  background-color:#111;
+  border-radius: 10px;
+  box-shadow: 0px 0px 40px #000;
+  border: 2px solid #000;
+  color: var(--ion-text-color);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  max-height: 80vh;
+  overflow: auto;
+  p, ol {
+    font-family: 'Source Code Pro';
+    line-height: 1.6;
+  }
+  ol {
+    padding-left: 28px;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+  ion-button {
+    margin-top: 4rem!important;
+    display: block;
+  }
 }

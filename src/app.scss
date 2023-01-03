@@ -10,6 +10,10 @@ body {
   --ion-background-color: transparent;
 }
 
+.ion-padding {
+  --ion-padding: 20px;
+}
+
 ion-toolbar {
   --border-color: transparent;
   .logo {
@@ -25,6 +29,7 @@ ion-label.durin-label {
   color: rgba(255, 255, 255, 0.6);
   font-size: 13px;
   letter-spacing: 0.1em;
+  font-weight: normal;
   padding-left: var(--durin-padding-start);
 
   &.ion-text-center {
@@ -40,6 +45,7 @@ input.durin-input {
   width: 100%;
   background: #000;
   color: #fff;
+  min-height: 56px;
   border: 1px solid transparent;
   box-shadow: 0px 0px 210px var(--durin-teal);
   padding: var(--durin-padding-y) 20px;
@@ -51,6 +57,9 @@ input.durin-input {
   --padding-top: var(--durin-padding-y);
 
   &::placeholder {
+    opacity: 0.6;
+  }
+  &::placeholder-shown() {
     opacity: 0.6;
   }
   &:focus-within,
@@ -66,6 +75,10 @@ input.durin-input {
 input[type="file"] {
   cursor: pointer;
   display: flex;
+  color: rgba(255,255,255,.6);
+  &.hasFile {
+    color: #fff;
+  }
   &::file-selector-button {
     color: inherit;
     border: 0px;
@@ -73,6 +86,7 @@ input[type="file"] {
     font-family: var(--ion-font-family);
     border-radius: 3px;
     align-self: center;
+    display: none;
   }
 }
 
@@ -118,6 +132,7 @@ ion-button.durin-button {
     font-size: 14px;
     min-height: 36px;
     letter-spacing: 2px;
+    margin: 0;
   }
 }
 
@@ -178,24 +193,35 @@ ion-item.durin-file {
   .durin-file {
     &_thumbnail {
       border-radius: 4px;
+      aspect-ratio: 1/1;
       overflow: hidden;
+      svg {
+        max-height: 100%;
+      }
     }
     &_url {
       color: var(--durin-teal);
     }
     &_date {
       font-family: "Koulen", sans-serif;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.5);
       font-size: 12px;
       letter-spacing: 0.1em;
     }
   }
 }
 
+.durin-validation {
+  position: relative;
+}
+
 .durin-error {
-  padding: 0px 0 20px 20px;
+  padding: 0px 20px 20px 20px;
   // border: 1px solid #D37669;
   color: rgba(255, 255, 255, 0.6);
+  position: absolute;
+  top: 0;
+  max-width: 100%;
   ion-label {
     color: var(--ion-color-danger);
     font-family: 'Koulen';
@@ -213,12 +239,35 @@ ion-item.durin-file {
 .durin-qr {
   background-color: #D9D9D9;
   border-radius: 10px;
-  max-width: 240px;
+  width: 240px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 35px;
   svg {
+    display: block;
     max-width: 100%;
     height: 100%;
+  }
+}
+
+.durin-square-img {
+  width: auto;
+  height: 240px;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111;
+  aspect-ratio: 1/1;
+  svg, img {
+    display: block;
+  }
+  svg {
+    max-height: 100%;
+    background-color: #1e1e1e;
   }
 }
 
@@ -248,12 +297,6 @@ ion-item.durin-file {
     grid-gap: 0;
     grid-template-columns: 1fr;
   }
-}
-
-.durin-image-preview {
-  max-width: 300px;
-  max-height: 30vh;
-  margin: 0 auto;
 }
 
 .durin-pulse {

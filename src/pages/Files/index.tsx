@@ -1,30 +1,20 @@
 import {
-  IonButton,
-  IonContent,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonItemSliding,
-  IonItemOptions,
-  IonItemOption,
   IonList,
   IonItem,
   IonLabel,
-  IonListHeader,
   IonThumbnail,
-  IonIcon,
   IonImg,
   IonHeader,
   useIonModal,
 } from "@ionic/react"
-import { share, trash } from "ionicons/icons"
 import { DateTime } from "luxon"
 import createPersistedState from "use-persisted-state"
-import { transform, transformForShare, useNodes } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
 import FileIcon from "../../components/FileIcon"
 import "./index.scss"
-import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces"
 import { useState } from "react"
 import File from "../File"
 
@@ -38,23 +28,12 @@ type Upload = {
   date: string
 }
 const useUploadedFiles = createPersistedState<Upload[]>("uploaded-files")
-const hasNativeShare = typeof navigator.share === "function"
-const nativeShare = (url: string) => {
-  navigator.share({ url: transformForShare(url) })
-}
 
 const Files: React.FC = () => {
-  const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
-  const { nodes } = useNodes()
+  const [uploadedFiles, ] = useUploadedFiles([])
   const [currentUpload, setCurrentUpload] = useState<Upload>()
 
   const hasFiles = uploadedFiles.length > 0
-
-  const deleteUploadedFile = (idx: number) => {
-    const newList = [...uploadedFiles]
-    newList.splice(idx, 1)
-    setUploadedFiles(newList)
-  }
 
   const [present, dismiss] = useIonModal(File, {
     upload: currentUpload,
@@ -94,16 +73,6 @@ const Files: React.FC = () => {
             </p>
           </IonLabel>
         </IonItem>
-        /* <IonItemOptions side="end">
-            {hasNativeShare && (
-              <IonItemOption onClick={() => nativeShare(upload.url)}>
-                <IonIcon icon={share} slot="icon-only" />
-              </IonItemOption>
-            )}
-            <IonItemOption color="danger" onClick={() => deleteUploadedFile(i)}>
-              <IonIcon icon={trash} slot="icon-only" />
-            </IonItemOption>
-          </IonItemOptions> */
       ))}
     </IonList>
   )

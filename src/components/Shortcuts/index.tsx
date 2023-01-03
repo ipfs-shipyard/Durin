@@ -1,26 +1,24 @@
-import { Flex } from "react-flex-lite"
-import { useNodes, open } from "../../util/ipfs"
+import { IonImg, IonItem, IonLabel, IonList, IonThumbnail } from "@ionic/react"
 import "./index.scss"
 
 const defaultLinks = [
-    { name: "Wikipedia", value: "ipns://en.wikipedia-on-ipfs.org" },
-    { name: "PeerPad", value: "ipns://peerpad.net" },
-    { name: "Uniswap", value: "ipns://app.uniswap.org" },
+    { name: "Wikipedia", value: "ipns://en.wikipedia-on-ipfs.org", logo: "wikipedia.png" },
+    { name: "PeerPad", value: "ipns://peerpad.net", logo: "peerpad.png" },
+    { name: "Uniswap", value: "ipns://app.uniswap.org", logo: "uniswap.png" },
 ]
-
 const ShortcutLinks: React.FC = () => {
-    const { nodes } = useNodes()
-
     return (
         <>
-            <h6>Shortcuts</h6>
-            <Flex pt={1} className="shortcuts">
-                {defaultLinks.map(({ name, value }) => (
-                    <button key={value} onClick={() => open(value, nodes[0])}>
-                        {name}
-                    </button>
+            <IonList>
+                {defaultLinks.map((link) => (
+                    <IonItem key={link.name} href={link.value} target="blank" className="durin-shortcut-link">
+                        <IonThumbnail slot="start">
+                            <IonImg src={`./assets/images/${link.logo}`} alt={link.name} />
+                        </IonThumbnail>
+                        <IonLabel>{link.name}</IonLabel>
+                    </IonItem>
                 ))}
-            </Flex>
+            </IonList>
         </>
     )
 }

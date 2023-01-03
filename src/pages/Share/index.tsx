@@ -1,10 +1,8 @@
 import {
   IonButton,
-  IonContent,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonSpinner,
   IonList,
   IonItem,
   IonLabel,
@@ -15,12 +13,11 @@ import {
   IonText,
   IonThumbnail,
 } from "@ionic/react"
-import { share, trash, addCircleOutline } from "ionicons/icons"
 import { useState } from "react"
 import { DateTime } from "luxon"
 import createPersistedState from "use-persisted-state"
 import { getThumbnailUrl } from "image-thumbnail-generator"
-import { transform, transformForShare, useNodes } from "../../util/ipfs"
+import { transformForShare } from "../../util/ipfs"
 import upload, { maxChunkSize } from "../../util/upload"
 import PageContainer from "../../components/PageContainer"
 import FileIcon from "../../components/FileIcon"
@@ -64,7 +61,6 @@ const Share: React.FC = () => {
   const [cid, setCid] = useState("")
   const [uploadedFile, setUploadedFile] = useState<Upload>()
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
-  const { nodes } = useNodes()
 
   const hasFiles = uploadedFiles.length > 0
 
@@ -104,12 +100,6 @@ const Share: React.FC = () => {
 
     if (!hasFiles) setIsUsingModal(true) // open the success state in the modal if its their first upload
   }
-
-  // const deleteUploadedFile = (idx: number) => {
-  //   const newList = [...uploadedFiles]
-  //   newList.splice(idx, 1)
-  //   setUploadedFiles(newList)
-  // }
 
   const successContent = uploadedFile && (
     <>
@@ -184,7 +174,7 @@ const Share: React.FC = () => {
       <IonLabel className="durin-label">Select Media to Upload</IonLabel>
       <input
         type="file"
-        className="durin-input"
+        className={`durin-input ${!!file && 'hasFile'}`}
         onChange={(e) => setFile(e.target?.files?.[0])}
         disabled={isUploading}
         placeholder="Select a file"

@@ -1,6 +1,5 @@
 import {
   IonButton,
-  IonContent,
   IonPage,
   IonLabel,
   IonIcon,
@@ -8,10 +7,8 @@ import {
   IonHeader,
   IonToolbar,
   IonButtons,
-  IonGrid,
-  IonRow,
-  IonCol,
   useIonToast,
+  IonTitle,
 } from "@ionic/react"
 import { closeOutline, checkmarkCircle } from "ionicons/icons"
 import { DateTime } from "luxon"
@@ -20,7 +17,7 @@ import { transformForShare } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
 import FileIcon from "../../components/FileIcon"
 import "./index.scss"
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import QRCode from "react-qr-code"
 
 type Upload = {
@@ -75,7 +72,7 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
           <QRCode value={foundFile.url} />
         </div>
       ) :
-        <>
+        <div className="durin-square-img">
           {foundFile.thumbnail ? (
             <IonImg
               src={`https://ipfs.io/ipfs/${foundFile.cid}/${foundFile.name}`}
@@ -85,7 +82,7 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
           ) : (
             <FileIcon extension={foundFile.extension} />
           )}
-        </>
+        </div>
       }
 
       <div className="durin-file-view">
@@ -135,6 +132,9 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
     <IonPage className="file-modal">
       <IonHeader>
         <IonToolbar>
+          <IonTitle>
+            <IonLabel className="durin-label ion-text-center">Share</IonLabel>
+          </IonTitle>
           <IonButtons slot="end">
             <IonButton color="light" onClick={() => onDismiss(null, "cancel")}>
               <IonIcon icon={closeOutline}></IonIcon>
@@ -144,7 +144,6 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
       </IonHeader>
       <PageContainer>
         <div className="durin-page-container flex-col">
-          <IonLabel className="durin-label ion-text-center ion-margin-bottom">Share</IonLabel>
           {fileContent}
         </div>
       </PageContainer>
