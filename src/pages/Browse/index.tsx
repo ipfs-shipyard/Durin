@@ -92,8 +92,9 @@ const Browse: React.FC = () => {
           <ol>
           <li>Try entering a CID or `IPFS://` url on the home page.</li>
           <li>Checkout the upload tab</li>
-          <li>view stats about your connections on the settings tab. Visit some things on the IPFS Network:</li>
+          <li>View stats about your connections on the settings tab.</li>
           </ol>
+          <p>Visit some things on the IPFS Network:</p>
           <ShortcutLinks />
           <IonButton className="durin-button" onClick={() => setShowIntro(false)}>Dismiss</IonButton>
         </div>
