@@ -170,7 +170,7 @@ const Share: React.FC = () => {
   )
 
   const uploadContent = (
-    <>
+    <div className="durin-input-container">
       <IonLabel className="durin-label">Select Media to Upload</IonLabel>
       <input
         type="file"
@@ -203,7 +203,7 @@ const Share: React.FC = () => {
           ( This may take a moment, the file is large! )
         </IonText>
       )}
-    </>
+    </div>
   )
   const mainContent = url ? (
     <PageContainer>

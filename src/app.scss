@@ -38,6 +38,10 @@ ion-label.durin-label {
   }
 }
 
+.durin-input-container {
+  overflow: visible;
+}
+
 ion-input.durin-input,
 input.durin-input {
   border-radius: calc(50px * var(--border-radius-factor));
