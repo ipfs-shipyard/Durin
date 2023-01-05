@@ -19,6 +19,7 @@ import FileIcon from "../../components/FileIcon"
 import "./index.scss"
 import { useState } from "react"
 import QRCode from "react-qr-code"
+import { Clipboard } from '@capacitor/clipboard'
 
 type Upload = {
   name: string
@@ -51,8 +52,10 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
     onDismiss(null, "cancel")
   }
 
-  const copyCID = (cid: string) => {
-    navigator.clipboard.writeText(cid)
+  const copyCID = async (cid: string) => {
+    await Clipboard.write({
+      string: cid
+    })
     present({
       message: `Copied CID: ${cid}`,
       duration: 2000,
