@@ -116,7 +116,7 @@ const Share: React.FC = () => {
 
           <IonLabel>
             <h2 className="durin-file_name">{uploadedFile.name}</h2>
-            <h3 className="durin-file_url">{uploadedFile.url}</h3>
+            <h3 className="durin-file_url">{transformForShare(uploadedFile.url)}</h3>
             <p className="durin-file_date">
               {DateTime.fromISO(uploadedFile.date).toLocaleString(
                 DateTime.DATETIME_MED
@@ -127,11 +127,11 @@ const Share: React.FC = () => {
       </IonList>
 
       <div className="durin-qr">
-        <QRCode value={uploadedFile.url} />
+        <QRCode value={transformForShare(uploadedFile.url)} />
       </div>
 
       <div className="durin-view-ipfs ion-margin-top">
-        <a href={uploadedFile.url} target="_blank" rel="noreferrer">View it on IPFS</a>
+        <a href={transformForShare(uploadedFile.url)} target="_blank" rel="noreferrer">View it on IPFS</a>
       </div>
 
       <div className="durin-buttons">

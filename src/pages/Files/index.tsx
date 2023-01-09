@@ -13,6 +13,7 @@ import {
 import { DateTime } from "luxon"
 import createPersistedState from "use-persisted-state"
 import PageContainer from "../../components/PageContainer"
+import { transformForShare } from "../../util/ipfs"
 import FileIcon from "../../components/FileIcon"
 import "./index.scss"
 import { useState } from "react"
@@ -65,7 +66,7 @@ const Files: React.FC = () => {
           </IonThumbnail>
           <IonLabel>
             <h2 className="durin-file_name">{upload.name}</h2>
-            <h3 className="durin-file_url">{upload.url}</h3>
+            <h3 className="durin-file_url">{transformForShare(upload.url)}</h3>
             <p className="durin-file_date">
               {DateTime.fromISO(upload.date).toLocaleString(
                 DateTime.DATETIME_MED

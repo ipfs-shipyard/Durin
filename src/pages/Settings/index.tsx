@@ -8,8 +8,6 @@ import {
   IonRadioGroup,
   IonItem,
   IonRadio,
-  IonList,
-  IonThumbnail,
 } from "@ionic/react"
 import { useNodes } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
