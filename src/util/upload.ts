@@ -22,7 +22,10 @@ const upload = async (file: File, options?: Options) => {
       if (options?.onProgress) options.onProgress(progress, file.size)
     }
   })
-  return `ipfs://${cid}/${file.name}`
+  return {
+    cid: cid,
+    url: `ipfs://${cid}/${file.name}`
+  }
 }
 
 export default upload

@@ -10,6 +10,7 @@ const config: CapacitorConfig = {
     SplashScreen: {
       launchAutoHide: false
     },
+    Clipboard: {},
     Keyboard: {
       style: 'dark',
       resize: 'none' as KeyboardResize
