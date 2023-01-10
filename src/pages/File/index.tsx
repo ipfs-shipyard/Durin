@@ -72,7 +72,7 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
     <>
       {showQR ? (
         <div className="durin-qr">
-          <QRCode value={foundFile.url} />
+          <QRCode value={transformForShare(foundFile.url)} />
         </div>
       ) :
         <div className="durin-square-img">
@@ -93,7 +93,7 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
         <IonLabel className="durin-label">File URL:</IonLabel>
         <p>
           <a className="durin-file_url" href={foundFile.url}>
-            {foundFile.url}
+            {transformForShare(foundFile.url)}
           </a>
         </p>
         <IonLabel className="durin-label ion-margin-top">File Uploaded:</IonLabel>

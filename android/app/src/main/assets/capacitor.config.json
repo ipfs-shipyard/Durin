@@ -7,6 +7,7 @@
 		"SplashScreen": {
 			"launchAutoHide": false
 		},
+		"Clipboard": {},
 		"Keyboard": {
 			"style": "dark",
 			"resize": "none"

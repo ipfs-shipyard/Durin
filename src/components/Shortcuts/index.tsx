@@ -1,4 +1,5 @@
 import { IonImg, IonItem, IonLabel, IonList, IonThumbnail } from "@ionic/react"
+import { transformForShare } from "../../util/ipfs"
 import "./index.scss"
 
 const defaultLinks = [
@@ -10,7 +11,7 @@ const ShortcutLinks: React.FC = () => {
     return (
         <IonList>
             {defaultLinks.map((link) => (
-                <IonItem key={link.name} href={link.value} target="blank" className="durin-shortcut-link">
+                <IonItem key={link.name} href={transformForShare(link.value)} target="blank" className="durin-shortcut-link">
                     <IonThumbnail slot="start">
                         <IonImg src={`./assets/images/${link.logo}`} alt={link.name} />
                     </IonThumbnail>
