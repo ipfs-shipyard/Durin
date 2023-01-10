@@ -40,6 +40,9 @@
   @media screen and (min-width:768px) {
     --height: 720px;
   }
+  ion-item {
+    --padding-start: 0;
+  }
 }
 
 .durin-intro-inner {

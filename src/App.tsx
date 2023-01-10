@@ -50,7 +50,7 @@ setupIonicReact({
 
 const App: React.FC = () => {
   const useUploadedFiles = createPersistedState<[]>("uploaded-files")
-  const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
+  const [uploadedFiles, ] = useUploadedFiles([])
   const hasFiles = uploadedFiles.length > 0
 
   useEffect(() => {

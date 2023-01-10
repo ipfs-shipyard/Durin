@@ -58,7 +58,7 @@ const Share: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(defaultUploadProgress)
   const [url, setUrl] = useState("")
-  const [cid, setCid] = useState("")
+  const [, setCid] = useState("")
   const [uploadedFile, setUploadedFile] = useState<Upload>()
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
 
@@ -217,6 +217,7 @@ const Share: React.FC = () => {
     </PageContainer>
   )
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const uploadModal = (
     <IonModal
       className="share-page"

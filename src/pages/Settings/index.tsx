@@ -8,50 +8,25 @@ import {
   IonRadioGroup,
   IonItem,
   IonRadio,
-  IonList,
-  IonThumbnail,
 } from "@ionic/react"
-import { useNodes } from "../../util/ipfs"
+import { useNodes, defaultNodes } from "../../util/ipfs"
 import PageContainer from "../../components/PageContainer"
 import createPersistedState from "use-persisted-state"
 
 import "./index.scss"
 import ShortcutLinks from "../../components/Shortcuts"
 
-const gateways = [
-  {
-    name: "auto",
-  },
-  {
-    name: "ipfs.io",
-  },
-  {
-    name: "dweb.link",
-  },
-  {
-    name: "gateway.ipfs.io",
-  },
-  {
-    name: "cf-ipfs.com",
-  },
-  {
-    name: "local",
-  },
-]
-
-type Settings = {
-  node: string,
-  gateway: string
+type SettingsObject = {
+  node: string
 }
 
 const Settings: React.FC = () => {
   const { nodes } = useNodes()
-  const useSettings = createPersistedState<Settings>("durin-settings")
+  const useSettings = createPersistedState<SettingsObject>("durin-settings")
   const [ settings, setSettings ] = useSettings({
-    node: nodes[0].host,
-    gateway: 'auto'
+    node: 'auto',
   })
-  const { node, gateway } = settings
+  const { node } = settings
 
   return (
     <IonPage className="settings-page">
@@ -65,12 +40,17 @@ const Settings: React.FC = () => {
       <PageContainer>
         <div className="durin-page-container fill-height">
           <div className="durin-settings-group">
-            <IonLabel className="durin-label">Available Nodes</IonLabel>
+          <IonLabel className="durin-label">Gateways</IonLabel>
             <IonRadioGroup name="durinNode" value={node} onIonChange={
               e => setSettings({
-              gateway: gateway,
               node: e.detail.value!
             })}>
+              <IonItem>
+                <IonLabel>
+                  auto
+                </IonLabel>
+                <IonRadio slot="end" value='auto'></IonRadio>
+              </IonItem>
               {nodes.map((n) => (
                 <IonItem key={n.host}>
                   <IonLabel>
@@ -79,19 +59,13 @@ const Settings: React.FC = () => {
                   <IonRadio slot="end" value={n.host}></IonRadio>
                 </IonItem>
               ))}
-            </IonRadioGroup>
-          </div>
-          <div className="durin-settings-group">
-            <IonLabel className="durin-label">Gateways</IonLabel>
-            <IonRadioGroup name="durinGateway" value={gateway} onIonChange={
-              e => setSettings({
-              gateway: e.detail.value!,
-              node: node
-            })}>
-              {gateways.map((g) => (
-                <IonItem key={g.name}>
-                  <IonLabel>{g.name}</IonLabel>
-                  <IonRadio slot="end" value={g.name}></IonRadio>
+
+              {defaultNodes.filter((n) => !nodes.map(h => h.host).includes(n.host)).map((n) => (
+                <IonItem key={n.host} disabled>
+                  <IonLabel>
+                    {n.host}
+                  </IonLabel>
+                  <IonRadio slot="end" value={n.host}></IonRadio>
                 </IonItem>
               ))}
             </IonRadioGroup>
