@@ -13,7 +13,7 @@ import {
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
 import PageContainer from '../../components/PageContainer'
-import { transformForShare } from '../../util/ipfs'
+import { SettingsObject, transformForShare } from '../../util/ipfs'
 import FileIcon from '../../components/FileIcon'
 import './index.scss'
 import { useState, FC } from 'react'
@@ -33,6 +33,10 @@ const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
 const Files: FC = () => {
   const [uploadedFiles] = useUploadedFiles([])
   const [currentUpload, setCurrentUpload] = useState<Upload>()
+  const useSettings = createPersistedState<SettingsObject>('durin-settings')
+  const [settings] = useSettings({
+    node: 'auto'
+  })
 
   const hasFiles = uploadedFiles.length > 0
 
@@ -68,7 +72,7 @@ const Files: FC = () => {
           </IonThumbnail>
           <IonLabel>
             <h2 className="durin-file_name">{upload.name}</h2>
-            <h3 className="durin-file_url">{transformForShare(upload.url)}</h3>
+            <h3 className="durin-file_url">{transformForShare(upload.url, settings.node)}</h3>
             <p className="durin-file_date">
               {DateTime.fromISO(upload.date).toLocaleString(
                 DateTime.DATETIME_MED

@@ -8,12 +8,13 @@ import {
   IonToolbar,
   IonButtons,
   useIonToast,
-  IonTitle
+  IonTitle,
+  isPlatform
 } from '@ionic/react'
 import { closeOutline, checkmarkCircle } from 'ionicons/icons'
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
-import { transformForShare } from '../../util/ipfs'
+import { SettingsObject, transformForShare } from '../../util/ipfs'
 import PageContainer from '../../components/PageContainer'
 import FileIcon from '../../components/FileIcon'
 import './index.scss'
@@ -32,8 +33,8 @@ type Upload = {
 }
 const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
 const hasNativeShare = typeof navigator.share === 'function'
-const nativeShare = (url: string) => {
-  navigator.share({ url: transformForShare(url) })
+const nativeShare = (url: string, node: string) => {
+  navigator.share({ url: transformForShare(url, node) })
 }
 
 type ModalProps = {
@@ -45,6 +46,10 @@ const File: FC<ModalProps> = ({ upload, onDismiss }) => {
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const [showQR, setShowQR] = useState(false)
   const [present] = useIonToast()
+  const useSettings = createPersistedState<SettingsObject>('durin-settings')
+  const [settings] = useSettings({
+    node: 'auto'
+  })
 
   const deleteUploadedFile = (cid: string) => {
     const newList = [...uploadedFiles].filter((u) => u.cid !== cid)
@@ -53,7 +58,11 @@ const File: FC<ModalProps> = ({ upload, onDismiss }) => {
   }
 
   const copyCID = async (cid: string) => {
-    await Clipboard.copy(cid)
+    if (isPlatform('cordova')) {
+      await Clipboard.copy(cid)
+    } else {
+      navigator.clipboard.writeText(cid)
+    }
     present({
       message: `Copied CID: ${cid}`,
       duration: 2000,
@@ -71,7 +80,7 @@ const File: FC<ModalProps> = ({ upload, onDismiss }) => {
       {showQR
         ? (
         <div className="durin-qr">
-          <QRCode value={transformForShare(foundFile.url)} />
+          <QRCode value={transformForShare(foundFile.url, settings.node)} />
         </div>
           )
         : <div className="durin-square-img">
@@ -94,7 +103,7 @@ const File: FC<ModalProps> = ({ upload, onDismiss }) => {
         <IonLabel className="durin-label">File URL:</IonLabel>
         <p>
           <a className="durin-file_url" href={foundFile.url}>
-            {transformForShare(foundFile.url)}
+            {transformForShare(foundFile.url, settings.node)}
           </a>
         </p>
         <IonLabel className="durin-label ion-margin-top">File Uploaded:</IonLabel>
@@ -117,7 +126,7 @@ const File: FC<ModalProps> = ({ upload, onDismiss }) => {
 
       <div className="durin-buttons">
         {hasNativeShare && (
-          <IonButton className="durin-button" onClick={() => nativeShare(foundFile.url)}>
+          <IonButton className="durin-button" onClick={() => nativeShare(foundFile.url, settings.node)}>
             Share
           </IonButton>
         )}

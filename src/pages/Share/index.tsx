@@ -17,7 +17,7 @@ import { useState, FC } from 'react'
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
 import { getThumbnailUrl } from 'image-thumbnail-generator'
-import { transformForShare } from '../../util/ipfs'
+import { SettingsObject, transformForShare } from '../../util/ipfs'
 import upload, { maxChunkSize } from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
 import FileIcon from '../../components/FileIcon'
@@ -37,9 +37,11 @@ type Upload = {
   date: string
 }
 const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
+const useSettings = createPersistedState<SettingsObject>('durin-settings')
+
 const hasNativeShare = typeof navigator.share === 'function'
-const nativeShare = (url: string) => {
-  navigator.share({ url: transformForShare(url) })
+const nativeShare = (url: string, node: string) => {
+  navigator.share({ url: transformForShare(url, node) })
 }
 const createThumbnail = async (file: File): Promise<string | undefined> => {
   try {
@@ -61,6 +63,9 @@ const Share: FC = () => {
   const [, setCid] = useState('')
   const [uploadedFile, setUploadedFile] = useState<Upload>()
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
+  const [settings] = useSettings({
+    node: 'auto'
+  })
 
   const hasFiles = uploadedFiles.length > 0
 
@@ -118,7 +123,7 @@ const Share: FC = () => {
 
           <IonLabel>
             <h2 className="durin-file_name">{uploadedFile.name}</h2>
-            <h3 className="durin-file_url">{transformForShare(uploadedFile.url)}</h3>
+            <h3 className="durin-file_url">{transformForShare(uploadedFile.url, settings.node)}</h3>
             <p className="durin-file_date">
               {DateTime.fromISO(uploadedFile.date).toLocaleString(
                 DateTime.DATETIME_MED
@@ -129,11 +134,11 @@ const Share: FC = () => {
       </IonList>
 
       <div className="durin-qr">
-        <QRCode value={transformForShare(uploadedFile.url)} />
+        <QRCode value={transformForShare(uploadedFile.url, settings.node)} />
       </div>
 
       <div className="durin-view-ipfs ion-margin-top">
-        <a href={transformForShare(uploadedFile.url)} target="_blank" rel="noreferrer">View it on IPFS</a>
+        <a href={transformForShare(uploadedFile.url, settings.node)} target="_blank" rel="noreferrer">View it on IPFS</a>
       </div>
 
       <div className="durin-buttons">
@@ -162,7 +167,7 @@ const Share: FC = () => {
           <IonButton
             expand="block"
             className="durin-button"
-            onClick={() => nativeShare(url)}
+            onClick={() => nativeShare(url, settings.node)}
           >
             Share
           </IonButton>

@@ -20,6 +20,10 @@ export type Node = {
   speed?: number
 }
 
+export type SettingsObject = {
+  node: string
+}
+
 export const transform = (url: string, node: Node) => {
   // support opening just a CID w/ no protocol
   if (cid(url) || cid(url.split('/')[0].split('?')[0])) url = `ipfs://${url}`
@@ -59,13 +63,15 @@ export const transform = (url: string, node: Node) => {
   throw new Error(`Failed to transform URL: ${url}`)
 }
 
-export const transformForShare = (url: string) =>
-  transform(url, defaultNodes[0])
+export const transformForShare = (url: string, node?: string) => {
+  const gateway = defaultNodes.find(n => n.host === node) || defaultNodes[0]
+  return transform(url, gateway)
+}
 
 export const open = (url: string, node?: Node) => {
   console.log('Attempting to open:', url)
 
-  const transformed = node ? transform(url, node) : transformForShare(url)
+  const transformed = node ? transform(url, node) : transformForShare(url, node)
   if (transformed) window.open(transformed)
 }
 

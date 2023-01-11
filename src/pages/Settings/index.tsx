@@ -9,17 +9,13 @@ import {
   IonItem,
   IonRadio
 } from '@ionic/react'
-import { useNodes, defaultNodes } from '../../util/ipfs'
+import { useNodes, defaultNodes, SettingsObject } from '../../util/ipfs'
 import PageContainer from '../../components/PageContainer'
 import createPersistedState from 'use-persisted-state'
 import { FC } from 'react'
 
 import './index.scss'
 import ShortcutLinks from '../../components/Shortcuts'
-
-type SettingsObject = {
-  node: string
-}
 
 const Settings: FC = () => {
   const { nodes } = useNodes()
