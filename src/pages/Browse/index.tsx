@@ -87,8 +87,11 @@ const Browse: FC = () => {
         canDismiss={true}
       >
         <div className="durin-intro-inner">
+        <IonButton fill="clear" className="close-icon" onClick={() => setShowIntro(false)}>
+          Dismiss
+        </IonButton>
           <h3>Welcome to Durin</h3>
-          <p>We aim to help you access and add content to the IPFS network. Here are a couple steps to get started:</p>
+          <p>Here are a couple steps to get started.</p>
           <ol>
           <li>Try entering a CID or `IPFS://` url on the home page.</li>
           <li>Checkout the upload tab</li>

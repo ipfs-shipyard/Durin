@@ -1,6 +1,7 @@
 import { IonImg, IonItem, IonLabel, IonList, IonThumbnail } from '@ionic/react'
 import { FC } from 'react'
-import { transformForShare } from '../../util/ipfs'
+import createPersistedState from 'use-persisted-state'
+import { transformForShare, SettingsObject } from '../../util/ipfs'
 import './index.scss'
 
 const defaultLinks = [
@@ -9,10 +10,14 @@ const defaultLinks = [
   { name: 'Uniswap', value: 'ipns://app.uniswap.org', logo: 'uniswap.png' }
 ]
 const ShortcutLinks: FC = () => {
+  const useSettings = createPersistedState<SettingsObject>('durin-settings')
+  const [settings] = useSettings({
+    node: 'auto'
+  })
   return (
         <IonList>
             {defaultLinks.map((link) => (
-                <IonItem key={link.name} href={transformForShare(link.value)} target="blank" className="durin-shortcut-link">
+                <IonItem key={link.name} href={transformForShare(link.value, settings.node)} target="blank" className="durin-shortcut-link">
                     <IonThumbnail slot="start">
                         <IonImg src={`./assets/images/${link.logo}`} alt={link.name} />
                     </IonThumbnail>

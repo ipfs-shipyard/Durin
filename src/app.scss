@@ -83,14 +83,14 @@ input[type="file"] {
   &.hasFile {
     color: #fff;
   }
+  
   &::file-selector-button {
-    color: inherit;
+    color: rgba(255,255,255,.6);
     border: 0px;
     background-color: #222;
     font-family: var(--ion-font-family);
-    border-radius: 3px;
+    border-radius: 8px;
     align-self: center;
-    display: none;
   }
 }
 
@@ -243,10 +243,10 @@ ion-item.durin-file {
 .durin-qr {
   background-color: #D9D9D9;
   border-radius: 10px;
-  width: 240px;
+  width: 180px;
   max-width: 100%;
   margin: 0 auto;
-  padding: 35px;
+  padding: 15px;
   svg {
     display: block;
     max-width: 100%;
@@ -256,7 +256,7 @@ ion-item.durin-file {
 
 .durin-square-img {
   width: auto;
-  height: 240px;
+  height: 180px;
   max-width: 100%;
   margin: 0 auto;
   border-radius: 10px;
@@ -295,10 +295,9 @@ ion-item.durin-file {
 .durin-buttons-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: .5rem;
+  grid-gap: 10px;
   margin: 1.25rem 0;
-  @media (max-width:390px) {
-    grid-gap: 0;
+  @media (max-width:360px) {
     grid-template-columns: 1fr;
   }
 }
