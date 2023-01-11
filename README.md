@@ -19,7 +19,12 @@ Created using [ionic](https://ionicframework.com/docs/cli/commands/start).
 ## Installation
 
 - Make sure you have [Xcode installed](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
-- Copy `.env` to a new file `.env.local` - replace the token with one from [web3.storage](https://web3.storage)
+- Create a new f ile `.env.local` - replace YOUR_TOKEN with one from [web3.storage](https://web3.storage)
+
+```
+REACT_APP_WEB3_STORAGE_TOKEN=YOUR_TOKEN
+```
+
 - Run the following commands:
 
 ```sh

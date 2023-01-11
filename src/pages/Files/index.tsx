@@ -8,16 +8,16 @@ import {
   IonThumbnail,
   IonImg,
   IonHeader,
-  useIonModal,
-} from "@ionic/react"
-import { DateTime } from "luxon"
-import createPersistedState from "use-persisted-state"
-import PageContainer from "../../components/PageContainer"
-import { transformForShare } from "../../util/ipfs"
-import FileIcon from "../../components/FileIcon"
-import "./index.scss"
-import { useState } from "react"
-import File from "../File"
+  useIonModal
+} from '@ionic/react'
+import { DateTime } from 'luxon'
+import createPersistedState from 'use-persisted-state'
+import PageContainer from '../../components/PageContainer'
+import { transformForShare } from '../../util/ipfs'
+import FileIcon from '../../components/FileIcon'
+import './index.scss'
+import { useState, FC } from 'react'
+import File from '../File'
 
 type Upload = {
   name: string
@@ -28,17 +28,17 @@ type Upload = {
   thumbnail?: string
   date: string
 }
-const useUploadedFiles = createPersistedState<Upload[]>("uploaded-files")
+const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
 
-const Files: React.FC = () => {
-  const [uploadedFiles, ] = useUploadedFiles([])
+const Files: FC = () => {
+  const [uploadedFiles] = useUploadedFiles([])
   const [currentUpload, setCurrentUpload] = useState<Upload>()
 
   const hasFiles = uploadedFiles.length > 0
 
   const [present, dismiss] = useIonModal(File, {
     upload: currentUpload,
-    onDismiss: (data: string, role: string) => dismiss(data, role),
+    onDismiss: (data: string, role: string) => dismiss(data, role)
   })
 
   const openModal = (e: MouseEvent, upload: Upload) => {
@@ -58,11 +58,13 @@ const Files: React.FC = () => {
           onClick={(e) => openModal(e as any, upload)}
         >
           <IonThumbnail slot="start" className="durin-file_thumbnail">
-            {upload.thumbnail ? (
+            {upload.thumbnail
+              ? (
               <IonImg src={upload.thumbnail} alt={upload.extension} />
-            ) : (
+                )
+              : (
               <FileIcon extension={upload.extension} />
-            )}
+                )}
           </IonThumbnail>
           <IonLabel>
             <h2 className="durin-file_name">{upload.name}</h2>

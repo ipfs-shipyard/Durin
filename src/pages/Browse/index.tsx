@@ -7,20 +7,20 @@ import {
   IonInput,
   IonLabel,
   IonImg,
-  IonModal,
-} from "@ionic/react"
-import { useState } from "react"
-import createPersistedState from "use-persisted-state"
-import PageContainer from "../../components/PageContainer"
-import ShortcutLinks from "../../components/Shortcuts"
-import { useNodes, open } from "../../util/ipfs"
-import "./index.scss"
+  IonModal
+} from '@ionic/react'
+import { useState, FC } from 'react'
+import createPersistedState from 'use-persisted-state'
+import PageContainer from '../../components/PageContainer'
+import ShortcutLinks from '../../components/Shortcuts'
+import { useNodes, open } from '../../util/ipfs'
+import './index.scss'
 
-const Browse: React.FC = () => {
-  const [url, setUrl] = useState("")
+const Browse: FC = () => {
+  const [url, setUrl] = useState('')
   const [error, setError] = useState(false)
   const { nodes } = useNodes()
-  const useIntro = createPersistedState<boolean>("durin-intro")
+  const useIntro = createPersistedState<boolean>('durin-intro')
   const [showIntro, setShowIntro] = useIntro(true)
 
   const validateUrl = (url: string) => {
@@ -54,7 +54,7 @@ const Browse: React.FC = () => {
                 placeholder="Enter CID, IPFS URL, or IPNS"
                 value={url}
                 className={`durin-input ${error && 'error'}`}
-                onIonChange={(e) => validateUrl(e.detail.value?.trim() || "")}
+                onIonChange={(e) => validateUrl(e.detail.value?.trim() || '')}
               />
               <div className="durin-validation">
                 <IonButton

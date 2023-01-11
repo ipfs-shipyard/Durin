@@ -7,24 +7,25 @@ import {
   IonLabel,
   IonRadioGroup,
   IonItem,
-  IonRadio,
-} from "@ionic/react"
-import { useNodes, defaultNodes } from "../../util/ipfs"
-import PageContainer from "../../components/PageContainer"
-import createPersistedState from "use-persisted-state"
+  IonRadio
+} from '@ionic/react'
+import { useNodes, defaultNodes } from '../../util/ipfs'
+import PageContainer from '../../components/PageContainer'
+import createPersistedState from 'use-persisted-state'
+import { FC } from 'react'
 
-import "./index.scss"
-import ShortcutLinks from "../../components/Shortcuts"
+import './index.scss'
+import ShortcutLinks from '../../components/Shortcuts'
 
 type SettingsObject = {
   node: string
 }
 
-const Settings: React.FC = () => {
+const Settings: FC = () => {
   const { nodes } = useNodes()
-  const useSettings = createPersistedState<SettingsObject>("durin-settings")
-  const [ settings, setSettings ] = useSettings({
-    node: 'auto',
+  const useSettings = createPersistedState<SettingsObject>('durin-settings')
+  const [settings, setSettings] = useSettings({
+    node: 'auto'
   })
   const { node } = settings
 
@@ -43,8 +44,8 @@ const Settings: React.FC = () => {
           <IonLabel className="durin-label">Gateways</IonLabel>
             <IonRadioGroup name="durinNode" value={node} onIonChange={
               e => setSettings({
-              node: e.detail.value!
-            })}>
+                node: e.detail.value!
+              })}>
               <IonItem>
                 <IonLabel>
                   auto

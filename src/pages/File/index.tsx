@@ -8,18 +8,18 @@ import {
   IonToolbar,
   IonButtons,
   useIonToast,
-  IonTitle,
-} from "@ionic/react"
-import { closeOutline, checkmarkCircle } from "ionicons/icons"
-import { DateTime } from "luxon"
-import createPersistedState from "use-persisted-state"
-import { transformForShare } from "../../util/ipfs"
-import PageContainer from "../../components/PageContainer"
-import FileIcon from "../../components/FileIcon"
-import "./index.scss"
-import { useState } from "react"
-import QRCode from "react-qr-code"
-import { Clipboard } from '@capacitor/clipboard'
+  IonTitle
+} from '@ionic/react'
+import { closeOutline, checkmarkCircle } from 'ionicons/icons'
+import { DateTime } from 'luxon'
+import createPersistedState from 'use-persisted-state'
+import { transformForShare } from '../../util/ipfs'
+import PageContainer from '../../components/PageContainer'
+import FileIcon from '../../components/FileIcon'
+import './index.scss'
+import { useState, FC } from 'react'
+import QRCode from 'react-qr-code'
+import { Clipboard } from '@awesome-cordova-plugins/clipboard'
 
 type Upload = {
   name: string
@@ -30,8 +30,8 @@ type Upload = {
   thumbnail?: string
   date: string
 }
-const useUploadedFiles = createPersistedState<Upload[]>("uploaded-files")
-const hasNativeShare = typeof navigator.share === "function"
+const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
+const hasNativeShare = typeof navigator.share === 'function'
 const nativeShare = (url: string) => {
   navigator.share({ url: transformForShare(url) })
 }
@@ -41,7 +41,7 @@ type ModalProps = {
   onDismiss: (data?: string | null | undefined | number, role?: string) => void
 }
 
-const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
+const File: FC<ModalProps> = ({ upload, onDismiss }) => {
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const [showQR, setShowQR] = useState(false)
   const [present] = useIonToast()
@@ -49,13 +49,11 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
   const deleteUploadedFile = (cid: string) => {
     const newList = [...uploadedFiles].filter((u) => u.cid !== cid)
     setUploadedFiles(newList)
-    onDismiss(null, "cancel")
+    onDismiss(null, 'cancel')
   }
 
   const copyCID = async (cid: string) => {
-    await Clipboard.write({
-      string: cid
-    })
+    await Clipboard.copy(cid)
     present({
       message: `Copied CID: ${cid}`,
       duration: 2000,
@@ -70,21 +68,24 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
 
   const fileContent = foundFile && (
     <>
-      {showQR ? (
+      {showQR
+        ? (
         <div className="durin-qr">
           <QRCode value={transformForShare(foundFile.url)} />
         </div>
-      ) :
-        <div className="durin-square-img">
-          {foundFile.thumbnail ? (
+          )
+        : <div className="durin-square-img">
+          {foundFile.thumbnail
+            ? (
             <IonImg
               src={`https://ipfs.io/ipfs/${foundFile.cid}/${foundFile.name}`}
               alt={foundFile.extension}
               className="durin-image-preview"
             />
-          ) : (
+              )
+            : (
             <FileIcon extension={foundFile.extension} />
-          )}
+              )}
         </div>
       }
 
@@ -139,7 +140,7 @@ const File: React.FC<ModalProps> = ({ upload, onDismiss }) => {
             <IonLabel className="durin-label ion-text-center">Share</IonLabel>
           </IonTitle>
           <IonButtons slot="end">
-            <IonButton color="light" onClick={() => onDismiss(null, "cancel")}>
+            <IonButton color="light" onClick={() => onDismiss(null, 'cancel')}>
               <IonIcon icon={closeOutline}></IonIcon>
             </IonButton>
           </IonButtons>

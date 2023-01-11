@@ -1,14 +1,15 @@
-import { IonImg, IonItem, IonLabel, IonList, IonThumbnail } from "@ionic/react"
-import { transformForShare } from "../../util/ipfs"
-import "./index.scss"
+import { IonImg, IonItem, IonLabel, IonList, IonThumbnail } from '@ionic/react'
+import { FC } from 'react'
+import { transformForShare } from '../../util/ipfs'
+import './index.scss'
 
 const defaultLinks = [
-    { name: "Wikipedia", value: "ipns://en.wikipedia-on-ipfs.org", logo: "wikipedia.png" },
-    { name: "PeerPad", value: "ipns://peerpad.net", logo: "peerpad.png" },
-    { name: "Uniswap", value: "ipns://app.uniswap.org", logo: "uniswap.png" },
+  { name: 'Wikipedia', value: 'ipns://en.wikipedia-on-ipfs.org', logo: 'wikipedia.png' },
+  { name: 'PeerPad', value: 'ipns://peerpad.net', logo: 'peerpad.png' },
+  { name: 'Uniswap', value: 'ipns://app.uniswap.org', logo: 'uniswap.png' }
 ]
-const ShortcutLinks: React.FC = () => {
-    return (
+const ShortcutLinks: FC = () => {
+  return (
         <IonList>
             {defaultLinks.map((link) => (
                 <IonItem key={link.name} href={transformForShare(link.value)} target="blank" className="durin-shortcut-link">
@@ -19,7 +20,7 @@ const ShortcutLinks: React.FC = () => {
                 </IonItem>
             ))}
         </IonList>
-    )
+  )
 }
 
 export default ShortcutLinks

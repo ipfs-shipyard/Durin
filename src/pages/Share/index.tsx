@@ -11,18 +11,18 @@ import {
   IonHeader,
   IonProgressBar,
   IonText,
-  IonThumbnail,
-} from "@ionic/react"
-import { useState } from "react"
-import { DateTime } from "luxon"
-import createPersistedState from "use-persisted-state"
-import { getThumbnailUrl } from "image-thumbnail-generator"
-import { transformForShare } from "../../util/ipfs"
-import upload, { maxChunkSize } from "../../util/upload"
-import PageContainer from "../../components/PageContainer"
-import FileIcon from "../../components/FileIcon"
+  IonThumbnail
+} from '@ionic/react'
+import { useState, FC } from 'react'
+import { DateTime } from 'luxon'
+import createPersistedState from 'use-persisted-state'
+import { getThumbnailUrl } from 'image-thumbnail-generator'
+import { transformForShare } from '../../util/ipfs'
+import upload, { maxChunkSize } from '../../util/upload'
+import PageContainer from '../../components/PageContainer'
+import FileIcon from '../../components/FileIcon'
 import QRCode from 'react-qr-code'
-import "./index.scss"
+import './index.scss'
 
 const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
 const PROGRESS_THRESHOLD = maxChunkSize / 1000
@@ -36,8 +36,8 @@ type Upload = {
   thumbnail?: string
   date: string
 }
-const useUploadedFiles = createPersistedState<Upload[]>("uploaded-files")
-const hasNativeShare = typeof navigator.share === "function"
+const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
+const hasNativeShare = typeof navigator.share === 'function'
 const nativeShare = (url: string) => {
   navigator.share({ url: transformForShare(url) })
 }
@@ -46,19 +46,19 @@ const createThumbnail = async (file: File): Promise<string | undefined> => {
     const { thumbnail } = await getThumbnailUrl(file, 80, 80) // 2x the size of the preview
     return thumbnail
   } catch (err) {
-    console.error("Error making thumbnail:", err)
+    console.error('Error making thumbnail:', err)
   }
 }
 const defaultUploadProgress: [number, number] = [0, 1]
 
-const Share: React.FC = () => {
+const Share: FC = () => {
   const [file, setFile] = useState<File>()
   const [error, setError] = useState<Error>()
   const [isUsingModal, setIsUsingModal] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(defaultUploadProgress)
-  const [url, setUrl] = useState("")
-  const [, setCid] = useState("")
+  const [url, setUrl] = useState('')
+  const [, setCid] = useState('')
   const [uploadedFile, setUploadedFile] = useState<Upload>()
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
 
@@ -70,13 +70,13 @@ const Share: React.FC = () => {
     let uploadedFile
     try {
       uploadedFile = await upload(file, {
-        onProgress: (progress, total) => setUploadProgress([progress, total]),
+        onProgress: (progress, total) => setUploadProgress([progress, total])
       })
     } catch (err) {
       setError(error)
       setIsUploading(false)
       setUploadProgress(defaultUploadProgress)
-      console.error("Error uploading file:", err)
+      console.error('Error uploading file:', err)
       return
     }
     setUrl(uploadedFile.url)
@@ -88,11 +88,11 @@ const Share: React.FC = () => {
       cid: uploadedFile.cid,
       url: uploadedFile.url,
       mimeType: file.type,
-      extension: file.name.split(".").pop(),
-      thumbnail: file.type.startsWith("image/")
+      extension: file.name.split('.').pop(),
+      thumbnail: file.type.startsWith('image/')
         ? await createThumbnail(file)
         : undefined,
-      date: new Date().toISOString(),
+      date: new Date().toISOString()
     }
     setUploadedFiles([newUpload, ...uploadedFiles])
     setUploadedFile(newUpload)
@@ -107,11 +107,13 @@ const Share: React.FC = () => {
       <IonList className="ion-margin-top ion-margin-bottom">
         <IonItem className="durin-file">
           <IonThumbnail slot="start" className="durin-file_thumbnail">
-            {uploadedFile.thumbnail ? (
+            {uploadedFile.thumbnail
+              ? (
               <IonImg src={uploadedFile.thumbnail} alt={uploadedFile.extension} />
-            ) : (
+                )
+              : (
               <FileIcon extension={uploadedFile.extension} />
-            )}
+                )}
           </IonThumbnail>
 
           <IonLabel>
@@ -140,7 +142,7 @@ const Share: React.FC = () => {
           className="durin-button-alt"
           routerLink="/files"
           onClick={() => {
-            setUrl("")
+            setUrl('')
             setIsUsingModal(true)
           }}
         >
@@ -150,7 +152,7 @@ const Share: React.FC = () => {
           expand="block"
           className="durin-button"
           onClick={() => {
-            setUrl("")
+            setUrl('')
             setIsUsingModal(true)
           }}
         >
@@ -183,17 +185,19 @@ const Share: React.FC = () => {
       <IonButton
         disabled={!file || isUploading}
         onClick={uploadFile}
-        className={`durin-button ${!isUploading && "durin-hide-when-disabled"}`}
+        className={`durin-button ${!isUploading && 'durin-hide-when-disabled'}`}
       >
-        <IonLabel>{isUploading ? "Uploading..." : "Upload"}</IonLabel>
+        <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>
       </IonButton>
 
-      {isUploading ? <div className="durin-pulse">
+      {isUploading
+        ? <div className="durin-pulse">
         <span></span>
         <span></span>
         <span></span>
         <span></span>
-      </div> : null}
+      </div>
+        : null}
 
       {isUploading && file && file.size > PROGRESS_THRESHOLD && (
         <IonProgressBar value={uploadProgress[0] / uploadProgress[1]} />
@@ -205,25 +209,27 @@ const Share: React.FC = () => {
       )}
     </div>
   )
-  const mainContent = url ? (
+  const mainContent = url
+    ? (
     <PageContainer>
       <div className="durin-page-container flex-col">{successContent}</div>
     </PageContainer>
-  ) : (
+      )
+    : (
     <PageContainer>
       <div className="durin-page-container flex-col center">
         <div>{uploadContent}</div>
       </div>
     </PageContainer>
-  )
+      )
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   const uploadModal = (
     <IonModal
       className="share-page"
       isOpen={isUsingModal}
       onDidDismiss={() => {
-        setUrl("")
+        setUrl('')
         setIsUsingModal(false)
       }}
       canDismiss={true}

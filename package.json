@@ -3,28 +3,25 @@
   "version": "1.0.1",
   "private": true,
   "dependencies": {
+    "@awesome-cordova-plugins/clipboard": "^6.0.0",
     "@awesome-cordova-plugins/core": "^6.0.0",
     "@awesome-cordova-plugins/zeroconf": "^6.0.0",
-    "@capacitor/android": "^3.4.3",
-    "@capacitor/app": "^1.1.0",
-    "@capacitor/clipboard": "*",
-    "@capacitor/core": "^4.0",
-    "@capacitor/haptics": "^1.1.4",
-    "@capacitor/ios": "^3.4.3",
-    "@capacitor/keyboard": "^1.2.1",
-    "@capacitor/splash-screen": "^1.2.2",
-    "@capacitor/status-bar": "^1.0.7",
+    "@capacitor/android": "^4.0.0",
+    "@capacitor/app": "^4.0.0",
+    "@capacitor/core": "^4.0.0",
+    "@capacitor/haptics": "^4.0.0",
+    "@capacitor/ios": "^4.0.0",
+    "@capacitor/keyboard": "^4.0.0",
+    "@capacitor/splash-screen": "^4.0.0",
+    "@capacitor/status-bar": "^4.0.0",
     "@ionic/react": "^6.0.0",
     "@ionic/react-router": "^6.0.0",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^12.6.3",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-zeroconf": "^1.4.2",
-    "eventemitter3": "^4.0.7",
+    "eventemitter3": "^5.0.0",
     "image-thumbnail-generator": "^1.0.5",
     "ionicons": "^6.0.0",
-    "is-ipfs": "^6.0.2",
+    "is-ipfs": "^8.0.0",
     "lodash": "^4.17.21",
     "luxon": "^2.3.2",
     "moize": "^6.1.1",
@@ -41,6 +38,7 @@
     "typescript": "^4.1.3",
     "use-persisted-state": "^0.3.3",
     "web3.storage": "^4.0.0",
+    "webworker": "^0.8.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
     "workbox-cacheable-response": "^5.1.4",
@@ -73,14 +71,9 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "semi": [
-        "error",
-        "never"
-      ]
-    }
+      "react-app/jest",
+      "standard"
+    ]
   },
   "browserslist": {
     "production": [
@@ -95,20 +88,27 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "^3.4.0",
+    "@capacitor/cli": "^4.0.0",
     "@ionic/cli": "^6.0.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
     "@types/jest": "^26.0.20",
     "@types/lodash": "^4.14.182",
     "@types/luxon": "^2.3.2",
     "@types/node": "^18.0.0",
-    "@types/react": "^16.14.3",
-    "@types/react-dom": "^16.9.10",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@types/react-file-icon": "^1.0.1",
-    "@types/react-router": "^5.1.11",
-    "@types/react-router-dom": "^5.1.7",
+    "@types/react-router": "^5.0.0",
+    "@types/react-router-dom": "^5.0.0",
     "@types/use-persisted-state": "^0.3.1",
     "cordova-res": "^0.15.4",
     "eslint": "^8.7.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.6.0",
+    "eslint-plugin-promise": "^6.1.1",
     "sass": "^1.52.0"
   }
 }

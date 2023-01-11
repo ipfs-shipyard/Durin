@@ -106,7 +106,7 @@ Zeroconf.watch('_ipfs-discovery._udp.', 'local.').subscribe((result) => {
 })
 
 export const useNodes = () => {
-  const [ nodes, setNodes ] = useNodeState(defaultNodes)
+  const [nodes, setNodes] = useNodeState(defaultNodes)
 
   // speed test nodes on startup
   useEffect(() => {
@@ -137,7 +137,7 @@ export const useNodes = () => {
       if (ips.length === 0) return
       setNodes((nodes) => nodes.filter((n) => ips.includes(n.host)))
     }
-  
+
     NodeListener.on('resolved', addNode)
     NodeListener.on('removed', removeNode)
     return () => {
@@ -147,9 +147,9 @@ export const useNodes = () => {
   }, [])
 
   const ranked = useMemo(() => {
-    const ranked = orderBy(uniqBy(nodes, 'host'), [ 'speed' ], 'asc').filter((node) => node.healthy)
-    return ranked.length === 0 ? [ defaultNodes[0] ] : ranked
-  }, [ nodes ])
+    const ranked = orderBy(uniqBy(nodes, 'host'), ['speed'], 'asc').filter((node) => node.healthy)
+    return ranked.length === 0 ? [defaultNodes[0]] : ranked
+  }, [nodes])
 
   return { nodes: ranked }
 }

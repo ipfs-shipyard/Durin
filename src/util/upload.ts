@@ -15,7 +15,7 @@ export const maxChunkSize = 1048576 // MAX_BLOCK_SIZE in SDK
 
 const upload = async (file: File, options?: Options) => {
   let progress = 0
-  const cid = await client.put([ file ], {
+  const cid = await client.put([file], {
     maxChunkSize, // 1mb
     onStoredChunk: (chunkSize) => {
       progress += chunkSize
@@ -23,7 +23,7 @@ const upload = async (file: File, options?: Options) => {
     }
   })
   return {
-    cid: cid,
+    cid,
     url: `ipfs://${cid}/${file.name}`
   }
 }

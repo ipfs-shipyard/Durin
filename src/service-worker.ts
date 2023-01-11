@@ -14,6 +14,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { StaleWhileRevalidate } from 'workbox-strategies'
 
+// eslint-disable-next-line no-undef
 declare const self: ServiceWorkerGlobalScope
 
 clientsClaim()
@@ -27,7 +28,7 @@ precacheAndRoute(self.__WB_MANIFEST)
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
-const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$')
+const fileExtensionRegexp = /\/[^/?]+\\.[^/]+$/
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
   ({ request, url }: { request: Request; url: URL }) => {
@@ -64,8 +65,8 @@ registerRoute(
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 50 }),
-    ],
+      new ExpirationPlugin({ maxEntries: 50 })
+    ]
   })
 )
 
