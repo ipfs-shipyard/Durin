@@ -1,5 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli'
-import { KeyboardResize } from '@capacitor/keyboard'
+import { KeyboardResize, KeyboardStyle } from '@capacitor/keyboard'
+
+/// <reference types="@capacitor/splash-screen" />
+/// <reference types="@capacitor/keyboard" />
+/// <reference types="@awesome-cordova-plugins/clipboard" />
 
 const config: CapacitorConfig = {
   appId: 'ai.protocol.durin',
@@ -12,8 +16,8 @@ const config: CapacitorConfig = {
     },
     Clipboard: {},
     Keyboard: {
-      style: 'dark',
-      resize: 'none' as KeyboardResize
+      style: KeyboardStyle.Dark,
+      resize: KeyboardResize.None
     }
   }
 }

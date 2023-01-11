@@ -6,7 +6,4 @@ node_modules/
 *.log
 build/
 resources/*/
-.env
 .env.local
-yarn.lock
-capacitor.config.json
