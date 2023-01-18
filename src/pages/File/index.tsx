@@ -102,7 +102,7 @@ const File: FC<ModalProps> = ({ upload, onDismiss }) => {
         <h2 className="durin-file_name">{foundFile.name}</h2>
         <IonLabel className="durin-label">File URL:</IonLabel>
         <p>
-          <a className="durin-file_url" href={foundFile.url}>
+          <a className="durin-file_url" href={transformForShare(foundFile.url, settings.node)}>
             {transformForShare(foundFile.url, settings.node)}
           </a>
         </p>
