@@ -12,7 +12,7 @@
 Created using [ionic](https://ionicframework.com/docs/cli/commands/start).
 
 - Handles `ipfs://` URLs and kicks them to dweb.link
-  - [ipfs://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq/wiki/](ipfs://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq/wiki/) to [https://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq.ipfs.dweb.link/wiki/](https://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq.ipfs.dweb.link/wiki/)
+  - [ipfs://bafybeihju6xivs4ipvfljsdgp4t4lfxgln3s464ie2pw5fxodgkr23pfzy/E85BE0E1-32B9-410F-87EB-4A8C882ECA12.png](ipfs://bafybeihju6xivs4ipvfljsdgp4t4lfxgln3s464ie2pw5fxodgkr23pfzy/E85BE0E1-32B9-410F-87EB-4A8C882ECA12.png) to [https://bafybeihju6xivs4ipvfljsdgp4t4lfxgln3s464ie2pw5fxodgkr23pfzy.ipfs.dweb.link/E85BE0E1-32B9-410F-87EB-4A8C882ECA12.png](https://bafybeihju6xivs4ipvfljsdgp4t4lfxgln3s464ie2pw5fxodgkr23pfzy.ipfs.dweb.link/E85BE0E1-32B9-410F-87EB-4A8C882ECA12.png)
 - Handles `ipns://` URLs and kicks them to dweb.link
   - [ipns://en.wikipedia-on-ipfs.org/wiki/](ipns://en.wikipedia-on-ipfs.org/wiki/) to [https://en-wikipedia--on--ipfs-org.ipns.dweb.link/wiki/](https://en-wikipedia--on--ipfs-org.ipns.dweb.link/wiki/)
 
