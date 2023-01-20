@@ -22,7 +22,7 @@ import { useState, FC } from 'react'
 import QRCode from 'react-qr-code'
 import { Clipboard } from '@awesome-cordova-plugins/clipboard'
 
-type Upload = {
+export type Upload = {
   name: string
   cid: string
   url: string

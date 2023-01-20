@@ -21,7 +21,7 @@ import Browse from './pages/Browse'
 import Share from './pages/Share'
 import Settings from './pages/Settings'
 import Files from './pages/Files'
-import File from './pages/File'
+import File, { Upload } from './pages/File'
 import createPersistedState from 'use-persisted-state'
 
 /* Core CSS required for Ionic components to work properly */
@@ -44,17 +44,29 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 import './app.scss'
 
+const CID_REGEXP = /(Qm[1-9A-HJ-NP-Za-km-z]{44,}?|b[A-Za-z2-7]{58,}?|B[A-Z2-7]{58,}?|z[1-9A-HJ-NP-Za-km-z]{48,}?|F[0-9A-F]{50,}?)/
+
 setupIonicReact({
   mode: 'ios'
 })
 
 const App: FC = () => {
-  const useUploadedFiles = createPersistedState<[]>('uploaded-files')
-  const [uploadedFiles] = useUploadedFiles([])
+  const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
+  const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const hasFiles = uploadedFiles.length > 0
 
   useEffect(() => {
     SplashScreen.hide()
+
+    if (uploadedFiles.some((f) => !f.cid)) {
+      setUploadedFiles(uploadedFiles.map((file: Upload) => {
+        if (!file.cid) {
+          const extractedCID = CID_REGEXP.exec(file.url)
+          if (extractedCID && extractedCID.length) file.cid = extractedCID[0]
+        }
+        return file
+      }))
+    }
   }, [])
   return (
     <IonApp>
