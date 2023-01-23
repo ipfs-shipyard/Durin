@@ -6,7 +6,6 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonModal,
   IonImg,
   IonHeader,
   IonProgressBar,
@@ -56,7 +55,6 @@ const defaultUploadProgress: [number, number] = [0, 1]
 const Share: FC = () => {
   const [file, setFile] = useState<File>()
   const [error, setError] = useState<Error>()
-  const [isUsingModal, setIsUsingModal] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(defaultUploadProgress)
   const [url, setUrl] = useState('')
@@ -66,8 +64,6 @@ const Share: FC = () => {
   const [settings] = useSettings({
     node: 'auto'
   })
-
-  const hasFiles = uploadedFiles.length > 0
 
   const uploadFile = async () => {
     if (!file) return
@@ -102,8 +98,6 @@ const Share: FC = () => {
     setUploadedFiles([newUpload, ...uploadedFiles])
     setUploadedFile(newUpload)
     setFile(undefined)
-
-    if (!hasFiles) setIsUsingModal(true) // open the success state in the modal if its their first upload
   }
 
   const successContent = uploadedFile && (
@@ -148,7 +142,6 @@ const Share: FC = () => {
           routerLink="/files"
           onClick={() => {
             setUrl('')
-            setIsUsingModal(true)
           }}
         >
           Go to Uploads List
@@ -158,7 +151,6 @@ const Share: FC = () => {
           className="durin-button"
           onClick={() => {
             setUrl('')
-            setIsUsingModal(true)
           }}
         >
           Upload Another
@@ -215,37 +207,14 @@ const Share: FC = () => {
     </div>
   )
   const mainContent = url
-    ? (
-    <PageContainer>
+    ? <PageContainer>
       <div className="durin-page-container flex-col">{successContent}</div>
     </PageContainer>
-      )
-    : (
-    <PageContainer>
+    : <PageContainer>
       <div className="durin-page-container flex-col center">
         <div>{uploadContent}</div>
       </div>
     </PageContainer>
-      )
-
-  // eslint-disable-next-line no-unused-vars
-  const uploadModal = (
-    <IonModal
-      className="share-page"
-      isOpen={isUsingModal}
-      onDidDismiss={() => {
-        setUrl('')
-        setIsUsingModal(false)
-      }}
-      canDismiss={true}
-      breakpoints={[0, 0.5, 1]}
-      initialBreakpoint={0.5}
-    >
-      <div className="share-page-modal-inner">
-        {url ? successContent : uploadContent}
-      </div>
-    </IonModal>
-  )
 
   return (
     <IonPage className="share-page">

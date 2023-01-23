@@ -67,7 +67,8 @@ const App: FC = () => {
         return file
       }))
     }
-  }, [])
+  })
+
   return (
     <IonApp>
       <IonReactRouter>
