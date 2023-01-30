@@ -1,16 +1,20 @@
+import { IonContent } from '@ionic/react'
+import { FC } from 'react'
 import './index.scss'
 
 interface ContainerProps {
-  title?: string;
-  text?: string;
+  title?: string
+  text?: string
 }
 
-const PageContainer: React.FC<ContainerProps> = ({ title, text, children }) => {
+const PageContainer: FC<ContainerProps> = ({ title, text, children }) => {
   return (
     <div className="page-container-component">
-      {title && <strong>{title}</strong>}
-      {text && <p>{text}</p>}
-      {children}
+      <IonContent className="ion-padding">
+        {title && <strong>{title}</strong>}
+        {text && <p>{text}</p>}
+        {children}
+      </IonContent>
     </div>
   )
 }

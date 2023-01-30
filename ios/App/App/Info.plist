@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -43,13 +43,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_ipfs-discovery._udp.</string>
+	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>The app needs access to your camera when you choose to upload photos or videos directly from the Camera app. This is only used when you click "Take a Photo/Video" on the upload page.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>The app needs access to find IPFS nodes on your local network, which are utilized for viewing files. If you have no need to use a local IPFS node, you should decline this.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>The app needs access to your camera when you choose to upload videos directly from the Camera app. This is only used when you click "Take a Photo/Video" on the upload page.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -73,20 +80,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>NSBonjourServices</key>
-	<array>
-	<string>_ipfs-discovery._udp.</string>
-	</array>
-
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>The app needs access to find IPFS nodes on your local network, which are utilized for viewing files. If you have no need to use a local IPFS node, you should decline this.</string>
-
-	<key>NSCameraUsageDescription</key>
-	<string>The app needs access to your camera when you choose to upload photos or videos directly from the Camera app. This is only used when you click "Take a Photo/Video" on the upload page.</string>
-
-	<key>NSMicrophoneUsageDescription</key>
-	<string>The app needs access to your camera when you choose to upload videos directly from the Camera app. This is only used when you click "Take a Photo/Video" on the upload page.</string>
 </dict>
 </plist>

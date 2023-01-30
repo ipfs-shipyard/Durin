@@ -20,6 +20,10 @@ export type Node = {
   speed?: number
 }
 
+export type SettingsObject = {
+  node: string
+}
+
 export const transform = (url: string, node: Node) => {
   // support opening just a CID w/ no protocol
   if (cid(url) || cid(url.split('/')[0].split('?')[0])) url = `ipfs://${url}`
@@ -59,20 +63,21 @@ export const transform = (url: string, node: Node) => {
   throw new Error(`Failed to transform URL: ${url}`)
 }
 
-export const transformForShare = (url: string) =>
-  transform(url, defaultNodes[0])
+export const transformForShare = (url: string, node?: string) => {
+  const gateway = defaultNodes.find(n => n.host === node) || defaultNodes[0]
+  return transform(url, gateway)
+}
 
 export const open = (url: string, node?: Node) => {
   console.log('Attempting to open:', url)
 
-  const transformed = node ? transform(url, node) : transformForShare(url)
+  const transformed = node ? transform(url, node) : transformForShare(url, node)
   if (transformed) window.open(transformed)
 }
 
 // presuppose that dweb.link is our best bet, but include local so it health checks for it on startup
 export const defaultNodes: Node[] = [
   { host: 'dweb.link', healthy: true, remote: true },
-  { host: 'ipfs-gateway.cloud', healthy: true, remote: true },
   { host: 'w3s.link', healthy: true, remote: true },
   { host: 'cf-ipfs.com', healthy: true, remote: true },
   { host: 'localhost', healthy: false, remote: false, port: 8080 }
@@ -107,7 +112,7 @@ Zeroconf.watch('_ipfs-discovery._udp.', 'local.').subscribe((result) => {
 })
 
 export const useNodes = () => {
-  const [ nodes, setNodes ] = useNodeState(defaultNodes)
+  const [nodes, setNodes] = useNodeState(defaultNodes)
 
   // speed test nodes on startup
   useEffect(() => {
@@ -138,7 +143,7 @@ export const useNodes = () => {
       if (ips.length === 0) return
       setNodes((nodes) => nodes.filter((n) => ips.includes(n.host)))
     }
-  
+
     NodeListener.on('resolved', addNode)
     NodeListener.on('removed', removeNode)
     return () => {
@@ -148,9 +153,9 @@ export const useNodes = () => {
   }, [])
 
   const ranked = useMemo(() => {
-    const ranked = orderBy(uniqBy(nodes, 'host'), [ 'speed' ], 'asc').filter((node) => node.healthy)
-    return ranked.length === 0 ? [ defaultNodes[0] ] : ranked
-  }, [ nodes ])
+    const ranked = orderBy(uniqBy(nodes, 'host'), ['speed'], 'asc').filter((node) => node.healthy)
+    return ranked.length === 0 ? [defaultNodes[0]] : ranked
+  }, [nodes])
 
   return { nodes: ranked }
 }

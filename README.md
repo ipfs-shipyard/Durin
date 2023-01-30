@@ -1,22 +1,30 @@
-# Durin
+![image](https://user-images.githubusercontent.com/1844554/208213758-c967debb-2097-4967-9790-58545e73bd6f.png)
 
-Native mobile apps for share actions on iOS and Android
+## Availability
+
+[<img src="https://user-images.githubusercontent.com/1844554/208214016-4cdbe4e4-f7d6-4ad6-bfda-44d7d5e4ee6d.png" height="50">](https://apps.apple.com/us/app/durin/id1613391995)
+[<img src="https://user-images.githubusercontent.com/1844554/208214017-ce2b9ed9-2f25-4d07-b6c6-5a7a41bc2dfe.png" height="50">](https://play.google.com/store/apps/details?id=ai.protocol.durin)
+
+> [Durin is an iOS and Android app for exploring IPFS use-cases. Initially with read and share flows, but a place where we can experiment with light client protocol implementation, proximity transports and the "where's my stuff" problem.](https://twitter.com/dietrich/status/1540366578319081472)
 
 ## Project Details
 
 Created using [ionic](https://ionicframework.com/docs/cli/commands/start).
 
 - Handles `ipfs://` URLs and kicks them to dweb.link
-  - `ipfs://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq/wiki/` to `https://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq.ipfs.dweb.link/wiki/`
-  - [Test Link](ipfs://bafybeiemxf5abjwjbikoz4mc3a3dla6ual3jsgpdr4cjr3oz3evfyavhwq/wiki/)
+  - [ipfs://bafybeihju6xivs4ipvfljsdgp4t4lfxgln3s464ie2pw5fxodgkr23pfzy/E85BE0E1-32B9-410F-87EB-4A8C882ECA12.png](ipfs://bafybeihju6xivs4ipvfljsdgp4t4lfxgln3s464ie2pw5fxodgkr23pfzy/E85BE0E1-32B9-410F-87EB-4A8C882ECA12.png) to [https://bafybeihju6xivs4ipvfljsdgp4t4lfxgln3s464ie2pw5fxodgkr23pfzy.ipfs.dweb.link/E85BE0E1-32B9-410F-87EB-4A8C882ECA12.png](https://bafybeihju6xivs4ipvfljsdgp4t4lfxgln3s464ie2pw5fxodgkr23pfzy.ipfs.dweb.link/E85BE0E1-32B9-410F-87EB-4A8C882ECA12.png)
 - Handles `ipns://` URLs and kicks them to dweb.link
-  - `ipns://en.wikipedia-on-ipfs.org/wiki/` to `https://en-wikipedia--on--ipfs-org.ipns.dweb.link/wiki/`
-  - [Test Link](ipns://en.wikipedia-on-ipfs.org/wiki/)
+  - [ipns://en.wikipedia-on-ipfs.org/wiki/](ipns://en.wikipedia-on-ipfs.org/wiki/) to [https://en-wikipedia--on--ipfs-org.ipns.dweb.link/wiki/](https://en-wikipedia--on--ipfs-org.ipns.dweb.link/wiki/)
 
 ## Installation
 
-- Make sure you have Xcode installed: https://apps.apple.com/us/app/xcode/id497799835?mt=12
-- Copy `.env` to a new file `.env.local` - replace the token with one from https://web3.storage
+- Make sure you have [Xcode installed](https://apps.apple.com/us/app/xcode/id497799835?mt=12)
+- Create a new f ile `.env.local` - replace YOUR_TOKEN with one from [web3.storage](https://web3.storage)
+
+```
+REACT_APP_WEB3_STORAGE_TOKEN=YOUR_TOKEN
+```
+
 - Run the following commands:
 
 ```sh
@@ -52,3 +60,7 @@ Note: Firefox and Chrome for iOS do not support custom protocols being typed int
 To test on Android, run `npm run android` which will open the studio, then using the UI run it in an emulator.
 
 Note: Android chrome [does not support custom protocols](https://developer.chrome.com/docs/multidevice/android/intents/) - you will need to type `intent://durin/CID_GOES_HERE#Intent;scheme=ipfs;end`
+
+## Credits
+
+Made with :heart: by [Justice Engineering](https://justice.engineering) & [Trigram](https://www.trigram.co/)

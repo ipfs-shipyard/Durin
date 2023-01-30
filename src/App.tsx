@@ -1,9 +1,8 @@
 import { Redirect, Route } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, FC } from 'react'
 import {
   IonApp,
   IonIcon,
-  IonLabel,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
@@ -11,11 +10,19 @@ import {
   setupIonicReact
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { planet, cloudUpload, settings } from 'ionicons/icons'
+import {
+  searchOutline,
+  cloudUploadOutline,
+  settingsOutline,
+  listOutline
+} from 'ionicons/icons'
 import { SplashScreen } from '@capacitor/splash-screen'
 import Browse from './pages/Browse'
 import Share from './pages/Share'
 import Settings from './pages/Settings'
+import Files from './pages/Files'
+import File, { Upload } from './pages/File'
+import createPersistedState from 'use-persisted-state'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -35,47 +42,75 @@ import '@ionic/react/css/display.css'
 
 /* Theme variables */
 import './theme/variables.css'
+import './app.scss'
 
-setupIonicReact()
+const CID_REGEXP = /(Qm[1-9A-HJ-NP-Za-km-z]{44,}?|b[A-Za-z2-7]{58,}?|B[A-Z2-7]{58,}?|z[1-9A-HJ-NP-Za-km-z]{48,}?|F[0-9A-F]{50,}?)/
 
-const App: React.FC = () => {
+setupIonicReact({
+  mode: 'ios'
+})
+
+const App: FC = () => {
+  const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
+  const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
+  const hasFiles = uploadedFiles.length > 0
+
   useEffect(() => {
     SplashScreen.hide()
-  }, [])
-  return <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/view">
-            <Browse />
-          </Route>
-          <Route exact path="/share">
-            <Share />
-          </Route>
-          <Route path="/settings">
-            <Settings />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/view" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="view" href="/view">
-            <IonIcon icon={planet} />
-            <IonLabel>Browse</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="share" href="/share">
-            <IonIcon icon={cloudUpload} />
-            <IonLabel>Share</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="settings" href="/settings">
-            <IonIcon icon={settings} />
-            <IonLabel>Settings</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
+
+    if (uploadedFiles.some((f) => !f.cid)) {
+      setUploadedFiles(uploadedFiles.map((file: Upload) => {
+        if (!file.cid) {
+          const extractedCID = CID_REGEXP.exec(file.url)
+          if (extractedCID && extractedCID.length) file.cid = extractedCID[0]
+        }
+        return file
+      }))
+    }
+  })
+
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path="/view">
+              <Browse />
+            </Route>
+            <Route exact path="/files">
+              <Files />
+            </Route>
+            <Route path="/files/:id" component={File} />
+            <Route exact path="/share">
+              <Share />
+            </Route>
+            <Route path="/settings">
+              <Settings />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/view" />
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="view" href="/view">
+              <IonIcon icon={searchOutline} />
+            </IonTabButton>
+            <IonTabButton tab="share" href="/share">
+              <IonIcon icon={cloudUploadOutline} />
+            </IonTabButton>
+            {hasFiles && (
+              <IonTabButton tab="files" href="/files">
+                <IonIcon icon={listOutline} />
+              </IonTabButton>
+            )}
+            <IonTabButton tab="settings" href="/settings">
+              <IonIcon icon={settingsOutline} />
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  )
 }
 
 export default App
