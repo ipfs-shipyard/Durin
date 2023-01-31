@@ -15,7 +15,6 @@ import createPersistedState from 'use-persisted-state'
 import { FC } from 'react'
 
 import './index.scss'
-import ShortcutLinks from '../../components/Shortcuts'
 
 const Settings: FC = () => {
   const { nodes } = useNodes()
@@ -66,11 +65,6 @@ const Settings: FC = () => {
                 </IonItem>
               ))}
             </IonRadioGroup>
-          </div>
-
-          <div className="durin-settings-group">
-            <IonLabel className="durin-label">Shortcuts</IonLabel>
-              <ShortcutLinks />
           </div>
         </div>
       </PageContainer>

@@ -12,7 +12,6 @@ import {
 import { useState, FC } from 'react'
 import createPersistedState from 'use-persisted-state'
 import PageContainer from '../../components/PageContainer'
-import ShortcutLinks from '../../components/Shortcuts'
 import { useNodes, open } from '../../util/ipfs'
 import './index.scss'
 
@@ -97,8 +96,6 @@ const Browse: FC = () => {
           <li>Checkout the upload tab</li>
           <li>View stats about your connections on the settings tab.</li>
           </ol>
-          <p>Visit some things on the IPFS Network:</p>
-          <ShortcutLinks />
           <IonButton className="durin-button" onClick={() => setShowIntro(false)}>Dismiss</IonButton>
         </div>
       </IonModal>
