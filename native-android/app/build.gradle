@@ -1,6 +1,7 @@
 
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -29,6 +30,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'ai.protocol.ipfs.java'
 }
 
 dependencies {
@@ -39,6 +41,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
     implementation 'com.github.ipld:java-cid:v1.3.1'
+    implementation 'androidx.core:core-ktx:+'
 
 
     testImplementation 'junit:junit:4.13.2'
