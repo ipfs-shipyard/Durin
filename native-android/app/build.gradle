@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "ai.protocol.ipfs.java"
