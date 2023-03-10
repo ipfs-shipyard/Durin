@@ -7,15 +7,20 @@ import {
   IonLabel,
   IonRadioGroup,
   IonItem,
-  IonRadio
+  IonRadio,
+  IonNote
 } from '@ionic/react'
-import { useNodes, defaultNodes, SettingsObject } from '../../util/ipfs'
+import { useNodes, defaultNodes, SettingsObject, Node } from '../../util/ipfs'
 import PageContainer from '../../components/PageContainer'
 import createPersistedState from 'use-persisted-state'
 import { FC } from 'react'
 
 import './index.scss'
 import ShortcutLinks from '../../components/Shortcuts'
+
+function displayRacing (node: Node) {
+  return node.hot ? '🏁' : null
+}
 
 const Settings: FC = () => {
   const { nodes } = useNodes()
@@ -51,7 +56,7 @@ const Settings: FC = () => {
               {nodes.map((n) => (
                 <IonItem key={n.host}>
                   <IonLabel>
-                    {n.host} - {n.speed}ms
+                    {n.host} {displayRacing(n)} - {n.speed}ms
                   </IonLabel>
                   <IonRadio slot="end" value={n.host}></IonRadio>
                 </IonItem>
@@ -66,6 +71,9 @@ const Settings: FC = () => {
                 </IonItem>
               ))}
             </IonRadioGroup>
+            <div className="ion-text-center">
+              <IonNote>🏁 indicates a Racing Gateway</IonNote>
+            </div>
           </div>
 
           <div className="durin-settings-group">
