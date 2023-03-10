@@ -18,6 +18,7 @@ export type Node = {
   remote: boolean
   healthy: boolean
   speed?: number
+  hot?: boolean
 }
 
 export type SettingsObject = {
@@ -75,29 +76,33 @@ export const open = (url: string, node?: Node) => {
   if (transformed) window.open(transformed)
 }
 
-// presuppose that dweb.link is our best bet, but include local so it health checks for it on startup
+// presuppose that w3s.link is our best bet, but include local so it health checks for it on startup
 export const defaultNodes: Node[] = [
+  { host: 'w3s.link', healthy: true, remote: true, hot: true },
   { host: 'dweb.link', healthy: true, remote: true },
-  { host: 'w3s.link', healthy: true, remote: true },
   { host: 'cf-ipfs.com', healthy: true, remote: true },
+  { host: '4everland.io', healthy: true, remote: true },
+  { host: 'nftstorage.link', healthy: true, remote: true, hot: true },
   { host: 'localhost', healthy: false, remote: false, port: 8080 }
 ]
 
-const healthCheck = memo(async (remote: boolean, host: string, port?: number) => {
+const healthCheck = memo(async (remote: boolean, host: string, port?: number, hot?: boolean) => {
   try {
     const start = Date.now()
     const url = transform(`ipfs://${TEST_CID}?now=${Date.now()}`, { host, port, remote, healthy: true })
     const res = await fetch(url)
     if (res.status !== 200) return { healthy: false }
-    return { healthy: true, speed: Date.now() - start }
+    let speed = Date.now() - start
+    if (hot) speed = speed - 1000 // prioritize hot gateways as they are more consistent
+    return { healthy: true, speed, hot }
   } catch (_) {
     return { healthy: false }
   }
 }, { isPromise: true, isDeepEqual: true, maxAge: MAX_CHECK_INTERVAL, maxSize: 100 })
 
 const getNodeStatus = async (node: Partial<Node>): Promise<Node> => {
-  const { healthy, speed } = await healthCheck(node.remote!, node.host!, node.port)
-  return { ...node, healthy, speed } as Node
+  const { healthy, speed, hot } = await healthCheck(node.remote!, node.host!, node.port, node.hot)
+  return { ...node, healthy, speed, hot } as Node
 }
 
 const getNodeList = async (nodes: Partial<Node>[]): Promise<Node[]> =>
