@@ -16,6 +16,7 @@ import {
   settingsOutline,
   listOutline
 } from 'ionicons/icons'
+import { Filesystem } from '@capacitor/filesystem'
 import { SplashScreen } from '@capacitor/splash-screen'
 import Browse from './pages/Browse'
 import Share from './pages/Share'
@@ -23,6 +24,7 @@ import Settings from './pages/Settings'
 import Files from './pages/Files'
 import File, { Upload } from './pages/File'
 import createPersistedState from 'use-persisted-state'
+import { SendIntent } from 'send-intent'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -43,11 +45,37 @@ import '@ionic/react/css/display.css'
 /* Theme variables */
 import './theme/variables.css'
 import './app.scss'
+// import upload from './util/upload'
 
 const CID_REGEXP = /(Qm[1-9A-HJ-NP-Za-km-z]{44,}?|b[A-Za-z2-7]{58,}?|B[A-Z2-7]{58,}?|z[1-9A-HJ-NP-Za-km-z]{48,}?|F[0-9A-F]{50,}?)/
 
 setupIonicReact({
   mode: 'ios'
+})
+
+const handleIntentReceived = () => {
+  SendIntent.checkSendIntentReceived()
+    .then((result: any) => {
+      if (result) {
+        console.log('SendIntent received')
+        console.log(JSON.stringify(result))
+      }
+      if (result.url) {
+        const resultUrl = decodeURIComponent(result.url)
+        Filesystem.readFile({ path: resultUrl })
+          .then((content) => {
+            // TODO: Convert this result to a format compatible with upload()
+            // upload(...)
+          })
+          .catch((err) => console.error(err))
+      }
+    })
+    .catch((err) => console.error(err))
+}
+handleIntentReceived()
+
+window.addEventListener('sendIntentReceived', () => {
+  handleIntentReceived()
 })
 
 const App: FC = () => {
