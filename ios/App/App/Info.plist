@@ -24,6 +24,16 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLName</key>
+			<string>durin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>durin</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLName</key>
 			<string>ipns</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
