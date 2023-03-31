@@ -9,6 +9,7 @@
     "@capacitor/android": "^4.0.0",
     "@capacitor/app": "^4.0.0",
     "@capacitor/core": "^4.0.0",
+    "@capacitor/filesystem": "^4.1.4",
     "@capacitor/haptics": "^4.0.0",
     "@capacitor/ios": "^4.0.0",
     "@capacitor/keyboard": "^4.0.0",

@@ -1149,6 +1149,11 @@
   dependencies:
     tslib "^2.1.0"
 
+"@capacitor/filesystem@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.npmjs.org/@capacitor/filesystem/-/filesystem-4.1.4.tgz"
+  integrity sha512-ivko1RNK4hq63xhMacq8D6D97N5/SAafTsrmY/pghYrG6Cl2SEY0+IgRu7V9/VWeN3FSplyUPucjUTAFQxXN5g==
+
 "@capacitor/haptics@^4.0.0":
   version "4.1.0"
   resolved "https://registry.npmjs.org/@capacitor/haptics/-/haptics-4.1.0.tgz"
