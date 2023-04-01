@@ -86,6 +86,7 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
     if (!location?.state?.url?.length) {
       return
     }
+    setUrl('')
     console.log('auto-upload initiated')
     // HACK: currently isn't using streams, just loads the whole file
     Filesystem.readFile({ path: location?.state?.url }).then(rfr => {
@@ -93,7 +94,7 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
       const realizedFile = new File([bits], location.state.url.split('/').pop()!, { type: location.state.type })
       uploadFile(realizedFile)
     })
-  }, [location?.state?.url])
+  }, [location, location?.state, location?.state?.url])
 
   const uploadFile = async (file: File|undefined) => {
     if (!file) return
