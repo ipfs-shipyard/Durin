@@ -76,6 +76,7 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
   const [url, setUrl] = useState('')
   const [, setCid] = useState('')
   const [uploadedFile, setUploadedFile] = useState<Upload>()
+  const [uploadCount, setUploadCount] = useState(0)
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const [settings] = useSettings({
     node: 'auto'
@@ -92,11 +93,16 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
     Filesystem.readFile({ path: location?.state?.url }).then(rfr => {
       const bits = base64.parse(rfr.data)
       const realizedFile = new File([bits], location.state.url.split('/').pop()!, { type: location.state.type })
-      uploadFile(realizedFile)
+      setFile(realizedFile)
+      setUploadCount(uploadCount + 1)
     })
   }, [location, location?.state, location?.state?.url])
 
-  const uploadFile = async (file: File|undefined) => {
+  useEffect(() => {
+    uploadFile()
+  }, [uploadCount])
+
+  const uploadFile = async () => {
     if (!file) return
     setIsUploading(true)
     let uploadedFile
@@ -212,7 +218,7 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
       ></input>
       <IonButton
         disabled={!file || isUploading}
-        onClick={() => uploadFile(file)}
+        onClick={() => uploadFile()}
         className={`durin-button ${!isUploading && 'durin-hide-when-disabled'}`}
       >
         <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>
