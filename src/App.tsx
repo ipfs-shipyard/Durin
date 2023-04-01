@@ -18,7 +18,7 @@ import {
 } from 'ionicons/icons'
 import { SplashScreen } from '@capacitor/splash-screen'
 import Browse from './pages/Browse'
-import Share from './pages/Share'
+import Share, { SharedComponentRouteProps } from './pages/Share'
 import Settings from './pages/Settings'
 import Files from './pages/Files'
 import File, { Upload } from './pages/File'
@@ -80,8 +80,16 @@ const App: FC = () => {
       if (url.indexOf('?') === -1) {
         open(url)
       } else {
-        // setOpenUrl(url);
-        // history.push("/share")
+        const urlParams = new URL(url).searchParams
+        const params: SharedComponentRouteProps = {
+          title: decodeURIComponent(urlParams.get('title') ?? ''),
+          description: decodeURIComponent(urlParams.get('description') ?? ''),
+          type: decodeURIComponent(urlParams.get('type') ?? ''),
+          url: decodeURIComponent(urlParams.get('url') ?? ''),
+          webPath: decodeURIComponent(urlParams.get('webPath') ?? '')
+        }
+
+        history.push('/share', params)
       }
     })
   }, [])
@@ -98,9 +106,7 @@ const App: FC = () => {
               <Files />
             </Route>
             <Route path="/files/:id" component={File} />
-            <Route exact path="/share">
-              <Share />
-            </Route>
+            <Route path="/share" component={Share} />
             <Route path="/settings">
               <Settings />
             </Route>

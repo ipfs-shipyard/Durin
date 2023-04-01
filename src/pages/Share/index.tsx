@@ -12,10 +12,12 @@ import {
   IonText,
   IonThumbnail
 } from '@ionic/react'
-import { useState, FC } from 'react'
+import { useState, FC, useEffect } from 'react'
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
+import { base64 } from 'rfc4648'
 import { getThumbnailUrl } from 'image-thumbnail-generator'
+import { Filesystem } from '@capacitor/filesystem'
 import { SettingsObject, transformForShare } from '../../util/ipfs'
 import upload, { maxChunkSize } from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
@@ -52,7 +54,21 @@ const createThumbnail = async (file: File): Promise<string | undefined> => {
 }
 const defaultUploadProgress: [number, number] = [0, 1]
 
-const Share: FC = () => {
+export interface SharedComponentRouteProps {
+  title: string
+  description: string
+  type: string
+  url: string
+  webPath: string
+}
+
+interface ShareComponentProps {
+  location: {
+    state: SharedComponentRouteProps
+  }
+}
+
+const Share: FC<ShareComponentProps> = ({ location }) => {
   const [file, setFile] = useState<File>()
   const [error, setError] = useState<Error>()
   const [isUploading, setIsUploading] = useState(false)
@@ -65,7 +81,21 @@ const Share: FC = () => {
     node: 'auto'
   })
 
-  const uploadFile = async () => {
+  useEffect(() => {
+    console.log('match:', location?.state)
+    if (!location?.state?.url?.length) {
+      return
+    }
+    console.log('auto-upload initiated')
+    // HACK: currently isn't using streams, just loads the whole file
+    Filesystem.readFile({ path: location?.state?.url }).then(rfr => {
+      const bits = base64.parse(rfr.data)
+      const realizedFile = new File([bits], location.state.url.split('/').pop()!, { type: location.state.type })
+      uploadFile(realizedFile)
+    })
+  }, [location?.state?.url])
+
+  const uploadFile = async (file: File|undefined) => {
     if (!file) return
     setIsUploading(true)
     let uploadedFile
@@ -181,7 +211,7 @@ const Share: FC = () => {
       ></input>
       <IonButton
         disabled={!file || isUploading}
-        onClick={uploadFile}
+        onClick={() => uploadFile(file)}
         className={`durin-button ${!isUploading && 'durin-hide-when-disabled'}`}
       >
         <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>
