@@ -1,6 +1,6 @@
 {
   "name": "durin",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "private": true,
   "dependencies": {
     "@awesome-cordova-plugins/clipboard": "^6.0.0",

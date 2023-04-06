@@ -61,6 +61,12 @@ To test on Android, run `npm run android` which will open the studio, then using
 
 Note: Android chrome [does not support custom protocols](https://developer.chrome.com/docs/multidevice/android/intents/) - you will need to type `intent://durin/CID_GOES_HERE#Intent;scheme=ipfs;end`
 
+### Publishing
+
+Apple: `ios/App/App/info.plist` version string needs to be bumped after each release. This prevents testflight from pulling and failing on already published version numbers.
+
+Android: `android/app/build.gradle` versionName needs to be bumped for new publishing. Also versionCode needs to be bumped with each manual upload of the signed bundle.
+
 ## Credits
 
 Made with :heart: by [Justice Engineering](https://justice.engineering) & [Trigram](https://www.trigram.co/)
