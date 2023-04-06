@@ -13,16 +13,26 @@ import androidx.compose.material3.Text
 import androidx.fragment.app.Fragment
 import io.ipfs.cid.Cid
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ComposeView
 
 
 class HomeFragment : Fragment() {
     // private var cidField: EditText? = null
     // private var launchButton: Button? = null
 
-    // TODO - using Jetpack Compose in a fragment.
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//
+
+        // TODO - start building compose UX
+        // TODO - find background image or color for the app (splash.png)
+        // TODO - put splash in the proper place
+
+        return ComposeView(requireContext()).apply {
+            setContent {
+                HelloWorld()
+            }
+        }
+
+    //
 //        val rootView = inflater.inflate(R.layout.fragment_home, container)
 //        cidField = rootView.findViewById(R.id.field_cid)
 //        launchButton = rootView.findViewById(R.id.btn_ipfs_intent)
@@ -46,7 +56,6 @@ class HomeFragment : Fragment() {
 //                Toast.makeText(requireContext(), "Invalid CID: " + exception.message, Toast.LENGTH_LONG).show()
 //            }
 //        })
-         return View(context)
     }
 
     @Composable
