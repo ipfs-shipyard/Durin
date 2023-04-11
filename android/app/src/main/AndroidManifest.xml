@@ -34,14 +34,14 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="ipfs" android:host="durin" />
+                <data android:scheme="ipfs" />
             </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="ipns" android:host="durin" />
+                <data android:scheme="ipns" />
             </intent-filter>
 
         </activity>
