@@ -70,7 +70,7 @@ class ShareViewController:  UIViewController {
                     value: $0.webPath?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? "")
             ]
         }.flatMap({ $0 })
-        var urlComps = URLComponents(string: "ipfs://;")!
+        var urlComps = URLComponents(string: "ipfs://")!
         urlComps.queryItems = queryItems
         openURL(urlComps.url!)
     }
