@@ -77,9 +77,10 @@ const App: FC = () => {
     NativeApp.addListener('appUrlOpen', ({ url }) => {
       console.log(`appUrlOpen: ${url}`)
 
-      if (url.indexOf('?') === -1) {
+      if (!url.startsWith('ipfs://?')) {
         open(url)
       } else {
+        console.log('pushing /share to history')
         const urlParams = new URL(url).searchParams
         const params: SharedComponentRouteProps = {
           title: decodeURIComponent(urlParams.get('title') ?? ''),

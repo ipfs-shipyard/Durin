@@ -83,7 +83,6 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
   })
 
   useEffect(() => {
-    console.log('match:', location?.state)
     if (!location?.state?.url?.length) {
       return
     }
