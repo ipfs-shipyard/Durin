@@ -32,7 +32,7 @@
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "react-file-icon": "^1.1.0",
-    "react-flex-lite": "^6.0.0",
+    "react-flex-lite": "^7.0.0",
     "react-qr-code": "^2.0.11",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
@@ -93,7 +93,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "^4.0.0",
-    "@ionic/cli": "^6.0.0",
+    "@ionic/cli": "^7.0.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
