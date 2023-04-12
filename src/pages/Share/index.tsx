@@ -12,7 +12,7 @@ import {
   IonText,
   IonThumbnail
 } from '@ionic/react'
-import { useState, FC, useEffect } from 'react'
+import { useState, FC, useEffect, useCallback } from 'react'
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
 import { base64 } from 'rfc4648'
@@ -70,17 +70,51 @@ interface ShareComponentProps {
 
 const Share: FC<ShareComponentProps> = ({ location }) => {
   const [file, setFile] = useState<File>()
-  const [error, setError] = useState<Error>()
+  const [, setError] = useState<Error>()
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(defaultUploadProgress)
   const [url, setUrl] = useState('')
   const [, setCid] = useState('')
   const [uploadedFile, setUploadedFile] = useState<Upload>()
-  const [uploadCount, setUploadCount] = useState(0)
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const [settings] = useSettings({
     node: 'auto'
   })
+
+  const uploadFile = useCallback(async (toUpload: File) => {
+    if (!toUpload) return
+    setIsUploading(true)
+    let uploadedFile
+    try {
+      uploadedFile = await upload(toUpload, {
+        onProgress: (progress, total) => setUploadProgress([progress, total])
+      })
+    } catch (err) {
+      setError(err as Error)
+      setIsUploading(false)
+      setUploadProgress(defaultUploadProgress)
+      console.error('Error uploading file:', err)
+      return
+    }
+    setUrl(uploadedFile.url)
+    setCid(uploadedFile.cid)
+    setIsUploading(false)
+    setUploadProgress(defaultUploadProgress)
+    const newUpload: Upload = {
+      name: toUpload.name,
+      cid: uploadedFile.cid,
+      url: uploadedFile.url,
+      mimeType: toUpload.type,
+      extension: toUpload.name.split('.').pop(),
+      thumbnail: toUpload.type.startsWith('image/')
+        ? await createThumbnail(toUpload)
+        : undefined,
+      date: new Date().toISOString()
+    }
+    setUploadedFiles([newUpload, ...uploadedFiles])
+    setUploadedFile(newUpload)
+    setFile(undefined)
+  }, [setIsUploading, setUploadProgress, setUrl, setCid, setUploadedFiles, uploadedFiles, setUploadedFile, setFile])
 
   useEffect(() => {
     if (!location?.state?.url?.length) {
@@ -93,48 +127,9 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
       const bits = base64.parse(rfr.data)
       const realizedFile = new File([bits], location.state.url.split('/').pop()!, { type: location.state.type })
       setFile(realizedFile)
-      setUploadCount(uploadCount + 1)
+      uploadFile(realizedFile)
     })
-  }, [location, location?.state, location?.state?.url])
-
-  useEffect(() => {
-    uploadFile()
-  }, [uploadCount])
-
-  const uploadFile = async () => {
-    if (!file) return
-    setIsUploading(true)
-    let uploadedFile
-    try {
-      uploadedFile = await upload(file, {
-        onProgress: (progress, total) => setUploadProgress([progress, total])
-      })
-    } catch (err) {
-      setError(error)
-      setIsUploading(false)
-      setUploadProgress(defaultUploadProgress)
-      console.error('Error uploading file:', err)
-      return
-    }
-    setUrl(uploadedFile.url)
-    setCid(uploadedFile.cid)
-    setIsUploading(false)
-    setUploadProgress(defaultUploadProgress)
-    const newUpload: Upload = {
-      name: file.name,
-      cid: uploadedFile.cid,
-      url: uploadedFile.url,
-      mimeType: file.type,
-      extension: file.name.split('.').pop(),
-      thumbnail: file.type.startsWith('image/')
-        ? await createThumbnail(file)
-        : undefined,
-      date: new Date().toISOString()
-    }
-    setUploadedFiles([newUpload, ...uploadedFiles])
-    setUploadedFile(newUpload)
-    setFile(undefined)
-  }
+  }, [location?.state?.type, location?.state?.url, uploadFile])
 
   const successContent = uploadedFile && (
     <>
@@ -217,7 +212,7 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
       ></input>
       <IonButton
         disabled={!file || isUploading}
-        onClick={() => uploadFile()}
+        onClick={() => file && uploadFile(file)}
         className={`durin-button ${!isUploading && 'durin-hide-when-disabled'}`}
       >
         <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>
