@@ -12,10 +12,12 @@ import {
   IonText,
   IonThumbnail
 } from '@ionic/react'
-import { useState, FC } from 'react'
+import { useState, FC, useEffect } from 'react'
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
+import { base64 } from 'rfc4648'
 import { getThumbnailUrl } from 'image-thumbnail-generator'
+import { Filesystem } from '@capacitor/filesystem'
 import { SettingsObject, transformForShare } from '../../util/ipfs'
 import upload, { maxChunkSize } from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
@@ -52,7 +54,21 @@ const createThumbnail = async (file: File): Promise<string | undefined> => {
 }
 const defaultUploadProgress: [number, number] = [0, 1]
 
-const Share: FC = () => {
+export interface SharedComponentRouteProps {
+  title: string
+  description: string
+  type: string
+  url: string
+  webPath: string
+}
+
+interface ShareComponentProps {
+  location: {
+    state: SharedComponentRouteProps
+  }
+}
+
+const Share: FC<ShareComponentProps> = ({ location }) => {
   const [file, setFile] = useState<File>()
   const [error, setError] = useState<Error>()
   const [isUploading, setIsUploading] = useState(false)
@@ -60,10 +76,30 @@ const Share: FC = () => {
   const [url, setUrl] = useState('')
   const [, setCid] = useState('')
   const [uploadedFile, setUploadedFile] = useState<Upload>()
+  const [uploadCount, setUploadCount] = useState(0)
   const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
   const [settings] = useSettings({
     node: 'auto'
   })
+
+  useEffect(() => {
+    if (!location?.state?.url?.length) {
+      return
+    }
+    setUrl('')
+    console.log('auto-upload initiated')
+    // HACK: currently isn't using streams, just loads the whole file
+    Filesystem.readFile({ path: location?.state?.url }).then(rfr => {
+      const bits = base64.parse(rfr.data)
+      const realizedFile = new File([bits], location.state.url.split('/').pop()!, { type: location.state.type })
+      setFile(realizedFile)
+      setUploadCount(uploadCount + 1)
+    })
+  }, [location, location?.state, location?.state?.url])
+
+  useEffect(() => {
+    uploadFile()
+  }, [uploadCount])
 
   const uploadFile = async () => {
     if (!file) return
@@ -181,7 +217,7 @@ const Share: FC = () => {
       ></input>
       <IonButton
         disabled={!file || isUploading}
-        onClick={uploadFile}
+        onClick={() => uploadFile()}
         className={`durin-button ${!isUploading && 'durin-hide-when-disabled'}`}
       >
         <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>

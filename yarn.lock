@@ -1149,6 +1149,11 @@
   dependencies:
     tslib "^2.1.0"
 
+"@capacitor/filesystem@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.npmjs.org/@capacitor/filesystem/-/filesystem-4.1.4.tgz"
+  integrity sha512-ivko1RNK4hq63xhMacq8D6D97N5/SAafTsrmY/pghYrG6Cl2SEY0+IgRu7V9/VWeN3FSplyUPucjUTAFQxXN5g==
+
 "@capacitor/haptics@^4.0.0":
   version "4.1.0"
   resolved "https://registry.npmjs.org/@capacitor/haptics/-/haptics-4.1.0.tgz"
@@ -3752,6 +3757,11 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001426, caniuse-lite@^1.0.30001449:
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001450.tgz"
   integrity sha512-qMBmvmQmFXaSxexkjjfMvD5rnDL0+m+dUMZKoDYsGG8iZN29RuYh9eRoMvKsT6uMAWlyUUGDEQGJJYjzCIO9ew==
 
+capacitor-share-extension@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/capacitor-share-extension/-/capacitor-share-extension-2.0.0.tgz"
+  integrity sha512-sOxfRKe9Gu7hq1zqRa8F6tmaSUnG5Efi7XG0MshbZ4Y6zCy9coiOd4LQObwHa0ym1ASZ21quUTOEylxnzueTiA==
+
 carbites@^1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/carbites/-/carbites-1.0.6.tgz"
@@ -5792,6 +5802,11 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   integrity sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==
+
+fsevents@^2.3.2, fsevents@~2.3.2:
+  version "2.3.2"
+  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
+  integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
 ftp@^0.3.10:
   version "0.3.10"
@@ -10225,6 +10240,11 @@ reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+
+rfc4648@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.npmjs.org/rfc4648/-/rfc4648-1.5.2.tgz"
+  integrity sha512-tLOizhR6YGovrEBLatX1sdcuhoSCXddw3mqNVAcKxGJ+J0hFeJ+SjeWCv5UPA/WU3YzWPPuCVYgXBKZUPGpKtg==
 
 rimraf@^3.0.0, rimraf@^3.0.2:
   version "3.0.2"

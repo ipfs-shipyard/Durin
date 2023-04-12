@@ -18,11 +18,14 @@ import {
 } from 'ionicons/icons'
 import { SplashScreen } from '@capacitor/splash-screen'
 import Browse from './pages/Browse'
-import Share from './pages/Share'
+import Share, { SharedComponentRouteProps } from './pages/Share'
 import Settings from './pages/Settings'
 import Files from './pages/Files'
 import File, { Upload } from './pages/File'
 import createPersistedState from 'use-persisted-state'
+import { App as NativeApp } from '@capacitor/app'
+import { open } from './util/ipfs'
+import { createBrowserHistory } from 'history'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -44,6 +47,7 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 import './app.scss'
 
+const history = createBrowserHistory()
 const CID_REGEXP = /(Qm[1-9A-HJ-NP-Za-km-z]{44,}?|b[A-Za-z2-7]{58,}?|B[A-Z2-7]{58,}?|z[1-9A-HJ-NP-Za-km-z]{48,}?|F[0-9A-F]{50,}?)/
 
 setupIonicReact({
@@ -69,9 +73,31 @@ const App: FC = () => {
     }
   })
 
+  useEffect(() => {
+    NativeApp.addListener('appUrlOpen', ({ url }) => {
+      console.log(`appUrlOpen: ${url}`)
+
+      if (!url.startsWith('ipfs://?')) {
+        open(url)
+      } else {
+        console.log('pushing /share to history')
+        const urlParams = new URL(url).searchParams
+        const params: SharedComponentRouteProps = {
+          title: decodeURIComponent(urlParams.get('title') ?? ''),
+          description: decodeURIComponent(urlParams.get('description') ?? ''),
+          type: decodeURIComponent(urlParams.get('type') ?? ''),
+          url: decodeURIComponent(urlParams.get('url') ?? ''),
+          webPath: decodeURIComponent(urlParams.get('webPath') ?? '')
+        }
+
+        history.push('/share', params)
+      }
+    })
+  }, [])
+
   return (
     <IonApp>
-      <IonReactRouter>
+      <IonReactRouter history={history}>
         <IonTabs>
           <IonRouterOutlet>
             <Route exact path="/view">
@@ -81,9 +107,7 @@ const App: FC = () => {
               <Files />
             </Route>
             <Route path="/files/:id" component={File} />
-            <Route exact path="/share">
-              <Share />
-            </Route>
+            <Route path="/share" component={Share} />
             <Route path="/settings">
               <Settings />
             </Route>
