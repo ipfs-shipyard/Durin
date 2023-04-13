@@ -50,8 +50,6 @@ export const transform = (url: string, node: Node) => {
     pathname = matchGroups.pathname!
   }
 
-  console.log('debug android', JSON.stringify({ url, protocol, hostname, pathname, search }))
-
   // v0 CID, fix loss of case sensitivity
   if (hostname.startsWith('qm')) {
     const start = url.search(new RegExp(hostname, 'i'))

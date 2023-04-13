@@ -18,15 +18,13 @@ import createPersistedState from 'use-persisted-state'
 import { base64 } from 'rfc4648'
 import { getThumbnailUrl } from 'image-thumbnail-generator'
 import { Filesystem } from '@capacitor/filesystem'
+import { RouteChildrenProps } from 'react-router'
 import { SettingsObject, transformForShare } from '../../util/ipfs'
 import upload, { maxChunkSize } from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
 import FileIcon from '../../components/FileIcon'
 import QRCode from 'react-qr-code'
 import './index.scss'
-
-const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
-const PROGRESS_THRESHOLD = maxChunkSize / 1000
 
 type Upload = {
   name: string
@@ -37,6 +35,17 @@ type Upload = {
   thumbnail?: string
   date: string
 }
+export interface ShareComponentRouteState {
+  title: string
+  description: string
+  type: string
+  url: string
+  webPath: string
+}
+
+const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
+const PROGRESS_THRESHOLD = maxChunkSize / 1000
+
 const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
 const useSettings = createPersistedState<SettingsObject>('durin-settings')
 
@@ -54,29 +63,15 @@ const createThumbnail = async (file: File): Promise<string | undefined> => {
 }
 const defaultUploadProgress: [number, number] = [0, 1]
 
-export interface SharedComponentRouteProps {
-  title: string
-  description: string
-  type: string
-  url: string
-  webPath: string
-}
-
-interface ShareComponentProps {
-  location: {
-    state: SharedComponentRouteProps
-  }
-}
-
-const Share: FC<ShareComponentProps> = ({ location }) => {
+const Share: FC<RouteChildrenProps<{}, ShareComponentRouteState>> = ({ location, history }) => {
   const [file, setFile] = useState<File>()
-  const [, setError] = useState<Error>()
+  const [error, setError] = useState<Error>()
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(defaultUploadProgress)
   const [url, setUrl] = useState('')
   const [, setCid] = useState('')
   const [uploadedFile, setUploadedFile] = useState<Upload>()
-  const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
+  const [, setUploadedFiles] = useUploadedFiles([])
   const [settings] = useSettings({
     node: 'auto'
   })
@@ -111,25 +106,37 @@ const Share: FC<ShareComponentProps> = ({ location }) => {
         : undefined,
       date: new Date().toISOString()
     }
-    setUploadedFiles([newUpload, ...uploadedFiles])
+    setUploadedFiles((prev) => [newUpload, ...prev])
     setUploadedFile(newUpload)
     setFile(undefined)
-  }, [setIsUploading, setUploadProgress, setUrl, setCid, setUploadedFiles, uploadedFiles, setUploadedFile, setFile])
+  }, [setIsUploading, setUploadProgress, setUrl, setCid, setUploadedFiles, setUploadedFile, setFile])
 
   useEffect(() => {
     if (!location?.state?.url?.length) {
       return
     }
     setUrl('')
-    console.log('auto-upload initiated')
+    console.log('auto-upload initiated', location.state.type, location.state.url)
     // HACK: currently isn't using streams, just loads the whole file
-    Filesystem.readFile({ path: location?.state?.url }).then(rfr => {
-      const bits = base64.parse(rfr.data)
-      const realizedFile = new File([bits], location.state.url.split('/').pop()!, { type: location.state.type })
-      setFile(realizedFile)
-      uploadFile(realizedFile)
-    })
-  }, [location?.state?.type, location?.state?.url, uploadFile])
+    Filesystem.readFile({ path: location?.state?.url })
+      .then((rfr) => {
+        const bits = base64.parse(rfr.data)
+        const realizedFile = new File([bits], location.state.url.split('/').pop()!, { type: location.state.type })
+        history.replace('/share', {})
+        setFile(realizedFile)
+        return uploadFile(realizedFile)
+      })
+      .then(() => {
+        console.log('auto-upload complete')
+      })
+      .catch((err) => {
+        setError(err)
+      })
+  }, [history, location?.state?.type, location?.state?.url, uploadFile])
+
+  useEffect(() => {
+    console.error('Error:', error)
+  }, [error])
 
   const successContent = uploadedFile && (
     <>

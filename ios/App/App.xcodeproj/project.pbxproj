@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		3A0B42C029D4C4C200632E84 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B42BF29D4C4C200632E84 /* ShareViewController.swift */; };
 		3A0B42C329D4C4C200632E84 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A0B42C129D4C4C200632E84 /* MainInterface.storyboard */; };
-		3A0B42C729D4C4C200632E84 /* DurinShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3A0B42BD29D4C4C200632E84 /* DurinShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3A0B42C729D4C4C200632E84 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3A0B42BD29D4C4C200632E84 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		504EC3081FED79650016851F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
@@ -26,7 +26,7 @@
 			containerPortal = 504EC2FC1FED79650016851F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 3A0B42BC29D4C4C200632E84;
-			remoteInfo = DurinShareExtension;
+			remoteInfo = ShareExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -37,7 +37,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				3A0B42C729D4C4C200632E84 /* DurinShareExtension.appex in Embed Foundation Extensions */,
+				3A0B42C729D4C4C200632E84 /* ShareExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,12 +46,12 @@
 
 /* Begin PBXFileReference section */
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		3A0B42BD29D4C4C200632E84 /* DurinShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DurinShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A0B42BD29D4C4C200632E84 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A0B42BF29D4C4C200632E84 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		3A0B42C229D4C4C200632E84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		3A0B42C429D4C4C200632E84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AEBEC1F29D5153300764E33 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
-		3AEBEC2029D515FF00764E33 /* DurinShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DurinShareExtension.entitlements; sourceTree = "<group>"; };
+		3AEBEC2029D515FF00764E33 /* ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareExtension.entitlements; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,22 +92,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3A0B42BE29D4C4C200632E84 /* DurinShareExtension */ = {
+		3A0B42BE29D4C4C200632E84 /* ShareExtension */ = {
 			isa = PBXGroup;
 			children = (
-				3AEBEC2029D515FF00764E33 /* DurinShareExtension.entitlements */,
+				3AEBEC2029D515FF00764E33 /* ShareExtension.entitlements */,
 				3A0B42BF29D4C4C200632E84 /* ShareViewController.swift */,
 				3A0B42C129D4C4C200632E84 /* MainInterface.storyboard */,
 				3A0B42C429D4C4C200632E84 /* Info.plist */,
 			);
-			path = DurinShareExtension;
+			path = ShareExtension;
 			sourceTree = "<group>";
 		};
 		504EC2FB1FED79650016851F = {
 			isa = PBXGroup;
 			children = (
 				504EC3061FED79650016851F /* App */,
-				3A0B42BE29D4C4C200632E84 /* DurinShareExtension */,
+				3A0B42BE29D4C4C200632E84 /* ShareExtension */,
 				504EC3051FED79650016851F /* Products */,
 				7F8756D8B27F46E3366F6CEA /* Pods */,
 				27E2DDA53C4D2A4D1A88CE4A /* Frameworks */,
@@ -118,7 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				504EC3041FED79650016851F /* App.app */,
-				3A0B42BD29D4C4C200632E84 /* DurinShareExtension.appex */,
+				3A0B42BD29D4C4C200632E84 /* ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,9 +151,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3A0B42BC29D4C4C200632E84 /* DurinShareExtension */ = {
+		3A0B42BC29D4C4C200632E84 /* ShareExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3A0B42CB29D4C4C200632E84 /* Build configuration list for PBXNativeTarget "DurinShareExtension" */;
+			buildConfigurationList = 3A0B42CB29D4C4C200632E84 /* Build configuration list for PBXNativeTarget "ShareExtension" */;
 			buildPhases = (
 				3A0B42B929D4C4C200632E84 /* Sources */,
 				3A0B42BA29D4C4C200632E84 /* Frameworks */,
@@ -163,9 +163,9 @@
 			);
 			dependencies = (
 			);
-			name = DurinShareExtension;
-			productName = DurinShareExtension;
-			productReference = 3A0B42BD29D4C4C200632E84 /* DurinShareExtension.appex */;
+			name = ShareExtension;
+			productName = ShareExtension;
+			productReference = 3A0B42BD29D4C4C200632E84 /* ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		504EC3031FED79650016851F /* App */ = {
@@ -195,8 +195,9 @@
 		504EC2FC1FED79650016851F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					3A0B42BC29D4C4C200632E84 = {
 						CreatedOnToolsVersion = 14.2;
@@ -223,7 +224,7 @@
 			projectRoot = "";
 			targets = (
 				504EC3031FED79650016851F /* App */,
-				3A0B42BC29D4C4C200632E84 /* DurinShareExtension */,
+				3A0B42BC29D4C4C200632E84 /* ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -310,7 +311,7 @@
 /* Begin PBXTargetDependency section */
 		3A0B42C629D4C4C200632E84 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3A0B42BC29D4C4C200632E84 /* DurinShareExtension */;
+			target = 3A0B42BC29D4C4C200632E84 /* ShareExtension */;
 			targetProxy = 3A0B42C529D4C4C200632E84 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -348,20 +349,24 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = DurinShareExtension/DurinShareExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7Y229E2YRL;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DurinShareExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DurinShareExtension;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = ai.protocol.durin.DurinShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.protocol.durin.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -375,19 +380,23 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_OBJC_WEAK = YES;
-				CODE_SIGN_ENTITLEMENTS = DurinShareExtension/DurinShareExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7Y229E2YRL;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DurinShareExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = DurinShareExtension;
+				INFOPLIST_FILE = ShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = ai.protocol.durin.DurinShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = ai.protocol.durin.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -504,7 +513,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -520,7 +530,10 @@
 				DEVELOPMENT_TEAM = 7Y229E2YRL;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-DDEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = ai.protocol.durin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -541,7 +554,10 @@
 				DEVELOPMENT_TEAM = 7Y229E2YRL;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = ai.protocol.durin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -553,7 +569,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3A0B42CB29D4C4C200632E84 /* Build configuration list for PBXNativeTarget "DurinShareExtension" */ = {
+		3A0B42CB29D4C4C200632E84 /* Build configuration list for PBXNativeTarget "ShareExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3A0B42C929D4C4C200632E84 /* Debug */,

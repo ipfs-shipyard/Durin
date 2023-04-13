@@ -79,7 +79,7 @@ class ShareViewController:  UIViewController {
         let fileManager = FileManager.default
         print("share url: " + url!.absoluteString)
         let copyFileUrl =
-        fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.ai.protocol.durin")!
+        fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.ai.protocol.durin.AppGroup")!
             .absoluteString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)! + url!
             .lastPathComponent.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         try? Data(contentsOf: url!).write(to: URL(string: copyFileUrl)!)
@@ -91,7 +91,7 @@ class ShareViewController:  UIViewController {
         let fileManager = FileManager.default
         
         let copyFileUrl =
-        fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.ai.protocol.durin")!
+        fileManager.containerURL(forSecurityApplicationGroupIdentifier: "group.ai.protocol.durin.AppGroup")!
             .absoluteString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         + "/screenshot.png"
         do {

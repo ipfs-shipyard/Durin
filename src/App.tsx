@@ -18,7 +18,7 @@ import {
 } from 'ionicons/icons'
 import { SplashScreen } from '@capacitor/splash-screen'
 import Browse from './pages/Browse'
-import Share, { SharedComponentRouteProps } from './pages/Share'
+import Share, { ShareComponentRouteState } from './pages/Share'
 import Settings from './pages/Settings'
 import Files from './pages/Files'
 import File, { Upload } from './pages/File'
@@ -82,7 +82,7 @@ const App: FC = () => {
       } else {
         console.log('pushing /share to history')
         const urlParams = new URL(url).searchParams
-        const params: SharedComponentRouteProps = {
+        const params: ShareComponentRouteState = {
           title: decodeURIComponent(urlParams.get('title') ?? ''),
           description: decodeURIComponent(urlParams.get('description') ?? ''),
           type: decodeURIComponent(urlParams.get('type') ?? ''),
