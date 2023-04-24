@@ -74,7 +74,7 @@ public class MainActivity extends BridgeActivity {
                 copyStreamToStream(input, output);
 
                 String encodedUri = Uri.encode(tempFile.toURI().toString());
-                Uri uri = Uri.parse("ipfs://?url=" + encodedUri);
+                Uri uri = Uri.parse("durin://?url=" + encodedUri);
                 Intent openViewIntent = new Intent(Intent.ACTION_VIEW, uri);
                 openViewIntent.addCategory(Intent.CATEGORY_BROWSABLE);
                 startActivity(openViewIntent);
