@@ -117,7 +117,7 @@ const Share: FC<RouteChildrenProps<{}, ShareComponentRouteState>> = ({ location,
     }
     setUrl('')
     console.log('auto-upload initiated', location.state.type, location.state.url)
-    // HACK: currently isn't using streams, just loads the whole file
+    // TODO: use streams here to use less memory
     Filesystem.readFile({ path: location?.state?.url })
       .then((rfr) => {
         const bits = base64.parse(rfr.data)
@@ -131,6 +131,8 @@ const Share: FC<RouteChildrenProps<{}, ShareComponentRouteState>> = ({ location,
       })
       .catch((err) => {
         setError(err)
+        setIsUploading(false)
+        setUploadProgress(defaultUploadProgress)
       })
   }, [history, location?.state?.type, location?.state?.url, uploadFile])
 
@@ -240,6 +242,11 @@ const Share: FC<RouteChildrenProps<{}, ShareComponentRouteState>> = ({ location,
       {isUploading && file && file.size >= BIG_FILE_THRESHOLD && (
         <IonText className="large-file-text" color="light">
           ( This may take a moment, the file is large! )
+        </IonText>
+      )}
+      {error && (
+        <IonText className="error-text" color="danger">
+          Error: {error.message || String(error)}
         </IonText>
       )}
     </div>
