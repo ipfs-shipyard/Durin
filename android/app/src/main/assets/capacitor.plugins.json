@@ -22,9 +22,5 @@
 	{
 		"pkg": "@capacitor/status-bar",
 		"classpath": "com.capacitorjs.plugins.statusbar.StatusBarPlugin"
-	},
-	{
-		"pkg": "capacitor-share-extension",
-		"classpath": "com.capacitor.shareextension.plugin.ShareExtension"
 	}
 ]

@@ -77,7 +77,7 @@ const App: FC = () => {
     NativeApp.addListener('appUrlOpen', ({ url }) => {
       console.log(`appUrlOpen: ${url}`)
 
-      if (!url.startsWith('ipfs://?')) {
+      if (!url.startsWith('durin://')) {
         open(url)
       } else {
         console.log('pushing /share to history')

@@ -19,6 +19,3 @@ project(':capacitor-splash-screen').projectDir = new File('../node_modules/@capa
 
 include ':capacitor-status-bar'
 project(':capacitor-status-bar').projectDir = new File('../node_modules/@capacitor/status-bar/android')
-
-include ':capacitor-share-extension'
-project(':capacitor-share-extension').projectDir = new File('../node_modules/capacitor-share-extension/android/capacitor-share-extension')
