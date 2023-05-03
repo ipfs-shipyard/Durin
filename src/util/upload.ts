@@ -1,11 +1,7 @@
 import { Web3Storage } from 'web3.storage'
+import { getToken } from './preferences'
 
-if (!process.env.REACT_APP_WEB3_STORAGE_TOKEN) throw new Error('Missing env.WEB3_STORAGE_TOKEN')
-
-const client = new Web3Storage({
-  endpoint: new URL('https://api.web3.storage'),
-  token: process.env.REACT_APP_WEB3_STORAGE_TOKEN
-})
+let client: Web3Storage
 
 type Options = {
   onProgress?: (progress: number, total: number) => void
@@ -14,6 +10,15 @@ type Options = {
 export const maxChunkSize = 1048576 // MAX_BLOCK_SIZE in SDK
 
 const upload = async (file: File, options?: Options) => {
+  if (!client) {
+    const web3StorageToken = await getToken()
+    if (!web3StorageToken) throw new Error('Missing WEB3_STORAGE_TOKEN')
+    client = new Web3Storage({
+      endpoint: new URL('https://api.web3.storage'),
+      token: web3StorageToken
+    })
+  }
+
   let progress = 0
   const cid = await client.put([file], {
     maxChunkSize, // 1mb
