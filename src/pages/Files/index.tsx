@@ -35,7 +35,8 @@ const Files: FC = () => {
   const [currentUpload, setCurrentUpload] = useState<Upload>()
   const useSettings = createPersistedState<SettingsObject>('durin-settings')
   const [settings] = useSettings({
-    node: 'auto'
+    node: 'auto',
+    web3storageToken: ''
   })
 
   const hasFiles = uploadedFiles.length > 0

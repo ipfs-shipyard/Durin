@@ -73,7 +73,8 @@ const Share: FC<RouteChildrenProps<{}, ShareComponentRouteState>> = ({ location,
   const [uploadedFile, setUploadedFile] = useState<Upload>()
   const [, setUploadedFiles] = useUploadedFiles([])
   const [settings] = useSettings({
-    node: 'auto'
+    node: 'auto',
+    web3storageToken: ''
   })
 
   const uploadFile = useCallback(async (toUpload: File) => {
@@ -81,7 +82,7 @@ const Share: FC<RouteChildrenProps<{}, ShareComponentRouteState>> = ({ location,
     setIsUploading(true)
     let uploadedFile
     try {
-      uploadedFile = await upload(toUpload, {
+      uploadedFile = await upload(toUpload, settings.web3storageToken, {
         onProgress: (progress, total) => setUploadProgress([progress, total])
       })
     } catch (err) {

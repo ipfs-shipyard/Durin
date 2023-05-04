@@ -11,7 +11,8 @@ const defaultLinks = [
 const ShortcutLinks: FC = () => {
   const useSettings = createPersistedState<SettingsObject>('durin-settings')
   const [settings] = useSettings({
-    node: 'auto'
+    node: 'auto',
+    web3storageToken: ''
   })
   return (
         <IonList>

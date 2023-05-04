@@ -48,7 +48,8 @@ const File: FC<ModalProps> = ({ upload, onDismiss }) => {
   const [present] = useIonToast()
   const useSettings = createPersistedState<SettingsObject>('durin-settings')
   const [settings] = useSettings({
-    node: 'auto'
+    node: 'auto',
+    web3storageToken: ''
   })
 
   const deleteUploadedFile = (cid: string) => {

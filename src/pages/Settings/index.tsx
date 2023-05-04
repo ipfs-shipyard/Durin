@@ -27,7 +27,8 @@ const Settings: FC = () => {
   const { nodes } = useNodes()
   const useSettings = createPersistedState<SettingsObject>('durin-settings')
   const [settings, setSettings] = useSettings({
-    node: 'auto'
+    node: 'auto',
+    web3storageToken: ''
   })
   const { node } = settings
 
