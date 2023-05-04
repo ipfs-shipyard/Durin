@@ -17,6 +17,7 @@ import { FC } from 'react'
 
 import './index.scss'
 import ShortcutLinks from '../../components/Shortcuts'
+import Web3StorageToken from '../../components/Web3StorageToken'
 
 function displayRacing (node: Node) {
   return node.hot ? '🏁' : null
@@ -79,6 +80,11 @@ const Settings: FC = () => {
           <div className="durin-settings-group">
             <IonLabel className="durin-label">Shortcuts</IonLabel>
               <ShortcutLinks />
+          </div>
+
+          <div className="durin-settings-group">
+            <IonLabel className="durin-label">Web3.Storage Token</IonLabel>
+              <Web3StorageToken />
           </div>
         </div>
       </PageContainer>
