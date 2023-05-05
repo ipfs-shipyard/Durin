@@ -47,6 +47,7 @@ const Settings: FC = () => {
           <IonLabel className="durin-label">Gateways</IonLabel>
             <IonRadioGroup name="durinNode" value={node} onIonChange={
               e => setSettings({
+                ...settings,
                 node: e.detail.value!
               })}>
               <IonItem>

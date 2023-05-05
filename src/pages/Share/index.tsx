@@ -110,7 +110,7 @@ const Share: FC<RouteChildrenProps<{}, ShareComponentRouteState>> = ({ location,
     setUploadedFiles((prev) => [newUpload, ...prev])
     setUploadedFile(newUpload)
     setFile(undefined)
-  }, [setIsUploading, setUploadProgress, setUrl, setCid, setUploadedFiles, setUploadedFile, setFile])
+  }, [setIsUploading, setUploadProgress, setUrl, setCid, setUploadedFiles, setUploadedFile, setFile, settings.web3storageToken])
 
   useEffect(() => {
     if (!location?.state?.url?.length) {
