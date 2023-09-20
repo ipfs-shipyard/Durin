@@ -1,8 +1,0 @@
-{
-  "name": "Durin",
-  "mode": "ios",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react"
-}
