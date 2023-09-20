@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionAttributes</key>
+		<dict>
+			<key>NSExtensionActivationRule</key>
+			<string>SUBQUERY (
+                  extensionItems,
+                  $extensionItem,
+                  SUBQUERY (
+                      $extensionItem.attachments,
+                      $attachment,
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.movie" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.audio" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.spreadsheet" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.presentation" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "org.openxmlformats.wordprocessingml.document" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.adobe.pdf" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.png" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.jpeg" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.jpeg-2000" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "public.plain-text" ||
+                               ANY $attachment.registeredTypeIdentifiers UTI-CONFORMS-TO "com.compuserve.gif"
+                    ).@count == $extensionItem.attachments.@count
+                    ).@count == 1
+            </string>
+		</dict>
+		<key>NSExtensionMainStoryboard</key>
+		<string>MainInterface</string>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.share-services</string>
+	</dict>
+</dict>
+</plist>
