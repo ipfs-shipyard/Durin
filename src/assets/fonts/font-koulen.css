@@ -1,8 +1,0 @@
-@font-face {
-  font-family: 'Koulen';
-  font-style: normal;
-  font-weight: 400;
-  src: url(dist/assets/Koulen/Koulen-normal-400.eot);
-  src: local('Koulen'), url(dist/assets/Koulen/Koulen-normal-400.svg#Koulen) format('svg'), url(dist/assets/Koulen/Koulen-normal-400.ttf) format('truetype'), url(dist/assets/Koulen/Koulen-normal-400.woff) format('woff'), url(dist/assets/Koulen/Koulen-normal-400.woff2) format('woff2'), url(dist/assets/Koulen/Koulen-normal-400.eot?#iefix) format('embedded-opentype');
-}
-
