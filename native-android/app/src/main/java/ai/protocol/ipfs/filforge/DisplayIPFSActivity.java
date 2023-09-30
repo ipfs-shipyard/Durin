@@ -1,11 +1,10 @@
-package ai.protocol.ipfs.java;
+package ai.protocol.ipfs.filforge;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 public class DisplayIPFSActivity extends AppCompatActivity {
 

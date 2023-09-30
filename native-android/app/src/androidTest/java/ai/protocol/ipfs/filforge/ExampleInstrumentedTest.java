@@ -1,4 +1,4 @@
-package ai.protocol.ipfs.java;
+package ai.protocol.ipfs.filforge;
 
 import android.content.Context;
 

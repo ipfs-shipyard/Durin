@@ -8,7 +8,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "ai.protocol.ipfs.java"
+        applicationId "ai.protocol.ipfs.filforge"
         minSdk 26
         targetSdk 33
         versionCode 1
@@ -42,7 +42,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'ai.protocol.ipfs.java'
+    namespace 'ai.protocol.ipfs.filforge'
     buildToolsVersion '30.0.3'
 }
 
