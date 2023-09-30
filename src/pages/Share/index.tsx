@@ -12,19 +12,19 @@ import {
   IonText,
   IonThumbnail
 } from '@ionic/react'
-import { useState, FC } from 'react'
+import { useState, FC, useEffect, useCallback } from 'react'
 import { DateTime } from 'luxon'
 import createPersistedState from 'use-persisted-state'
+import { base64 } from 'rfc4648'
 import { getThumbnailUrl } from 'image-thumbnail-generator'
+import { Filesystem } from '@capacitor/filesystem'
+import { RouteChildrenProps } from 'react-router'
 import { SettingsObject, transformForShare } from '../../util/ipfs'
 import upload, { maxChunkSize } from '../../util/upload'
 import PageContainer from '../../components/PageContainer'
 import FileIcon from '../../components/FileIcon'
 import QRCode from 'react-qr-code'
 import './index.scss'
-
-const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
-const PROGRESS_THRESHOLD = maxChunkSize / 1000
 
 type Upload = {
   name: string
@@ -35,6 +35,17 @@ type Upload = {
   thumbnail?: string
   date: string
 }
+export interface ShareComponentRouteState {
+  title: string
+  description: string
+  type: string
+  url: string
+  webPath: string
+}
+
+const BIG_FILE_THRESHOLD = 5 * 1024 // 5mb
+const PROGRESS_THRESHOLD = maxChunkSize / 1000
+
 const useUploadedFiles = createPersistedState<Upload[]>('uploaded-files')
 const useSettings = createPersistedState<SettingsObject>('durin-settings')
 
@@ -52,7 +63,7 @@ const createThumbnail = async (file: File): Promise<string | undefined> => {
 }
 const defaultUploadProgress: [number, number] = [0, 1]
 
-const Share: FC = () => {
+const Share: FC<RouteChildrenProps<{}, ShareComponentRouteState>> = ({ location, history }) => {
   const [file, setFile] = useState<File>()
   const [error, setError] = useState<Error>()
   const [isUploading, setIsUploading] = useState(false)
@@ -60,21 +71,21 @@ const Share: FC = () => {
   const [url, setUrl] = useState('')
   const [, setCid] = useState('')
   const [uploadedFile, setUploadedFile] = useState<Upload>()
-  const [uploadedFiles, setUploadedFiles] = useUploadedFiles([])
+  const [, setUploadedFiles] = useUploadedFiles([])
   const [settings] = useSettings({
     node: 'auto'
   })
 
-  const uploadFile = async () => {
-    if (!file) return
+  const uploadFile = useCallback(async (toUpload: File) => {
+    if (!toUpload) return
     setIsUploading(true)
     let uploadedFile
     try {
-      uploadedFile = await upload(file, {
+      uploadedFile = await upload(toUpload, {
         onProgress: (progress, total) => setUploadProgress([progress, total])
       })
     } catch (err) {
-      setError(error)
+      setError(err as Error)
       setIsUploading(false)
       setUploadProgress(defaultUploadProgress)
       console.error('Error uploading file:', err)
@@ -85,20 +96,49 @@ const Share: FC = () => {
     setIsUploading(false)
     setUploadProgress(defaultUploadProgress)
     const newUpload: Upload = {
-      name: file.name,
+      name: toUpload.name,
       cid: uploadedFile.cid,
       url: uploadedFile.url,
-      mimeType: file.type,
-      extension: file.name.split('.').pop(),
-      thumbnail: file.type.startsWith('image/')
-        ? await createThumbnail(file)
+      mimeType: toUpload.type,
+      extension: toUpload.name.split('.').pop(),
+      thumbnail: toUpload.type.startsWith('image/')
+        ? await createThumbnail(toUpload)
         : undefined,
       date: new Date().toISOString()
     }
-    setUploadedFiles([newUpload, ...uploadedFiles])
+    setUploadedFiles((prev) => [newUpload, ...prev])
     setUploadedFile(newUpload)
     setFile(undefined)
-  }
+  }, [setIsUploading, setUploadProgress, setUrl, setCid, setUploadedFiles, setUploadedFile, setFile])
+
+  useEffect(() => {
+    if (!location?.state?.url?.length) {
+      return
+    }
+    setUrl('')
+    console.log('auto-upload initiated', location.state.type, location.state.url)
+    // TODO: use streams here to use less memory
+    Filesystem.readFile({ path: location?.state?.url })
+      .then((rfr) => {
+        const bits = base64.parse(rfr.data)
+        const realizedFile = new File([bits], location.state.url.split('/').pop()!, { type: location.state.type })
+        history.replace('/share', {})
+        setFile(realizedFile)
+        return uploadFile(realizedFile)
+      })
+      .then(() => {
+        console.log('auto-upload complete')
+      })
+      .catch((err) => {
+        setError(err)
+        setIsUploading(false)
+        setUploadProgress(defaultUploadProgress)
+      })
+  }, [history, location?.state?.type, location?.state?.url, uploadFile])
+
+  useEffect(() => {
+    console.error('Error:', error)
+  }, [error])
 
   const successContent = uploadedFile && (
     <>
@@ -181,7 +221,7 @@ const Share: FC = () => {
       ></input>
       <IonButton
         disabled={!file || isUploading}
-        onClick={uploadFile}
+        onClick={() => file && uploadFile(file)}
         className={`durin-button ${!isUploading && 'durin-hide-when-disabled'}`}
       >
         <IonLabel>{isUploading ? 'Uploading...' : 'Upload'}</IonLabel>
@@ -202,6 +242,11 @@ const Share: FC = () => {
       {isUploading && file && file.size >= BIG_FILE_THRESHOLD && (
         <IonText className="large-file-text" color="light">
           ( This may take a moment, the file is large! )
+        </IonText>
+      )}
+      {error && (
+        <IonText className="error-text" color="danger">
+          Error: {error.message || String(error)}
         </IonText>
       )}
     </div>

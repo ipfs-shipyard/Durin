@@ -1,9 +1,7 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom'
-import { App as NativeApp } from '@capacitor/app'
 import App from './App'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
-import { open } from './util/ipfs'
 
 ReactDOM.render(
   <StrictMode>
@@ -16,7 +14,3 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
 serviceWorkerRegistration.unregister()
-
-NativeApp.addListener('appUrlOpen', ({ url }) => {
-  open(url)
-})

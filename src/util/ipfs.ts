@@ -42,6 +42,14 @@ export const transform = (url: string, node: Node) => {
 
   let { protocol, hostname, pathname, search } = new URL(url)
 
+  // there's a bug in URL that causes hostname and pathname to be confused on Android (ok on iOS)
+  // specifically, hostname is empty and path name has the format "//hostname/pathname"
+  if (!hostname.length && pathname.length) {
+    const matchGroups = pathname.match(/^\/\/(?<hostname>[^/]+)(?<pathname>\/?.*)$/)!.groups!
+    hostname = matchGroups.hostname!
+    pathname = matchGroups.pathname!
+  }
+
   // v0 CID, fix loss of case sensitivity
   if (hostname.startsWith('qm')) {
     const start = url.search(new RegExp(hostname, 'i'))
