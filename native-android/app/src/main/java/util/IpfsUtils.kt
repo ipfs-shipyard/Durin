@@ -7,7 +7,6 @@ import io.ipfs.cid.Cid
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
-import kotlinx.coroutines.runBlocking
 import org.apache.commons.codec.binary.Base32
 
 
@@ -21,27 +20,25 @@ data class Node(
     val remote: Boolean,
     var healthy: Boolean,
     var speed: Int? = null,
-    var hot: Boolean? = null
+    var hot: Boolean = false
 )
 
+suspend fun updateNodeStatus(node : Node) {
+    healthCheck(node, node.hot)
+}
+
 /**
- * Performs a health check on the specified node by sending an HTTP request to an IPFS URL,
- * and updates the node's health and speed properties based on the response and time taken.
+ * Performs a health check on a specified [Node] and updates its health and speed attributes accordingly.
+ *
+ * This function creates an HTTP client, sends a GET request to a transformed URL, and evaluates the response
+ * to determine the health of the node. If the response status is not 200, the node is marked as unhealthy.
+ * Additionally, the function computes the elapsed time for the request and adjusts it if the [hot] parameter is true,
+ * reflecting a prioritization for hot gateways due to their consistency.
  *
  * @param node The [Node] object representing the node to be checked.
- * @param hot A [Boolean] flag indicating whether the node is considered "hot".
- *            Hot nodes are prioritized and a time discount is applied to them to reflect
- *            their higher consistency.
- *
- * This function operates in a blocking manner due to the use of [runBlocking].
- *
- * Example Usage:
- * ```kotlin
- * val node = Node(...)
- * healthCheck(node, hot = true)
- * ```
+ * @param hot A [Boolean] flag indicating whether the node is considered hot (true) or not (false).
  */
-fun healthCheck(node : Node, hot : Boolean) = runBlocking {
+suspend fun healthCheck(node : Node, hot : Boolean) {
     val start : Long = System.currentTimeMillis()
     val transformedUrl = transform("ipfs://$TEST_CID?now=" + System.currentTimeMillis(), node)
     val client = HttpClient()
