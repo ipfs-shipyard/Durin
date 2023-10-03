@@ -5,52 +5,113 @@ import android.net.Uri
 import android.util.Log
 import io.ipfs.cid.Cid
 import io.ktor.client.HttpClient
+import io.ktor.client.features.HttpTimeout
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
-import org.apache.commons.codec.binary.Base32
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 
 
-const val TEST_CID : String = "bafybeiczsscdsbs7ffqz55asqdf3smv6klcw3gofszvwlyarci47bgf354"
+const val TEST_CID : String ="QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A"
+
 const val HOT_TIME_DISCOUNT : Long = 1000
+const val HTTP_REQUEST_TIMEOUT : Long = 30_000
 
 // node definition
 data class Node(
     val host: String,
+    val healthy: Boolean = true,
+    val remote: Boolean = true,
+    val hot: Boolean = false,
     val port: Int? = null,
-    val remote: Boolean,
-    var healthy: Boolean,
-    var speed: Int? = null,
-    var hot: Boolean = false
+    val speed: Long? = null,
 )
 
-suspend fun updateNodeStatus(node : Node) {
-    healthCheck(node, node.hot)
+// setup default nodes
+val defaultNodeList : List<Node> = listOf(
+    Node(host = "w3s.link", hot = true),
+    Node(host = "dweb.link"),
+    Node(host = "cf-ipfs.com"),
+    Node(host = "4everland.io"),
+    Node(host = "nftstorage.link", hot=true))
+
+var updatedNodeList : List<Node> = emptyList()
+
+/**
+ * Initiates a health check on a predefined list of nodes to update their status.
+ * Utilizes parallel processing to expedite the health check process.
+ */
+suspend fun nodeCheck() {
+
+    val client = HttpClient {
+        install(HttpTimeout) {
+            // Sets a request timeout
+            requestTimeoutMillis = HTTP_REQUEST_TIMEOUT
+        }
+    }
+
+    updatedNodeList = defaultNodeList.pmap {
+        healthCheck(client, it)
+    }
+
+    client.close()
+
+    for (node in updatedNodeList) {
+        Log.d(LOG_TAG, "${node.host} is ${node.healthy} with ${node.speed}")
+    }
 }
 
 /**
- * Performs a health check on a specified [Node] and updates its health and speed attributes accordingly.
+ * A parallel map function that applies a transform function to each element of the given Iterable
+ * in a concurrent manner, returning a new list with the transformed elements.
  *
- * This function creates an HTTP client, sends a GET request to a transformed URL, and evaluates the response
- * to determine the health of the node. If the response status is not 200, the node is marked as unhealthy.
- * Additionally, the function computes the elapsed time for the request and adjusts it if the [hot] parameter is true,
- * reflecting a prioritization for hot gateways due to their consistency.
- *
- * @param node The [Node] object representing the node to be checked.
- * @param hot A [Boolean] flag indicating whether the node is considered hot (true) or not (false).
+ * @param transform The transform function to be applied to each element of the given Iterable.
+ * @return A new list with the transformed elements.
  */
-suspend fun healthCheck(node : Node, hot : Boolean) {
-    val start : Long = System.currentTimeMillis()
-    val transformedUrl = transform("ipfs://$TEST_CID?now=" + System.currentTimeMillis(), node)
-    val client = HttpClient()
-    val response: HttpResponse = client.get(transformedUrl)
-    if (response.status.value != 200) {
-        node.healthy = false
+suspend fun <A, B> Iterable<A>.pmap(transform: suspend (A) -> B): List<B> {
+    return coroutineScope {
+        map {
+            async {
+                transform(it)
+            }
+        }.awaitAll()
     }
-    client.close()
-    var elapsed = System.currentTimeMillis() - start
-    if (hot)
-        elapsed -= HOT_TIME_DISCOUNT // priortize hot gateways as they are more consistent
-    node.speed
+}
+
+/**
+ * Performs a health check on a given node to measure its healthiness and speed.
+ * The healthiness is determined based on the HTTP response status and the speed is
+ * measured based on the time taken to process a sample HTTP request.
+ *
+ * @param node The node to be checked.
+ * @return A new Node instance with updated healthiness and speed attributes.
+ */
+suspend fun healthCheck(client : HttpClient, node : Node): Node {
+
+    var nodeHealthy = true
+
+    val start : Long = System.currentTimeMillis()
+
+    try {
+        val transformedUrl = transform("ipfs://$TEST_CID?now=" + System.currentTimeMillis(), node)
+        Log.d(LOG_TAG, "URL IS: $transformedUrl")
+        val response: HttpResponse = client.get(transformedUrl)
+        if (response.status.value != 200) {
+            nodeHealthy = false
+        }
+    }
+    catch (e : Exception) {
+        nodeHealthy = false
+        Log.w(LOG_TAG, "health check failed!", e)
+    }
+
+
+    var nodeSpeed = System.currentTimeMillis() - start
+    if (node.hot)
+        nodeSpeed -= HOT_TIME_DISCOUNT // priortize hot gateways as they are more consistent
+
+    return node.copy(healthy = nodeHealthy, speed = nodeSpeed)
 }
 
 /**
@@ -85,8 +146,7 @@ fun transform(inputUrl : String, node: Node) : String {
     try {
         if (Uri.parse(inputUrl).scheme!!.startsWith("http"))
             return inputUrl
-    } catch (ignored : Exception) {}
-
+    } catch (ignored : Exception) {  }
 
     var outputUrl : String = inputUrl
 
@@ -102,8 +162,8 @@ fun transform(inputUrl : String, node: Node) : String {
     // trim trailing /
     outputUrl = outputUrl.removeSuffix("/")
 
-    val urlObject = java.net.URL(outputUrl)
-    val protocol = urlObject.protocol
+    val urlObject = java.net.URI(outputUrl)
+    val protocol = urlObject.scheme
     var hostname = urlObject.host
     var pathname = urlObject.path
     val search = urlObject.query
@@ -132,15 +192,19 @@ fun transform(inputUrl : String, node: Node) : String {
     val nodeHost = node.port?.let { "${node.host}:$it" } ?: node.host
     val nodeProtocol = if (node.remote) "https" else "http"
 
-    if (protocol == "ipfs:") {
-        if (node.remote && isBase32EncodedMultibase(hostname))
-            return "$nodeProtocol://$hostname.ipfs.$nodeHost$pathname$search"
+    if (protocol == "ipfs") {
+        // When origin-based security is needed, a CIDv1 in a case-insensitive
+        // encoding such as Base32 or Base36 should be used in the subdomain:
+        // ex: https://<cidv1b32>.ipfs.<gateway-host>.tld/path/to/resource
+        if (node.remote && isBase32EncodedMultibase(hostname)) {
+            return "$nodeProtocol://$hostname.ipfs.$nodeHost/$pathname".withQueryParams(search)
+        }
 
-        return "$nodeProtocol://$nodeHost/ipfs/$hostname$pathname$search"
+        return "$nodeProtocol://$nodeHost/ipfs/$hostname$pathname".withQueryParams(search)
     }
 
-    if (protocol == "ipns:") {
-        return "$nodeProtocol://$nodeHost/ipns/$hostname$pathname$search"
+    if (protocol == "ipns") {
+        return "$nodeProtocol://$nodeHost/ipns/$hostname$pathname".withQueryParams(search)
     }
 
     throw Exception("Failed to transform URL: $inputUrl")
@@ -162,7 +226,6 @@ fun transform(inputUrl : String, node: Node) : String {
         Cid.decode(cid)
         true
     } catch (e : Exception) {
-        Log.e(LOG_TAG, "Error parsing CID: ", e)
         false
     }
 }
@@ -176,15 +239,21 @@ fun transform(inputUrl : String, node: Node) : String {
  * @param inputCid The Content Identifier (CID) to be checked.
  * @return true if the `inputCid` is Base32 encoded and multibase prefixed, false otherwise.
  */
-fun isBase32EncodedMultibase(inputCid : String): Boolean {
-    try {
-        val cid = Cid.decode(inputCid)
-        Base32().decode(cid.toString())
+fun isBase32EncodedMultibase(inputCid : String) : Boolean {
+    return try {
+        var cid = Cid.decode(inputCid)
+        (cid.version == 1L)
     }
     catch(ignored : Exception) {
-        return false
+        false
     }
+}
 
-    return true
+fun String.withQueryParams(queryParams: String?): String {
+    return if (queryParams.isNullOrEmpty()) {
+        this
+    } else {
+        "$this?$queryParams"
+    }
 }
 
