@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "ai.protocol.ipfs.filforge"
@@ -43,7 +43,7 @@ android {
         viewBinding true
     }
     namespace 'ai.protocol.ipfs.filforge'
-    buildToolsVersion '30.0.3'
+    buildToolsVersion '33.0.1'
 }
 
 dependencies {
@@ -56,8 +56,8 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
 
     // for activities using compose
-    implementation("androidx.activity:activity-compose:1.7.0")
-    implementation("androidx.core:core-splashscreen:1.0.0")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
 
     // Android Studio Preview support
@@ -65,17 +65,15 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.navigation:navigation-fragment:2.5.3'
-    implementation 'androidx.navigation:navigation-ui:2.5.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.3'
     implementation 'com.github.ipld:java-cid:v1.3.1'
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
 
     implementation "io.ktor:ktor-client-core:1.6.1"
     implementation "io.ktor:ktor-client-okhttp:1.6.1"
-
-    implementation 'commons-codec:commons-codec:1.15'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
