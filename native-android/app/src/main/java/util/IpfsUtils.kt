@@ -199,7 +199,7 @@ fun transform(inputUrl : String, node: Node) : String {
         // encoding such as Base32 or Base36 should be used in the subdomain:
         // ex: https://<cidv1b32>.ipfs.<gateway-host>.tld/path/to/resource
         if (node.remote && isBase32EncodedMultibase(hostname)) {
-            return "$nodeProtocol://$hostname.ipfs.$nodeHost/$pathname".withQueryParams(search)
+            return "$nodeProtocol://$hostname.ipfs.$nodeHost$pathname".withQueryParams(search)
         }
 
         return "$nodeProtocol://$nodeHost/ipfs/$hostname$pathname".withQueryParams(search)
