@@ -12,41 +12,47 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
+const val TEST_CID = "QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A"
+const val HOT_TIME_DISCOUNT: Long = 1000
+const val HTTP_REQUEST_TIMEOUT: Long = 30_000
 
-const val TEST_CID : String ="QmPChd2hVbrJ6bfo3WBcTW4iZnpHm8TEzWkLHmLpXhF68A"
-
-const val HOT_TIME_DISCOUNT : Long = 1000
-const val HTTP_REQUEST_TIMEOUT : Long = 30_000
-
-// node definition
+/**
+ * Data class representing a node with its attributes.
+ *
+ * @property host The hostname of the node.
+ * @property healthy Indicates if the node is healthy.
+ * @property remote Indicates if the node is remote.
+ * @property hot Indicates if the node is hot.
+ * @property port The port of the node. Can be null.
+ * @property speed The speed of the node. Can be null.
+ */
 data class Node(
     val host: String,
     val healthy: Boolean = true,
     val remote: Boolean = true,
     val hot: Boolean = false,
     val port: Int? = null,
-    val speed: Long? = null,
+    val speed: Long? = null
 )
 
-// setup default nodes
-val defaultNodeList : List<Node> = listOf(
+/** List of default nodes. */
+val defaultNodeList: List<Node> = listOf(
     Node(host = "w3s.link", hot = true),
     Node(host = "dweb.link"),
     Node(host = "cf-ipfs.com"),
     Node(host = "4everland.io"),
-    Node(host = "nftstorage.link", hot=true))
+    Node(host = "nftstorage.link", hot = true)
+)
 
-var updatedNodeList : List<Node> = emptyList()
+var updatedNodeList: List<Node> = emptyList()
 
 /**
  * Initiates a health check on a predefined list of nodes to update their status.
  * Utilizes parallel processing to expedite the health check process.
  */
 suspend fun nodeCheck() {
-
     val client = HttpClient {
         install(HttpTimeout) {
-            // Sets a request timeout
             requestTimeoutMillis = HTTP_REQUEST_TIMEOUT
         }
     }
@@ -84,14 +90,13 @@ suspend fun <A, B> Iterable<A>.pmap(transform: suspend (A) -> B): List<B> {
  * The healthiness is determined based on the HTTP response status and the speed is
  * measured based on the time taken to process a sample HTTP request.
  *
+ * @param client The [HttpClient] to use for the request.
  * @param node The node to be checked.
  * @return A new Node instance with updated healthiness and speed attributes.
  */
-suspend fun healthCheck(client : HttpClient, node : Node): Node {
-
+suspend fun healthCheck(client: HttpClient, node: Node): Node {
     var nodeHealthy = true
-
-    val start : Long = System.currentTimeMillis()
+    val start: Long = System.currentTimeMillis()
 
     try {
         val transformedUrl = transform("ipfs://$TEST_CID?now=" + System.currentTimeMillis(), node)
@@ -100,16 +105,13 @@ suspend fun healthCheck(client : HttpClient, node : Node): Node {
         if (response.status.value != 200) {
             nodeHealthy = false
         }
-    }
-    catch (e : Exception) {
+    } catch (e: Exception) {
         nodeHealthy = false
         Log.w(LOG_TAG, "health check failed!", e)
     }
 
-
     var nodeSpeed = System.currentTimeMillis() - start
-    if (node.hot)
-        nodeSpeed -= HOT_TIME_DISCOUNT // priortize hot gateways as they are more consistent
+    if (node.hot) nodeSpeed -= HOT_TIME_DISCOUNT
 
     return node.copy(healthy = nodeHealthy, speed = nodeSpeed)
 }
@@ -241,7 +243,7 @@ fun transform(inputUrl : String, node: Node) : String {
  */
 fun isBase32EncodedMultibase(inputCid : String) : Boolean {
     return try {
-        var cid = Cid.decode(inputCid)
+        val cid = Cid.decode(inputCid)
         (cid.version == 1L)
     }
     catch(ignored : Exception) {
