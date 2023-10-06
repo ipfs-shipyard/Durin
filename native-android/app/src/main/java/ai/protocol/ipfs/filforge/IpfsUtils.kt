@@ -4,7 +4,7 @@ import android.net.Uri
 import android.util.Log
 import io.ipfs.cid.Cid
 import io.ktor.client.HttpClient
-import io.ktor.client.features.HttpTimeout
+import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.async
