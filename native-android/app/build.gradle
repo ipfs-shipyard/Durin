@@ -17,10 +17,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildFeatures {
-        compose true
-    }
-
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
@@ -43,27 +39,9 @@ android {
         viewBinding true
     }
     namespace 'ai.protocol.ipfs.filforge'
-    buildToolsVersion '33.0.1'
 }
 
 dependencies {
-
-    def composeBom = platform('androidx.compose:compose-bom:2023.01.00')
-    implementation composeBom
-    androidTestImplementation composeBom
-
-    // Material Design 3
-    implementation 'androidx.compose.material3:material3'
-
-    // for activities using compose
-    implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.core:core-splashscreen:1.0.1")
-
-
-    // Android Studio Preview support
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
-
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
