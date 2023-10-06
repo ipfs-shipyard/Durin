@@ -11,7 +11,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import util.nodeCheck
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,15 +34,15 @@ class MainActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.setIcon(tableIcons[position])
         }.attach()
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         // Launch nodeCheck in a coroutine when the activity resumes
         CoroutineScope(Dispatchers.IO).launch {
             nodeCheck()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     private inner class HomePagerAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {

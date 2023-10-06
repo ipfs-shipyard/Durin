@@ -11,9 +11,6 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
-import util.IpfsUtilsKt;
-import util.Node;
-
 /**
  * Instrumented test, which will execute on an Android device.
  *

@@ -1,6 +1,5 @@
-package util
+package ai.protocol.ipfs.filforge
 
-import ai.protocol.ipfs.filforge.LOG_TAG
 import android.net.Uri
 import android.util.Log
 import io.ipfs.cid.Cid
@@ -41,10 +40,30 @@ val defaultNodeList: List<Node> = listOf(
     Node(host = "dweb.link"),
     Node(host = "cf-ipfs.com"),
     Node(host = "4everland.io"),
+    Node(host = "gw3.io"),
+    Node(host = "storry.tv"),
     Node(host = "nftstorage.link", hot = true)
 )
 
-var updatedNodeList: List<Node> = emptyList()
+var nodeList: List<Node> = emptyList()
+
+
+/**
+ * Retrieves the fastest healthy node from the nodeList.
+ *
+ * This function filters out unhealthy nodes and then sorts the remaining nodes based on their speed in ascending order.
+ * The node with the smallest speed value (i.e., fastest) is then returned.
+ *
+ * @return The fastest healthy node.
+ * @throws Exception if there are no healthy nodes in the nodeList.
+ */
+fun getFastestNode() : Node {
+    val sortedHealthyNodes = nodeList.filter { it.healthy }.sortedBy { it.speed }
+    if (sortedHealthyNodes.isNotEmpty())
+        return sortedHealthyNodes[0]
+
+    throw Exception("No healthy nodes found!")
+}
 
 /**
  * Initiates a health check on a predefined list of nodes to update their status.
@@ -57,13 +76,14 @@ suspend fun nodeCheck() {
         }
     }
 
-    updatedNodeList = defaultNodeList.pmap {
+    nodeList = defaultNodeList.pmap {
         healthCheck(client, it)
     }
 
     client.close()
 
-    for (node in updatedNodeList) {
+    // TODO - remove this is debugging code
+    for (node in nodeList) {
         Log.d(LOG_TAG, "${node.host} is ${node.healthy} with ${node.speed}")
     }
 }

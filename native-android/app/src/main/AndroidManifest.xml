@@ -21,35 +21,6 @@
             </intent-filter>
         </activity>
 
-
-        <activity
-            android:name=".DisplayIPFSActivity"
-            android:theme="@style/AppTheme.NoActionBarLaunch"
-            android:exported="true" >
-
-            <intent-filter android:exported="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="*"
-                    android:scheme="ipfs" />
-            </intent-filter>
-
-            <intent-filter android:exported="true">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="*"
-                    android:scheme="ipns" />
-            </intent-filter>
-
-        </activity>
     </application>
 
 </manifest>
