@@ -6,4 +6,7 @@
     <string name="default_ipfs_image">ipfs://bafybeiagu4ioj5uzviif242wnyqsqoz7gryvfb72hhoot4wgco3rz7xxnq</string>
     <string name="enter_cid_ipfs_url_or_ipns">ENTER CID, IPFS URL, OR IPNS</string>
     <string name="durin">DURIN</string>
+    <string name="splash_background">splash background</string>
+    <string name="hint_enter_cid_ipfs_url_or_ipns">Enter CID, IPFS URL or IPNS</string>
+    <string name="open_in_browser">OPEN IN BROWSER</string>
 </resources>
