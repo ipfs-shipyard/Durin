@@ -26,7 +26,11 @@
         android:text="@string/durin"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@android:color/white"
+        android:layout_marginTop="5dp"
         android:gravity="center"
+        android:letterSpacing="0.2"
+        android:textSize="32sp"
+        android:fontFamily="@font/koulen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
