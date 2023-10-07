@@ -6,17 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
+    <View
+        android:id="@+id/radial_light"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/light_behind_edittext"/>
+
     <TextView
+        android:id="@+id/text_above"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="5dp"
+        android:paddingStart="20dp"
         android:layout_above="@id/field_cid"
         android:text="@string/enter_cid_ipfs_url_or_ipns"
         android:textStyle="bold"
-        android:textColor="@android:color/darker_gray"/>
+        android:textColor="@android:color/holo_blue_light"/>
 
     <EditText
         android:id="@+id/field_cid"
