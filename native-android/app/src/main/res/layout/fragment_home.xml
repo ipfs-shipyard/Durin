@@ -1,30 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="center"
     tools:context=".HomeFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@id/field_cid"
+        android:text="@string/enter_cid_ipfs_url_or_ipns"
+        android:textStyle="bold"
+        android:textColor="@android:color/darker_gray"/>
 
     <EditText
         android:id="@+id/field_cid"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="40dp"
-        android:layout_gravity="center_horizontal"
-        android:singleLine="true"
+        android:layout_height="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_centerInParent="true"
+        android:maxLines="1"
+        android:paddingStart="10dp"
         android:inputType="textUri"
-        android:text="@string/default_ipfs_image"
-    />
+        android:background="@drawable/rounded_edittext_background"
+        android:textColor="@android:color/white"
+        android:hint="@string/enter_cid_ipfs_url_or_ipns"
+        android:textColorHint="@android:color/darker_gray"
+        android:autofillHints="ipfsCID" />
 
     <Button
         android:id="@+id/btn_ipfs_intent"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/load_ipfs_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_below="@id/field_cid"
+        android:background="@drawable/rounded_edittext_background_blue"
+        android:layout_centerHorizontal="true"
+        android:text="OPEN IN BROWSER"/>
 
-</LinearLayout>
+</RelativeLayout>

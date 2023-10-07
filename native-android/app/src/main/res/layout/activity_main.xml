@@ -5,11 +5,25 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background="@drawable/splash"
+    android:background="@color/black"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/splash"
+        android:scaleType="center"
+        android:scaleX="2.2"
+        android:scaleY="2.2"
+        android:layout_centerInParent="true"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#AA000000" />
+
     <TextView
-        android:text="DURIN"
+        android:text="@string/durin"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@android:color/white"
         android:gravity="center"
@@ -28,6 +42,7 @@
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="4dp"
         app:tabMode="fixed"
         app:tabGravity="fill" />
 
