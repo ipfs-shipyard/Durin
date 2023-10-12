@@ -51,6 +51,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun createFragment(position: Int): Fragment {
+            if (position == 1) {
+                return UploadFragment()
+            } else if (position == 2) {
+                return SettingsFragment()
+            }
+
             return HomeFragment()
         }
 

@@ -9,4 +9,5 @@
     <string name="splash_background">splash background</string>
     <string name="hint_enter_cid_ipfs_url_or_ipns">Enter CID, IPFS URL or IPNS</string>
     <string name="open_in_browser">OPEN IN BROWSER</string>
+    <string name="not_implemented_yet">Not Implemented Yet</string>
 </resources>
