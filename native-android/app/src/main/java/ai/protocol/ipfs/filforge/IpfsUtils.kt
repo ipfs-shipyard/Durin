@@ -45,6 +45,10 @@ val defaultNodeList: List<Node> = listOf(
     Node(host = "nftstorage.link", hot = true)
 )
 
+/** Callback type for nodeCheck. */
+typealias NodeCheckCallback = (List<Node>) -> Unit
+
+/** List of nodes. */
 var nodeList: List<Node> = emptyList()
 
 
@@ -69,7 +73,7 @@ fun getFastestNode() : Node {
  * Initiates a health check on a predefined list of nodes to update their status.
  * Utilizes parallel processing to expedite the health check process.
  */
-suspend fun nodeCheck() {
+suspend fun nodeCheck(callback: NodeCheckCallback? = null) {
     val client = HttpClient {
         install(HttpTimeout) {
             requestTimeoutMillis = HTTP_REQUEST_TIMEOUT
@@ -81,6 +85,9 @@ suspend fun nodeCheck() {
     }
 
     client.close()
+
+    // exec callback if provided
+    callback?.invoke(nodeList)
 }
 
 /**
