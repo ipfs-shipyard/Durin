@@ -81,11 +81,6 @@ suspend fun nodeCheck() {
     }
 
     client.close()
-
-    // TODO - remove this is debugging code
-    for (node in nodeList) {
-        Log.d(LOG_TAG, "${node.host} is ${node.healthy} with ${node.speed}")
-    }
 }
 
 /**
@@ -120,7 +115,6 @@ suspend fun healthCheck(client: HttpClient, node: Node): Node {
 
     try {
         val transformedUrl = transform("ipfs://$TEST_CID?now=" + System.currentTimeMillis(), node)
-        Log.d(LOG_TAG, "URL IS: $transformedUrl")
         val response: HttpResponse = client.get(transformedUrl)
         if (response.status.value != 200) {
             nodeHealthy = false
