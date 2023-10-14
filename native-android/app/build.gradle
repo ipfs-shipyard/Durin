@@ -51,6 +51,9 @@ dependencies {
     implementation 'com.github.ipld:java-cid:v1.3.1'
     implementation 'androidx.core:core-ktx:1.12.0'
 
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
+
     implementation 'io.ktor:ktor-client-core:2.3.5'
     implementation 'io.ktor:ktor-client-okhttp:2.3.5'
 
