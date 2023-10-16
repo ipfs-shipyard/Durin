@@ -20,7 +20,7 @@ class NodeListAdapter(private val nodeList: List<Node>) : RecyclerView.Adapter<N
 
     override fun onBindViewHolder(holder: NodeViewHolder, position: Int) {
         val currentNode = nodeList[position]
-        holder.nodeTextView.text = currentNode.host + " - " + currentNode.speed + "ms"
+        holder.nodeTextView.text = currentNode.host + " - " + currentNode.speed + " ms"
     }
 
     inner class NodeViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
