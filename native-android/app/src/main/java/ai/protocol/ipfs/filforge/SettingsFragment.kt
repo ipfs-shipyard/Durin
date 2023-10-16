@@ -1,6 +1,8 @@
 package ai.protocol.ipfs.filforge
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +14,17 @@ import androidx.recyclerview.widget.RecyclerView
 class SettingsFragment : Fragment() {
 
     private lateinit var viewModel: NodeViewModel
+
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val runnable: Runnable = object : Runnable {
+        override fun run() {
+            // refresh the nodeList every 30 seconds
+            viewModel.refresh()
+            handler.postDelayed(this, 30000) // 60 seconds
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,5 +49,15 @@ class SettingsFragment : Fragment() {
             val sortedHealthyNodes = nodes.filter { it.healthy }.sortedBy { it.speed }
             nodeListRecyclerView.adapter = NodeListAdapter(sortedHealthyNodes)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handler.postDelayed(runnable, 30000) // 30 seconds
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable)
     }
 }

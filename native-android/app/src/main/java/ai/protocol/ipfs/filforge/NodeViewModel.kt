@@ -29,4 +29,17 @@ class NodeViewModel : ViewModel() {
     fun getNodeList(): LiveData<List<Node>> {
         return nodes
     }
+
+    /**
+     * Refreshes the node list.
+     */
+    fun refresh() {
+        viewModelScope.launch(Dispatchers.IO) {
+            nodeCheck { nodes ->
+                launch(Dispatchers.Main) {
+                    setNodes(nodes)
+                }
+            }
+        }
+    }
 }
