@@ -11,4 +11,5 @@
     <string name="open_in_browser">OPEN IN BROWSER</string>
     <string name="not_implemented_yet">Not Implemented Yet</string>
     <string name="gateways">GATEWAYS</string>
+    <string name="auto">auto</string>
 </resources>

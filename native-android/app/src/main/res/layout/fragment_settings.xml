@@ -17,9 +17,25 @@
         android:textColor="@android:color/holo_blue_light"
         />
 
+    <TextView
+        android:layout_below="@id/gateways_text"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:id="@+id/node_auto"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/source_code_pro_medium"
+        android:textSize="16sp"
+        android:text="@string/auto"
+        android:background="@drawable/bottom_border"
+        android:textColor="@color/white">
+    </TextView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/node_list_recycler_view"
-        android:layout_below="@id/gateways_text"
+        android:layout_below="@id/node_auto"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:layout_width="match_parent"
