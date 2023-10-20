@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,6 +17,18 @@
         android:text="@string/gateways"
         android:textColor="@android:color/holo_blue_light"
         />
+
+    <ImageView
+        android:id="@+id/cicle_check"
+        android:layout_marginEnd="40dp"
+        android:layout_below="@id/gateways_text"
+        android:layout_centerVertical="true"
+        app:tint="@android:color/holo_blue_light"
+        android:layout_alignParentEnd="true"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="@string/access_enabled_checkmark"
+        android:src="@drawable/circle_check" />
 
     <TextView
         android:layout_below="@id/gateways_text"

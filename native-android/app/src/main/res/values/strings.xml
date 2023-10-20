@@ -12,4 +12,5 @@
     <string name="not_implemented_yet">Not Implemented Yet</string>
     <string name="gateways">GATEWAYS</string>
     <string name="auto">auto</string>
+    <string name="access_enabled_checkmark">enabled_checkmark</string>
 </resources>
