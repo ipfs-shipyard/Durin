@@ -1,15 +1,11 @@
 package ai.protocol.ipfs.filforge
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -55,20 +51,14 @@ class SettingsFragment : Fragment() {
         }
 
         // add a click listener to the node list
-        nodeListRecyclerView.addOnItemTouchListener(
-            RecyclerItemClickListener(
-                requireContext(),
-                nodeListRecyclerView,
-                object : RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        val nodeList = viewModel.getNodeList().value
-                        if (nodeList != null) {
-                            val node = nodeList[position]
-                            view.findViewById<ImageView>(R.id.circle_check).visibility = View.VISIBLE
-                        }
-                    }
-                })
-        )
+        nodeListRecyclerView.setOnItemClickListener { view, position ->
+            val node = viewModel.getNodeList().value?.get(position)
+            if (node != null) {
+                view.findViewById<View>(R.id.circle_check).visibility = View.VISIBLE
+                // viewModel.setNode(node)
+            }
+        }
+
     }
 
     override fun onResume() {
@@ -81,38 +71,20 @@ class SettingsFragment : Fragment() {
         handler.removeCallbacks(runnable)
     }
 
-}
+    fun RecyclerView.setOnItemClickListener(onItemClickListener: (view: View, position: Int) -> Unit) {
+        this.addOnChildAttachStateChangeListener(object: RecyclerView.OnChildAttachStateChangeListener {
+            override fun onChildViewAttachedToWindow(view: View) {
+                view.setOnClickListener {
+                    val holder = getChildViewHolder(view)
+                    onItemClickListener(view, holder.adapterPosition)
+                }
+            }
 
-class RecyclerItemClickListener(
-    context: Context,
-    recyclerView: RecyclerView,
-    private val mListener: OnItemClickListener?
-) : RecyclerView.OnItemTouchListener {
-
-    private val mGestureDetector: GestureDetector
-
-    init {
-        mGestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onSingleTapUp(e: MotionEvent): Boolean {
-                return true
+            override fun onChildViewDetachedFromWindow(view: View) {
+                view.setOnClickListener(null)
             }
         })
     }
 
-    override fun onInterceptTouchEvent(view: RecyclerView, e: MotionEvent): Boolean {
-        val childView = view.findChildViewUnder(e.x, e.y)
-        if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
-            mListener.onItemClick(childView, view.getChildAdapterPosition(childView))
-            return true
-        }
-        return false
-    }
 
-    override fun onTouchEvent(view: RecyclerView, motionEvent: MotionEvent) {}
-
-    override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-
-    interface OnItemClickListener {
-        fun onItemClick(view: View, position: Int)
-    }
 }
