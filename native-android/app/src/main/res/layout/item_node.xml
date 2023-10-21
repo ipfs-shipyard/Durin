@@ -6,12 +6,13 @@
     android:background="@drawable/bottom_border">
 
     <ImageView
-        android:id="@+id/cicle_check"
+        android:id="@+id/circle_check"
         android:layout_centerVertical="true"
         app:tint="@android:color/holo_blue_light"
         android:layout_alignParentEnd="true"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:visibility="invisible"
         android:contentDescription="@string/access_enabled_checkmark"
         android:src="@drawable/circle_check" />
 

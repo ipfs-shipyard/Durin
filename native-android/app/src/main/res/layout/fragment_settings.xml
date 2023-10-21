@@ -19,7 +19,7 @@
         />
 
     <ImageView
-        android:id="@+id/cicle_check"
+        android:id="@+id/circle_check"
         android:layout_marginEnd="40dp"
         android:layout_below="@id/gateways_text"
         android:layout_centerVertical="true"
