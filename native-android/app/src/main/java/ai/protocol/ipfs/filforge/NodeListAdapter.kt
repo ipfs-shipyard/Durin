@@ -14,6 +14,10 @@ class NodeListAdapter(private val nodeList: List<Node>) : RecyclerView.Adapter<N
         return NodeViewHolder(view)
     }
 
+    fun getItem(position: Int): Node {
+        return nodeList[position]
+    }
+
     override fun getItemCount(): Int {
         return nodeList.size
     }
@@ -21,10 +25,17 @@ class NodeListAdapter(private val nodeList: List<Node>) : RecyclerView.Adapter<N
     override fun onBindViewHolder(holder: NodeViewHolder, position: Int) {
         val currentNode = nodeList[position]
         holder.nodeTextView.text = currentNode.host + " - " + currentNode.speed + " ms"
+        if (currentNode.host == getPreferredGateway(holder.nodeTextView.context)) {
+            holder.circleCheck.visibility = View.VISIBLE
+        }
+        else {
+            holder.circleCheck.visibility = View.INVISIBLE
+        }
     }
 
     inner class NodeViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         val nodeTextView: TextView = itemView.findViewById<TextView>(R.id.node_text)
+        val circleCheck: View = itemView.findViewById<View>(R.id.circle_check)
     }
 
 

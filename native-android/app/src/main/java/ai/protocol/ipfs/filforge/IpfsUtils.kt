@@ -1,5 +1,6 @@
 package ai.protocol.ipfs.filforge
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import io.ipfs.cid.Cid
@@ -280,3 +281,16 @@ fun String.withQueryParams(queryParams: String?): String {
     }
 }
 
+/**
+ * get the preferred gateway to use
+ */
+fun getPreferredGateway(context : Context) : String? {
+    return context.getSharedPreferences("ai.protocol.ipfs.filforge", Context.MODE_PRIVATE).getString(KEY_PREFERRED_GATEWAY, "auto")
+}
+
+/**
+ * Set the preferred gateway to use
+ */
+fun setPreferredGateway(context : Context, gateway : String) {
+    context.getSharedPreferences("ai.protocol.ipfs.filforge", Context.MODE_PRIVATE).edit().putString(KEY_PREFERRED_GATEWAY, gateway).apply()
+}

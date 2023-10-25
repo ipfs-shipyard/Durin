@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 class SettingsFragment : Fragment() {
 
     private lateinit var viewModel: NodeViewModel
-
+    private lateinit var autoNodeCircleCheck : View
 
     private val handler = Handler(Looper.getMainLooper())
     private val runnable: Runnable = object : Runnable {
@@ -24,7 +24,6 @@ class SettingsFragment : Fragment() {
             handler.postDelayed(this, 30000) // 60 seconds
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +36,9 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_settings, container, false)
+        autoNodeCircleCheck = rootView.findViewById<View>(R.id.circle_check)
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,14 +52,16 @@ class SettingsFragment : Fragment() {
         }
 
         // add a click listener to the node list
-        nodeListRecyclerView.setOnItemClickListener { view, position ->
-            val node = viewModel.getNodeList().value?.get(position)
-            if (node != null) {
-                view.findViewById<View>(R.id.circle_check).visibility = View.VISIBLE
-                // viewModel.setNode(node)
+        nodeListRecyclerView.setOnItemClickListener { _view, position ->
+            // important - get the filtered node list from the adapter, not the original list
+            // from the view model
+            val node = (nodeListRecyclerView.adapter as? NodeListAdapter)?.getItem(position)
+            node?.let {
+                setPreferredGateway(requireContext(), it.host)
+                (nodeListRecyclerView.adapter as? NodeListAdapter)?.notifyDataSetChanged()
+                autoNodeCircleCheck.visibility = View.INVISIBLE
             }
         }
-
     }
 
     override fun onResume() {
@@ -71,7 +74,7 @@ class SettingsFragment : Fragment() {
         handler.removeCallbacks(runnable)
     }
 
-    fun RecyclerView.setOnItemClickListener(onItemClickListener: (view: View, position: Int) -> Unit) {
+    private fun RecyclerView.setOnItemClickListener(onItemClickListener: (view: View, position: Int) -> Unit) {
         this.addOnChildAttachStateChangeListener(object: RecyclerView.OnChildAttachStateChangeListener {
             override fun onChildViewAttachedToWindow(view: View) {
                 view.setOnClickListener {
@@ -85,6 +88,7 @@ class SettingsFragment : Fragment() {
             }
         })
     }
+
 
 
 }
