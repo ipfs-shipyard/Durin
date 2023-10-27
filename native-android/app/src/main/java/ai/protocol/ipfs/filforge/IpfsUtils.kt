@@ -70,6 +70,16 @@ fun getFastestNode() : Node {
     throw Exception("No healthy nodes found!")
 }
 
+fun getPreferredNode(context : Context) : Node {
+    val preferredGateway = getPreferredGateway(context)
+    if (preferredGateway == "auto") {
+        return getFastestNode()
+    }
+    else {
+        return nodeList.filter { it.host == preferredGateway }[0]
+    }
+}
+
 /**
  * Initiates a health check on a predefined list of nodes to update their status.
  * Utilizes parallel processing to expedite the health check process.

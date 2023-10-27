@@ -19,19 +19,18 @@ class HomeFragment : Fragment() {
         val cidField : EditText = rootView.findViewById(R.id.field_cid)
         val launchButton : Button = rootView.findViewById(R.id.btn_ipfs_intent)
 
-        // TODO - add exception handling
+        // test value -> bafybeiagu4ioj5uzviif242wnyqsqoz7gryvfb72hhoot4wgco3rz7xxnq
         launchButton.setOnClickListener {
             // get the input
             val userInput = cidField.text.toString()
             // transform the input into a URL, get the fastest node
-            val url = transform(userInput, getFastestNode())
+            val url = transform(userInput, getPreferredNode(requireContext()))
             launchBrowser(url)
         }
 
         return rootView
     }
 
-    // TODO add exception handling
     private fun launchBrowser(url : String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
