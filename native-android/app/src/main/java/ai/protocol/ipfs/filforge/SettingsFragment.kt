@@ -15,13 +15,14 @@ class SettingsFragment : Fragment() {
 
     private lateinit var viewModel: NodeViewModel
     private lateinit var autoNodeCircleCheck : View
+    private lateinit var autoNode : View
 
     private val handler = Handler(Looper.getMainLooper())
     private val runnable: Runnable = object : Runnable {
         override fun run() {
             // refresh the nodeList every 30 seconds
             viewModel.refresh()
-            handler.postDelayed(this, 30000) // 60 seconds
+            handler.postDelayed(this, 30000) // 30 seconds
         }
     }
 
@@ -37,7 +38,8 @@ class SettingsFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val rootView = inflater.inflate(R.layout.fragment_settings, container, false)
-        autoNodeCircleCheck = rootView.findViewById<View>(R.id.circle_check)
+        autoNodeCircleCheck = rootView.findViewById(R.id.circle_check)
+        autoNode = rootView.findViewById(R.id.node_auto)
         return rootView
     }
 
@@ -51,6 +53,13 @@ class SettingsFragment : Fragment() {
             nodeListRecyclerView.adapter = NodeListAdapter(sortedHealthyNodes)
         }
 
+        if (getPreferredGateway(requireContext()) == "auto") {
+            autoNodeCircleCheck.visibility = View.VISIBLE
+        }
+        else {
+            autoNodeCircleCheck.visibility = View.INVISIBLE
+        }
+
         // add a click listener to the node list
         nodeListRecyclerView.setOnItemClickListener { _view, position ->
             // important - get the filtered node list from the adapter, not the original list
@@ -61,6 +70,13 @@ class SettingsFragment : Fragment() {
                 (nodeListRecyclerView.adapter as? NodeListAdapter)?.notifyDataSetChanged()
                 autoNodeCircleCheck.visibility = View.INVISIBLE
             }
+        }
+
+        // add a click listener to the auto node
+        autoNode.setOnClickListener {
+            setPreferredGateway(requireContext(), "auto")
+            autoNodeCircleCheck.visibility = View.VISIBLE
+            (nodeListRecyclerView.adapter as? NodeListAdapter)?.notifyDataSetChanged()
         }
     }
 
