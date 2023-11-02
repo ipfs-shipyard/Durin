@@ -106,7 +106,4 @@ class SettingsFragment : Fragment() {
             }
         })
     }
-
-
-
 }
