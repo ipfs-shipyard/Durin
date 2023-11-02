@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.reallybadapps.ipfsrouter.Node
+import com.reallybadapps.ipfsrouter.nodeCheck
 
 class NodeViewModel : ViewModel() {
 

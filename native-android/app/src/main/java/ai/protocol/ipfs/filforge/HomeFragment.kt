@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.reallybadapps.ipfsrouter.getPreferredNode
+import com.reallybadapps.ipfsrouter.transform
 
 
 class HomeFragment : Fragment() {
@@ -32,7 +34,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun launchBrowser(url : String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(intent);
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 }

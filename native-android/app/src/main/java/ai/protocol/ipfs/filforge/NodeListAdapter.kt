@@ -5,7 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
+import com.reallybadapps.ipfsrouter.Node
+import com.reallybadapps.ipfsrouter.getPreferredGateway
 
 class NodeListAdapter(private val nodeList: List<Node>) : RecyclerView.Adapter<NodeListAdapter.NodeViewHolder>() {
 

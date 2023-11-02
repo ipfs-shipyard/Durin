@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.reallybadapps.ipfsrouter.getPreferredGateway
+import com.reallybadapps.ipfsrouter.setPreferredGateway
 
 class SettingsFragment : Fragment() {
 

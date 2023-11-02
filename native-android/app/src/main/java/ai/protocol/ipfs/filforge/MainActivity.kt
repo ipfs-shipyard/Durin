@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import com.reallybadapps.ipfsrouter.nodeCheck
 
 class MainActivity : AppCompatActivity() {
 
