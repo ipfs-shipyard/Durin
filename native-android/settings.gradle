@@ -5,14 +5,16 @@ pluginManagement {
         mavenCentral()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://maven.pkg.github.com/Really-Bad-Apps/AndroidIPFSRouter' }
         maven { url 'https://jitpack.io' }
     }
 }
+
 rootProject.name = "Mobile Share"
 include ':app'
-include ':IPFSRouter'

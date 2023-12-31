@@ -53,7 +53,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.2"
-    implementation project(path: ':IPFSRouter')
+    implementation 'com.github.Really-Bad-Apps:AndroidIPFSRouter:0.8.4'
 
 
     testImplementation 'junit:junit:4.13.2'
