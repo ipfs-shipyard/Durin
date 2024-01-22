@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_border">
+
+    <ImageView
+        android:id="@+id/circle_check"
+        android:layout_centerVertical="true"
+        app:tint="@android:color/holo_blue_light"
+        android:layout_alignParentEnd="true"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="invisible"
+        android:contentDescription="@string/access_enabled_checkmark"
+        android:src="@drawable/circle_check" />
+
+    <TextView
+        android:id="@+id/node_text"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/source_code_pro_medium"
+        android:textSize="16sp"
+        android:textColor="@color/white" />
+
+</RelativeLayout>
+
