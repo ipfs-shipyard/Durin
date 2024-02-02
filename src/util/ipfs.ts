@@ -22,7 +22,8 @@ export type Node = {
 }
 
 export type SettingsObject = {
-  node: string
+  node: string,
+  web3storageToken: string
 }
 
 export const transform = (url: string, node: Node) => {
