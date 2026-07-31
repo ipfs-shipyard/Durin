@@ -1,3 +1,22 @@
+> [!IMPORTANT]
+> **This project is no longer maintained and the repository is archived.**
+>
+> Nobody is shipping updates to either app store. The Android listing is gone
+> from Google Play, and while the iOS listing is still up, it is not being
+> updated. Uploading is expected to fail: the share flow was built against the
+> old web3.storage upload API, which was deprecated in 2023
+> ([#47](https://github.com/ipfs-shipyard/Durin/issues/47)) and no longer
+> exists at that address. `durin.site` is offline too.
+>
+> The `ipfs://` and `ipns://` handling still shows a reasonable pattern to copy,
+> so the code is worth reading. Treat it as a reference, not something to
+> install.
+>
+> The repository can be unarchived, but only for a named maintainer who commits
+> to keeping it up, which here also means owning the app store listings. If that
+> is you, reach out to the [IPFS Foundation](https://ipfsfoundation.org/about/).
+> Forking is fine too.
+
 ![image](https://user-images.githubusercontent.com/1844554/208213758-c967debb-2097-4967-9790-58545e73bd6f.png)
 
 ## Availability
